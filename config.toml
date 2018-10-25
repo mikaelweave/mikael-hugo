@@ -1,0 +1,69 @@
+baseurl = "http://www.mikaelstadden.com"
+title = "Mikael Stadden"
+theme = "coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentsstyle = "bw"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+disqusShortname = "mikaelsnavy"
+
+[params]
+    author = "Mikael Stadden"
+    info = "Software Engineer"
+    description = "Mikael Stadden's personal website"
+    keywords = "blog,developer,personal"
+    avatarurl = "img/Mikael-0233-zoomed.jpg"
+
+    favicon_32 = "/img/favicon-32x32.png"
+    favicon_16 = "/img/favicon-16x16.png"
+
+    footercontent = ""
+
+    hidecredits = false
+    hidecopyright = false
+
+    rtl = false
+
+    math = true
+    custom_css = ["css/custom.css"]
+
+# Social links
+[[params.social]]
+    name = "Github"
+    icon = "fab fa-github fa-2x"
+    weight = 1
+    url = "https://github.com/mikaelsnavy/"
+[[params.social]]
+    name = "Twitter"
+    icon = "fab fa-twitter fa-2x"
+    weight = 3
+    url = "https://twitter.com/mikaelsnavy/"
+[[params.social]]
+    name = "Instagram"
+    icon = "fab fa-instagram fa-2x"
+    weight = 3
+    url = "https://instagram.com/mikaelsnavy/"
+
+# Menu links
+[[menu.main]]
+    name = "Blog"
+    weight = 1
+    url  = "/blog/"
+[[menu.main]]
+    name = "Photography"
+    weight = 1
+    url  = "/photography/"
+[[menu.main]]
+    name = "About"
+    weight = 2
+    url = "/about/"
+[[menu.main]]
+    name = "Contact"
+    weight = 2
+    url = "/contact/"
