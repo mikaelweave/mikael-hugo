@@ -1,0 +1,26 @@
+<section class="container list">
+  <h1 class="title">{{ .Title }}</h1>
+  <div class="article">
+    {{ range .Paginator.Pages }}
+    <article class="post excerpt">
+      {{ $featured := .Params.featured_image }}
+      {{ $title := .Title }}
+      <div class="feature-thumbnail-container">
+        {{ with .Resources }}
+          {{ with .GetMatch $featured }}
+              {{ $cover := .Resize "600x" }}
+              {{ with $cover }}
+                    <img src="{{ .Permalink }}" alt="{{ $title }}"/>
+              {{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+      <div class="thumbnail-post-content">
+        <h2 class="title"><a href="{{ .URL }}">{{ .Title }}</a></h2>
+        <span class="entry-meta">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</section>

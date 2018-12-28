@@ -1,0 +1,54 @@
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* LIST PAGE OVERRIDES */
+.post {
+    float: left;
+    width: 100%;
+}
+.post.excerpt {
+    clear: both;
+    position: relative;
+    margin:15px 0;
+    background:#fff;
+}
+.article {
+    width: 68.58%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+.featured-thumbnail-container {
+    display: inline-block;
+    float: left;
+    width: 100%;
+    position:relative;
+}
+.thumbnail-post-content {
+    display: inline-block;
+    float: left;
+    width: 100%;
+    max-width: 100%;
+    padding:20px;
+    text-align:center;
+}
+.post.excerpt h2.title {
+    margin: 0px 0 7px 0;
+}
+.post.excerpt h2.title a {
+    color: #000;
+    font-weight:500;
+    line-height: 140%;
+    font-size: 32px;
+}
+span.entry-meta {
+    font-size: 15px;
+    display: inline-block;
+    float: left;
+    width: 100%;
+    margin-bottom: 7px;
+    font-weight: 400;
+    color: #464646;
+}
