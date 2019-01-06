@@ -1,4 +1,4 @@
-baseurl = "http://www.mikaelstadden.com"
+baseurl = "https://upbeat-meitner-2b2528.netlify.com/"
 title = "Mikael Stadden"
 theme = "hugo-coder"
 languagecode = "en"
