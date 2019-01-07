@@ -3,6 +3,7 @@ title = "Mikael Stadden"
 theme = "hugo-coder"
 languagecode = "en"
 defaultcontentlanguage = "en"
+pluralizelisttitles= "false"
 
 paginate = 20
 canonifyurls = true

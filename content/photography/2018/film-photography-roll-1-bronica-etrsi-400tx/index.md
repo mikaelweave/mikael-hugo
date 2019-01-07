@@ -4,7 +4,7 @@ author: Mikael Stadden
 type: post
 date: 2018-04-30T23:32:00+00:00
 url: /2018/04/30/film-photography-roll-1-bronica-etrsi-400tx/
-featured_image: /wp-content/uploads/2018/04/01-2-700x530.jpg
+featured_image: 01-2.jpg
 blogger_blog:
   - mikaelsnavy.blogspot.com
 blogger_author:

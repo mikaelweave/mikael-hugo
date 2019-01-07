@@ -4,7 +4,7 @@ author: Mikael Stadden
 type: post
 date: 2018-06-13T03:27:00+00:00
 url: /2018/06/13/film-photography-4-st-lucia/
-featured_image: /wp-content/uploads/2018/06/32a-700x450.jpg
+featured_image: 32a.jpg
 blogger_blog:
   - mikaelsnavy.blogspot.com
 blogger_author:

@@ -4,7 +4,7 @@ author: Mikael Stadden
 type: post
 date: 2018-04-30T23:42:00+00:00
 url: /2018/04/30/film-photography-roll-2-yashica-mat-124g/
-featured_image: /wp-content/uploads/2018/04/01-1-700x710.jpg
+featured_image: 01-1.jpg
 blogger_blog:
   - mikaelsnavy.blogspot.com
 blogger_author:

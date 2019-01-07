@@ -4,7 +4,7 @@ author: notadmin
 type: post
 date: 2018-06-17T05:38:12+00:00
 url: /2018/06/17/film-photography-6-colombia/
-featured_image: /wp-content/uploads/2018/06/34-150x150.jpg
+featured_image: 34.jpg
 categories:
   - 35mm
   - Canon EOS 3
@@ -127,7 +127,7 @@ After one night in Buga, we went to Laguna El Sonso. There was lichen hanging f
 The Renault Duster, one of my favorite cars, was out transport for 8 days. I had to take a photo!
 
 {{< imgproc "34.jpg" "" >}}
-
+<br />
 {{< imgproc "35.jpg" "" >}}
 
 Dreamy lichen shot. For the second one, I tried to hold some lichen in front of the camera.
