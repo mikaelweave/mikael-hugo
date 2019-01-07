@@ -24,14 +24,15 @@ My third film roll was roll #2 with my Yashica Mat 124G. I shot this entire roll
 I am ultimately  disappointed with this roll but it was still a great learning experience. This roll in a magical and memorable place that was underwhelming will remind me to take my time in the future. The lovely women in these photos are [Katy Weaver ](https://www.katyweaver.com/){:target=\"_blank\"}and [Marcela Pulido](https://www.mgpulido.co/){:target=\"_blank\"}.
 
 **Camera**: Yashica Mat 124G
+
 **Film**: Ektar 100 (120)
 
 {{< imgproc "01.jpg" "" >}}￼
-
+<br />
 {{< imgproc "02.jpg" "" >}}
-
+<br />
 {{< imgproc "03.jpg" "" >}}
-
+<br />
 {{< imgproc "04.jpg" "" >}}
 
 Testing out the timer!
@@ -49,11 +50,11 @@ This would have been SO perfect if I lined it up beter and focused correctly. Ca
 Getting dark and blurry – I blame it on the alcohol.
 
 {{< imgproc "08.jpg" "" >}}
-
+<br />
 {{< imgproc "09.jpg" "" >}}
-
+<br />
 {{< imgproc "10.jpg" "" >}}
-
+<br />
 {{< imgproc "11.jpg" "" >}}
 
 Last shot was a timer shot on a rooftop brew pub just before we went home. Timer works, shot is just underexposed by about 6 clicks.
@@ -61,4 +62,3 @@ Last shot was a timer shot on a rooftop brew pub just before we went home. Timer
 {{< imgproc "12.jpg" "" >}}
 
 Thanks for reading!
-

@@ -50,23 +50,23 @@ SUPER blurry from playing around indoors. It took me a while to get used to the 
 Here is the first photo from Guatemala from the [Utopia Eco Hotel ](https://www.utopiaecohotel.com/)near Lanquin. The common eating / bar / hangout area was a HUGE balcony looking directly into the canopy. Photos taken on February 26th – 28th, 2018.
 
 {{< imgproc "04-1.jpg" "emergent tree poking out of forest in cloudy rainforest" >}}
-
+<br />
 {{< imgproc "05-1.jpg" "woman with binoculars bird watching in black and white " >}}
-
+<br />
 {{< imgproc "06-1.jpg" "Two women near a river in black and white photo" >}}
 
 Trouble in paradise – I got lazy with focusing. With all the autofocusing and smartphone technology I have experienced in my life, I DEFINITELY did not take proper care.
 
 {{< imgproc "07-1.jpg" "Woman in jungle holding binoculars" >}}
-
+<br />
 {{< imgproc "08-1.jpg" "Marcela, Katy, and Mikael smiling in Guatemala" >}}
 
 Next, we moved to Antigua, Guatemala. Photos taken February 25th and 26th, 2018. I was obviously struggling with focusing more but still had some fun with the cityscapes at night.
 
 {{< imgproc "09-1.jpg" "Blurry photo of street in Antigua, Guatemala" >}}
-
+<br />
 {{< imgproc "10-1.jpg" "Building at night in black and white" >}}
-
+<br />
 {{< imgproc "11-1.jpg" "" >}}
 
 My bad ass partners in crime, [Katy Weaver ](https://www.katyweaver.com/){:target=\"_blank\"}and [Marcela Pulido](https://www.mgpulido.co/){:target=\"_blank\"}.

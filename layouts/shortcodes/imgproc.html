@@ -4,7 +4,7 @@
 {{ $options := .Get 3 }}
 
 {{ if eq $command ""}}
-<img src="{{ $original }}" alt="{{ $alt }}" >
+<img src="{{ $original.RelPermalink }}" alt="{{ $alt }}" >
 {{ else }}
 {{ if eq $command "Fit"}}
 {{ .Scratch.Set "image" ($original.Fit $options) }}

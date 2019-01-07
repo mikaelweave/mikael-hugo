@@ -21,7 +21,7 @@ Favorite football team is the Vikings and favorite basketball team is the Blazer
 {{< imgproc "tesla1.jpg" "Mikael's adorable cat" >}}
 
 ## Professional Achievements
-- Designed and implemented "best in industry" Case Management software as judged by the National Committee for Quality Assurance.
+- Designed and implemented "best in industry" Case Management software as judged by the National Committee for Quality Assurance (NCQA).
 - Led team of 4 other developers to standardize developemnt process and deployments.
 - Championed Microsoft based Release Management migration to enable CI/CD for company.
 - Facilitated countless valuable relationships with users and vendors to strategically focus time on useful work.

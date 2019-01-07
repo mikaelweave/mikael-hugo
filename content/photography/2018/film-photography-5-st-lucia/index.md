@@ -39,21 +39,21 @@ Some discarded cocoa shells.
 We made friends!
 
 {{< imgproc "05.jpg" "" >}}
-
+<br />
 {{< imgproc "06.jpg" "" >}}
 
 Petit Piton in the front and Gros Piton in the back from our second Airbnb in Soufrière.
 
 {{< imgproc "07.jpg" "" >}}
-
+<br />
 {{< imgproc "08.jpg" "" >}}
 
 Back-focused photos from New Jerusalem Hot Springs.
 
 {{< imgproc "09.jpg" "" >}}
-
+<br />
 {{< imgproc "10.jpg" "" >}}
-
+<br />
 {{< imgproc "12.jpg" "" >}}
 
 Using up the film on the last day. I hoard it over trips and then use the rest so quickly.

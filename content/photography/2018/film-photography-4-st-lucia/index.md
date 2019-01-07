@@ -23,16 +23,17 @@ I traveled to St. Lucia for my fourth and fifth rolls of film! My fiancée [Katy
 Katy had an old Canon EOS 3 laying around so I picked it up to try out 35mm film after getting used to 120. I wanted to try something easier, cheaper, and more accessible to balance out the extreme hesitation I was finding I had with my Yashica.
 
 **Camera**: Canon EOS 3
+
 **Film**: Fujicolor PRO400H (35mm)
 
 {{< imgproc "36a.jpg" "" >}}
-
+<br />
 {{< imgproc "35a.jpg" "" >}}
 
 Katy's clients were happy to let me take some shots of them above Soufrière with the two Pitons in the background. The town is known for the Pitons.
 
 {{< imgproc "34a.jpg" "" >}}
-
+<br />
 {{< imgproc "33a.jpg" "" >}}
 
 A rookery of cattle egrets in the middle of town.
@@ -42,7 +43,7 @@ A rookery of cattle egrets in the middle of town.
 Petit Piton is visible from town and hides Gros Piton.
 
 {{< imgproc "31a.jpg" "" >}}
-
+<br />
 {{< imgproc "30a.jpg" "" >}}
 
 The EOS 3 has a flash!
@@ -52,7 +53,7 @@ The EOS 3 has a flash!
 The view from our balcony from our first Airbnb.
 
 {{< imgproc "28a.jpg" "" >}}
-
+<br />
 {{< imgproc "27a.jpg" "" >}}
 
 Katy, keep your eyes open!
@@ -62,9 +63,9 @@ Katy, keep your eyes open!
 That's better.
 
 {{< imgproc "28a.jpg" "" >}}
-
+<br />
 {{< imgproc "25a.jpg" "" >}}
-
+<br />
 {{< imgproc "22a.jpg" "" >}}
 
 Pulp from a local plant turns red when squeezed.
@@ -90,7 +91,7 @@ One day I'll master timed photos...
 Katy insisted there be a photo of me.
 
 {{< imgproc "02a.jpg" "" >}}
-
+<br />
 {{< imgproc "03a.jpg" "" >}}
 
 St. Lucia was occupied by the French and English multiple times. There are these watchtowers and other military ruins around the island.
