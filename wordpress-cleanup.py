@@ -16,6 +16,7 @@ site_url = "mikaelstadden.com"
 
 import os
 import re
+from shutil import copyfile
 
 # Copy and cleanup files
 for filename in os.listdir(os.path.abspath(export_path + "/posts/")):
@@ -26,7 +27,7 @@ for filename in os.listdir(os.path.abspath(export_path + "/posts/")):
     title = "-".join(filename.split("-")[3:]).replace(".md", "")
 
     # Make the directory
-    new_folder_path=os.path.abspath(new_path + "/" + year + "/" + month + "/" + day + "/" + title + "/")
+    new_folder_path=os.path.abspath(new_path + "/" + year + "/" + title + "/")
     os.makedirs(new_folder_path, exist_ok=True)
 
     # Open pointer to new file path
@@ -45,13 +46,25 @@ for filename in os.listdir(os.path.abspath(export_path + "/posts/")):
     file_contents = file_contents.replace('https://www.' + site_url, '')
 
     # Remove DIVs - they are irrelevant here
-    pattern = re.compile(r"<div .*?>")
+    pattern = re.compile(r"<div.*?>")
     file_contents = re.sub(pattern, "", file_contents)
     file_contents = file_contents.replace("</div>", "")
 
+    # Copy images (only standard size) to same folder of md file
+    pattern = re.compile(r'<img class=".*?" src=".*?"')
+    img_refs = re.findall(pattern, file_contents)
+    for match in img_refs:
+        pattern = re.compile(r'src=".*?"')
+        src_ref = re.findall(pattern, match)[0].replace('src="', "")[:-1]
+        # Copy image
+        src_ref = src_ref.replace("/photography/", "")
+        copyfile(os.path.abspath(export_path + "/" + src_ref), os.path.abspath(new_folder_path + "/" + src_ref.replace("\\", "/").split('/')[-1]))
+
     # Fix image refs
-    pattern = re.compile(r"<img class=.* src=\"(.*)\" alt=\"(.*)\" width=\"([0-9]*)\" height=\"([0-9]*)\" srcset=\"(.*)\" sizes=\"(.*)\" />")
-    file_contents = re.sub(pattern, r'{{< imgproc "\1" "\2" >}}', file_contents)
+    def firstreffileonly(matchobj):
+        return '{{< imgproc "' + matchobj.group(1).replace("\\", "/").split('/')[-1] + '" "' + matchobj.group(2) + '" >}}'
+    pattern = re.compile(r'<img class=".*" src="(.*)" alt="(.*)" width="([0-9]*)" height="([0-9]*)" srcset="(.*)" sizes="(.*)" />')
+    file_contents = re.sub(pattern, firstreffileonly, file_contents)
 
     # Remove styles
     pattern = re.compile(r' style=".*?"')
@@ -68,13 +81,21 @@ for filename in os.listdir(os.path.abspath(export_path + "/posts/")):
     file_contents = file_contents.replace("<span >", "")
     file_contents = file_contents.replace("</span>", "")
 
+    # Remove p
+    file_contents = file_contents.replace("<p>", "")
+    file_contents = file_contents.replace("</p>", "")
+
     # General cleanup
     file_contents = file_contents.replace('&#8217;', "'") # apostrophe
     file_contents = file_contents.replace('&#8211;', "–") # en dash
     file_contents = file_contents.replace('&nbsp;', "") # non-breaking space
+    file_contents = file_contents.replace('&#8230;', "...") # ELLIPSIS
     pattern = re.compile(r"<b>(.*)</b>") # bold
     file_contents = re.sub(pattern, r"**\1**", file_contents)
-    pattern = re.compile(r"\n +([A-Za-z{*\[])") # lines shouldn't start with space
+    pattern = re.compile(r"<strong>(.*?)</strong>") # bold
+    file_contents = re.sub(pattern, r"**\1**", file_contents)
+    file_contents = file_contents.replace('<br />', '\n') # line break
+    pattern = re.compile(r"\n +([A-Za-z{\*\[])") # lines shouldn't start with space
     file_contents = re.sub(pattern, r"\1", file_contents)
     pattern = re.compile(r"\n\n[\n]+") # normalize newline
     file_contents = re.sub(pattern, "\n\n", file_contents)
