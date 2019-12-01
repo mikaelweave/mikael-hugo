@@ -1,1 +1,37 @@
-<!-- Insert any site-wide javascript here -->
+<script src="/js/headroom.min.js"></script>
+<script>
+    /* Handle the mobile navbar link toggle */
+    function toggleNavbar() {
+        var x = document.getElementById("navbar-toggle-links");
+        var y = document.getElementById("navbar-mobile");
+        if (x.style.display === "flex") {
+            x.style.display = "none";
+            y.classList.remove("show-menu");
+            document.body.classList.remove("lock-scroll");
+        } else {
+            x.style.display = "flex";
+            document.body.classList.add("lock-scroll");
+            y.classList.add("show-menu");
+        }
+    }
+
+    // grab an element
+    var navbarMobile = document.getElementById("navbar-mobile");
+    var navbarDesktop = document.getElementById("navbar-desktop");
+    // construct an instance of Headroom, passing the element
+    var headroomMobile  = new Headroom(navbarMobile, {
+        "tolerance" : {
+            up : 30,
+            down : 2
+        }
+    });
+    var headroomDesktop  = new Headroom(navbarDesktop, {
+        "tolerance" : {
+            up : 15,
+            down : 2
+        }
+    });
+    // initialise
+    headroomMobile.init(); 
+    headroomDesktop.init(); 
+</script>
