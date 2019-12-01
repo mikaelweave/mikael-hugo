@@ -1,2 +1,2 @@
-# mikaelstadden-hugo
-Hugo website for mikaelstadden.com
+# mikael-hugo
+Hugo website for mikael.dev

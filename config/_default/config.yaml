@@ -1,0 +1,63 @@
+baseURL: https://www.mikael.dev/
+srcsetFileName: data/srcsets.json
+title: Mikael Weaver
+languagecode: en
+pluralizelisttitles: false
+paginate: 20
+
+params:
+  img_sizes: [480, 768, 1200, 1400, 1700, 2000, 2436]
+  srcset_img_prefix: https://mikaeldevsite.blob.core.windows.net/
+  author: Mikael Weaver
+  info: Software Engineer
+  description:  Mikael Weaver's personal website
+  keywords:  blog,developer,personal
+  avatarurl:  img/Mikael-0233-zoomed.jpg
+
+  favicon_32:  /img/favicon-32x32.png
+  favicon_16:  /img/favicon-16x16.png
+
+  hidecredits:  false
+  hidecopyright:  false
+
+  rtl:  false
+
+  math:  true
+  custom_css:  ["css/custom.css"]
+  social:
+  - name: "Github"
+    icon:  "fab fa-github fa-2x"
+    weight:  1
+    url:  "https://github.com/mikaelweave/"
+  - name:  "Twitter"
+    icon:  "fab fa-twitter fa-2x"
+    weight:  3
+    url:  "https://twitter.com/mikaelweave/"
+  - name: "Instagram"
+    name:  "Instagram"
+    icon:  "fab fa-instagram fa-2x"
+    weight:  3
+    url:  "https://instagram.com/mikaelweave/"
+menu:
+  main:
+    - name:  "Blog"
+      weight:  1
+      url :  "/blog/"
+    - name:  "Photography"
+      weight:  1
+      url :  "/photography/"
+    - name:  "About"
+      weight:  2
+      url:  "/about/"
+    - name:  "Contact"
+      weight:  2
+      url:  "/contact/"
+relativeURLs: false
+title: mikael.dev
+blackfriday:
+  extensions:
+  - hardLineBreak
+  - noEmptyLineBeforeBlock
+taxonomies:
+  category: categories
+  tag: tag

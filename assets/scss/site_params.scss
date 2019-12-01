@@ -1,0 +1,186 @@
+/*********************************************************
+FONTS
+**********************************************************/
+
+$headerFont: 'Tahoma', sans-serif;
+$menuFont: 'arial', sans-serif;
+$textFont: 'arial', sans-serif;
+
+// Regular is 400
+$headerFontWeight: 700;
+
+/*********************************************************
+SCREEN SIZES
+**********************************************************/
+
+// THESE ARE ALSO IN THE config.yaml
+$mobileNavHeight: 150px;
+$desktopNavHeight: 220px;
+
+$maxSiteWidth: 2000px;
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Site size helpers - (css defaults mobile)
+// Small devices
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+ }
+ 
+ // Medium devices
+ @mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+ }
+ 
+ // Large devices
+ @mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+ }
+ 
+ // Extra large devices
+ @mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+ }
+
+ // Abovr max screen width for size
+ @mixin max {
+    @media (min-width: #{$maxSiteWidth}) {
+        @content;
+    }
+ }
+
+
+/*********************************************************
+COLORS
+**********************************************************/
+$tan: #e3ded1;
+$salmon: #cf8d77;
+$orange: #df933b;
+$brown: #95663a;
+$forest: #2e342a;
+$dark-teal: #1a3030;
+$foam-green: #778b76;
+$mustard: #d9a432;
+
+// Neutrals
+$translucent-black: rgba(0,0,0,0.8);
+$translucent-white: rgba(255, 255, 255, 0.8);
+$gray: gray;
+$lightgray: lightgray;
+$black: black;
+$white: white;
+
+
+// Color Fill and BG Helpers
+.tan-fill {
+    fill: $tan;
+}
+.tan-bg {
+    background: $tan;
+}
+.salmon-fill {
+    fill: $salmon;
+}
+.salmon-bg {
+    background: $salmon;
+}
+.orange-fill {
+    fill: $orange;
+}
+.orange-bg {
+    background: $orange;
+}
+.brown-fill {
+    fill: $brown;
+}
+.brown-bg {
+    background: $brown;
+}
+.forest-fill {
+    fill: $forest;
+}
+.forest-bg {
+    background: $forest;
+}
+.dark-teal-fill {
+    fill: $dark-teal;
+}
+.dark-teal-bg {
+    background: $dark-teal;
+}
+.foam-green-fill {
+    fill: $foam-green;
+}
+.foam-green-bg {
+    background: $foam-green;
+}
+.mustard-bg {
+    background: $mustard;
+}
+.mustard-fill {
+    fill: $mustard;
+}
+
+// Neutral Fill and BG Helpers
+.lightgray-fill {
+    fill: $lightgray
+}
+.lightgray-bg {
+    background: $lightgray
+}
+.black-fill {
+    fill: $black;
+}
+.black-gr {
+    background: $brown;
+}
+.white-fill {
+    fill: $white;
+}
+.white-bg {
+    background: $white;
+}
+
+// Text Helpers
+.white-color {
+    color: $white;
+}
+.salmon-color {
+    color: $salmon;
+}
+.orange-color {
+    color: $orange;
+}
+.brown-color {
+    color: $brown;
+}
+.forest-color {
+    color: $forest;
+}
+.dark-teal-color {
+    color: $dark-teal;
+}
+.foam-green-color {
+    color: $foam-green;
+}
+.mustard-color {
+    color: $mustard;
+}

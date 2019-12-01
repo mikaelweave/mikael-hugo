@@ -1,0 +1,42 @@
+{{/* 
+<!-- 
+    FUNCTION PAGE
+
+    Color DIVs and TEXT
+--> 
+*/}}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "Content" .input }}
+{{ $ctx := .ctx }}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "Content" .input }}
+
+{{ $headers := (($scratch.Get "Content") | findRE "<h[0-9][^>]*>[^<]*</h[0-9]>" ) }}
+{{/* <!-- Add color to headers via site params--> */}}
+{{ if isset $ctx.Site.Params "header_colors" }}
+    {{ $i := 0 }}
+    {{ range $headers }}
+            {{ $header := . }}
+            {{ $color := index $ctx.Site.Params.header_colors (mod $i (len $ctx.Site.Params.header_colors)) }}
+            {{ $replace := printf "%s class=\"%s-color\" %s" (substr $header 0 3) $color (substr $header 4) }}
+            {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) $header $replace) }}
+            {{ $i = add $i 1 }}
+    {{ end }}
+{{ end }}
+
+{{/* <!-- Add color to headers -->*/}}
+{{ if isset $ctx.Params "header_color" }}
+    {{ range $headers }}
+        {{ $header := . }}
+        {{ range $ctx.Params.header_color }}
+            {{ if  (in $header .title) }}
+                {{ $replace := printf "%s class=\"%s-color\" %s" (substr $header 0 3) .color (substr $header 4) }}
+                {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) $header $replace) }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ safeHTML ($scratch.Get "Content") }}

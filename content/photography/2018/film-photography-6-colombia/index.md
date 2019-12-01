@@ -22,114 +22,114 @@ While I wanted to bring my medium format camera, we only carried our luggage on 
 
 CARTAGENA
 
-{{< imgproc "1.jpg" "" >}}
+![](1.jpg)
 
 We started out in Cartagena! The touristy section is a beautiful, colonial inspired walled city.
 
-{{< imgproc "2.jpg" "" >}}
+![](2.jpg)
 <br />
-{{< imgproc "3.jpg" "" >}}
+![](3.jpg)
 <br />
-{{< imgproc "4.jpg" "" >}}
+![](4.jpg)
 
 The whole area is colorful like this!
 
-{{< imgproc "5.jpg" "" >}}
+![](5.jpg)
 
 MINCA
 
-{{< imgproc "6.jpg" "" >}}
+![](6.jpg)
 
 Next we went up to Minca for some bird watching. The Sierra Nevada mountain area has over 1/4 of the endemic birds of Colombia.
 
-{{< imgproc "7.jpg" "" >}}
+![](7.jpg)
 <br />
-{{< imgproc "8.jpg" "" >}}
+![](8.jpg)
 <br />
-{{< imgproc "9.jpg" "" >}}
+![](9.jpg)
 
 I became obsessed with trying to capture a humming bird on film mainly because Katy was trying out her new Sony cameras on birds.
 
-{{< imgproc "10-1.jpg" "" >}}
+![](10-1.jpg)
 <br />
-{{< imgproc "11-1.jpg" "" >}}
+![](11-1.jpg)
 
 Katy's aunt and uncle loaned us this book for reference on our trip. Although we carried on all our luggage, this made the cut and was worth it's weight in gold (until we found a new book in Cali).
 
-{{< imgproc "12-1.jpg" "" >}}
+![](12-1.jpg)
 <br />
-{{< imgproc "13.jpg" "" >}}
+![](13.jpg)
 
 Club Colombia was a great, local cheap beer.
 
-{{< imgproc "14.jpg" "" >}}
+![](14.jpg)
 <br />
-{{< imgproc "15.jpg" "" >}}
+![](15.jpg)
 
 The textures through the fence looked better in person&#8230;
 
-{{< imgproc "16.jpg" "" >}}
+![](16.jpg)
 
 Memorized by the fog. 😍
 
-{{< imgproc "17.jpg" "" >}}
+![](17.jpg)
 
 CALI
 
-{{< imgproc "18.jpg" "" >}}
+![](18.jpg)
 
 Cleaned up for Cali! We love going from bird watching to nice, city scenes.
 
-{{< imgproc "19.jpg" "" >}}
+![](19.jpg)
 <br />
-{{< imgproc "20.jpg" "" >}}
+![](20.jpg)
 <br />
-{{< imgproc "21.jpg" "" >}}
+![](21.jpg)
 
 We went to the Modern Art museum in Cali. This was taken outside.
 
-{{< imgproc "22.jpg" "" >}}
+![](22.jpg)
 <br />
-{{< imgproc "23.jpg" "" >}}
+![](23.jpg)
 <br />
-{{< imgproc "24.jpg" "" >}}
+![](24.jpg)
 
 We stopped by a place called Nora's with humming bird and tanager feeders. Reminder – all these were taken with a 40mm. This is how close I were to them.
 
-{{< imgproc "25.jpg" "" >}}
+![](25.jpg)
 
 The Afga has an interesting effect with the brilliant reds on the feeders.
 
-{{< imgproc "26.jpg" "" >}}
+![](26.jpg)
 <br />
-{{< imgproc "27.jpg" "" >}}
+![](27.jpg)
 <br />
-{{< imgproc "28.jpg" "" >}}
+![](28.jpg)
 
 Creeping on Katy in the jungle.
 
-{{< imgproc "29.jpg" "" >}}
+![](29.jpg)
 <br />
-{{< imgproc "30.jpg" "" >}}
+![](30.jpg)
 
 We asked our guide to take a photo. In the future I'll focus and leave it on manual.
 
-{{< imgproc "31.jpg" "" >}}
+![](31.jpg)
 
 BUGA
 
-{{< imgproc "32.jpg" "" >}}
+![](32.jpg)
 
 After one night in Buga, we went to Laguna El Sonso. There was lichen hanging from trees EVERYWHERE!!!
 
-{{< imgproc "33.jpg" "" >}}
+![](33.jpg)
 
 The Renault Duster, one of my favorite cars, was out transport for 8 days. I had to take a photo!
 
-{{< imgproc "34.jpg" "" >}}
+![](34.jpg)
 <br />
-{{< imgproc "35.jpg" "" >}}
+![](35.jpg)
 
 Dreamy lichen shot. For the second one, I tried to hold some lichen in front of the camera.
 
-{{< imgproc "36.jpg" "" >}}
+![](36.jpg)

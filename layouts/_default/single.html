@@ -1,0 +1,72 @@
+{{ define "title" }}
+  {{ .Title }} · {{ .Site.Title }}
+{{ end }}
+
+{{ define "content" }}
+  <section class="container page">
+    <article>
+      <header class="center">
+        {{/* <!-- Ensure featured image is formatted correctly --> */}}
+        {{ if isset .Params "featured_image" }}
+                {{ $featuredImageUrl := (partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image)) }}
+                {{ partial "function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $featuredImageUrl .Title )) }}
+        {{ end }}
+
+        {{ $showTitle := index .Params "show_title" | default "True" }}
+        {{ $titleColor := index .Params "show_title" | default "True" }}
+        {{ $titleText := index .Params "page_title" | default .Title}}
+
+        {{ if $showTitle }}
+                {{ if isset .Params "title_color" }}
+                    <h1 class="{{ .Params.title_color }}-color">{{ $titleText }}</h1>
+                {{ else if isset .Site.Params "title_color"}}
+                    <h1 class="{{ .Site.Params.title_color }}-color">{{ $titleText }}</h1>
+                {{ else }}
+                    <h1>{{ $titleText }}</h1>
+                {{ end }}
+        {{ end }}
+
+        {{ if and (isset .Params "table_of_contents") (.Params.table_of_contents) }}
+            {{ if isset .Params "toc_headings_to_ignore" }}
+                {{- partial "table-of-contents.html" (dict "ctx" . "headings_to_ignore" .Params.toc_headings_to_ignore) -}}
+            {{ else }}
+                {{- partial "table-of-contents.html" (dict "ctx" .) -}}
+            {{ end }}
+        {{ end }}
+      </header>
+      <div class="container center page">
+            {{ $content := .Content }}
+            {{ $content = replace $content "\n" "<br>" | safeHTML }}
+            {{ $content = partial "process_divs.html" (dict "ctx" . "input" $content) }}
+            {{ $content = partial "function_color.html" (dict "ctx" . "input" $content) }}
+            {{ $content = partial "function_wrap_imgs.html" (dict "ctx" . "input" $content "removeSpacing" "true") }}
+            {{ $content = partial "function_local_imgs.html" (dict "ctx" . "input" $content) }}
+            {{ $content = partial "function_add_srcset.html" (dict "ctx" . "input" $content) }}
+            {{ $content }}
+
+            {{ if and (isset .Params "num_blog_previews") (isset .Params "blog_preview_category") }}
+                <div class="blog-preview">
+                    <h2 class="section-title"> {{ index .Params "blob_preview_title" }}</h2>
+                    <section id="menu">
+                    <ul>
+                        {{ $scratch := newScratch }}
+                        {{ $scratch.Set "i" 0 }}
+                        {{ range first .Params.num_blog_previews (index .Site.Taxonomies.categories  (index .Params "blog_preview_category")) }}
+                                {{ if modBool ( $scratch.Get "i" ) 2 }}
+                                    {{/* <!-- https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01 -->*/}}
+                                    <div class="row">
+                                {{ end }}
+                                {{ $scratch.Set "i" (add ($scratch.Get "i" ) 1) }}
+                                {{ partial "blog_preview_square.html" . }}
+                                {{ if modBool ($scratch.Get "i" ) 2 }}
+                                    </div>
+                                {{ end }}
+                            {{ end }}
+                    </ul>
+                </section>
+            </div>
+          {{ end }}
+      </div>
+    </article>
+  </section>
+{{ end }}

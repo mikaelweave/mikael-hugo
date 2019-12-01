@@ -1,18 +1,10 @@
 ---
 title: 'Film Photography #1 – Cascade Mountains & Oregon Coast'
-author: Mikael Stadden
+author: Mikael Weaver
 type: post
 date: 2018-04-30T23:32:00+00:00
 url: /2018/04/30/film-photography-roll-1-bronica-etrsi-400tx/
 featured_image: 01-2.jpg
-blogger_blog:
-  - mikaelsnavy.blogspot.com
-blogger_author:
-  - Mikael Stadden
-blogger_permalink:
-  - /2018/04/film-photography-roll-1-bronica-etrsi.html
-blogger_internal:
-  - /feeds/3632865599668819031/posts/default/7854610062913883157
 categories:
   - Bronica ETRSi
   - Medium Format
@@ -30,51 +22,51 @@ Here is the first shot I took with the camera with help from James on January 6t
 **Camera**: Bronica ETRSi
 **Film**: 400TX (120)
 
-{{< imgproc "01-2.jpg" "Looking over the bridge on opal creek" >}}
+![Looking over the bridge on opal creek](01-2.jpg)
 
 Next I decided to venture off and try some photos on my own. The forest was so dark I adjusted the shutter speed SUPER low on some of the shots to compensate and it shows.
 
-{{< imgproc "02-2.jpg" "Photo of water on ground at Opal Creek" >}}
+![Photo of water on ground at Opal Creek](02-2.jpg)
 <br />
-{{< imgproc "03-2.jpg" "Photo of ferns taken at low light." >}}
+![Photo of ferns taken at low light.](03-2.jpg)
 <br />
-{{< imgproc "04-2.jpg" "Blurry photo of moss and water at low light" >}}
+![Blurry photo of moss and water at low light](04-2.jpg)
 
 Here is the money shot – the photo Blue Moon wanted to use for their social media account. My friend Kyle wanted to dip his face into the creek. Mind you, it was only barely above freezing outsize and the creek was crisp. I decided to try to capture this moment on film. I myself was precariously on the edge of the creek and set the camera on a rock, set the aperture / shutter speed to a guess, and took the photo from my hip. I got very lucky.
 
-{{< imgproc "05-2.jpg" "Man with head in ice cold creek" >}}
+![Man with head in ice cold creek](05-2.jpg)
 
 I love this next shot from January 7th. This is the famous James with his Hasselblad. I took WAY too long to take this shot (probably about 3 minutes).
 
-{{< imgproc "06-2.jpg" "James O'Shea outside Opal Creek on mountains" >}}
+![James O'Shea outside Opal Creek on mountains](06-2.jpg)
 <br />
-{{< imgproc "07-2.jpg" "Ridge with trees in black and white" >}}
+![Ridge with trees in black and white](07-2.jpg)
 
 I continued this roll on January 13th, 2018 at Ecola State park. All these photos were taken near the end of the day.
 
-{{< imgproc "08-2.jpg" "Blurry beach at Cannon Beach" >}}
+![Blurry beach at Cannon Beach](08-2.jpg)
 
 This portrait of myself and [Katy Weaver](https://www.katyweaver.com/){:target=\"_blank\"} was taken by [Luke Wenker Photography](http://www.lukewenkerphotography.com/){:target=\"_blank\"}.
 
-{{< imgproc "09-2.jpg" "Katy and Mikael at Ecola State Park" >}}
+![Katy and Mikael at Ecola State Park](09-2.jpg)
 
 Here is a shot of Luke himself.
 
-{{< imgproc "10-2.jpg" "Man next to creek on beach in forest" >}}
+![Man next to creek on beach in forest](10-2.jpg)
 <br />
-{{< imgproc "11-2.jpg" "Indian Beach ecola state park at dusk black and white" >}}
+![Indian Beach ecola state park at dusk black and white](11-2.jpg)
 
 I finished off this role South of Lincoln City on  February 17th, 2018.
 
-{{< imgproc "12-2.jpg" "dock in bay with wood and seagulls" >}}
+![dock in bay with wood and seagulls](12-2.jpg)
 <br />
-{{< imgproc "13.jpg" "lovers james and melissa at the beach in black and white" >}}
+![lovers james and melissa at the beach in black and white](13.jpg)
 
 A lot is going on here, but it really captured the crazy fun we were having between rain showers.
 
-{{< imgproc "14.jpg" "people taking pictures and pointing" >}}
+![people taking pictures and pointing](14.jpg)
 <br />
-{{< imgproc "15.jpg" "Man who is higher than he looks with unsuspecting fiancee" >}}
+![Man who is higher than he looks with unsuspecting fiancee](15.jpg)
 
 Thanks for reading!
 

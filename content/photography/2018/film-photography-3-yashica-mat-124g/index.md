@@ -1,18 +1,10 @@
 ---
 title: 'Film Photography #3 – Antigua, Guatemala'
-author: Mikael Stadden
+author: Mikael Weaver
 type: post
 date: 2018-04-30T23:43:00+00:00
 url: /2018/04/30/film-photography-3-yashica-mat-124g/
 featured_image: 02.jpg
-blogger_blog:
-  - mikaelsnavy.blogspot.com
-blogger_author:
-  - Mikael Stadden
-blogger_permalink:
-  - /2018/04/film-photography-3-yashica-mat-124g.html
-blogger_internal:
-  - /feeds/3632865599668819031/posts/default/8343814303895411755
 categories:
   - Medium Format
   - Travel
@@ -27,38 +19,38 @@ I am ultimately  disappointed with this roll but it was still a great learning 
 
 **Film**: Ektar 100 (120)
 
-{{< imgproc "01.jpg" "" >}}￼
+![](01.jpg)￼
 <br />
-{{< imgproc "02.jpg" "" >}}
+![](02.jpg)
 <br />
-{{< imgproc "03.jpg" "" >}}
+![](03.jpg)
 <br />
-{{< imgproc "04.jpg" "" >}}
+![](04.jpg)
 
 Testing out the timer!
 
-{{< imgproc "05.jpg" "" >}}
+![](05.jpg)
 
 Churches in Central America are not this blurry generally. 😂
 
-{{< imgproc "06.jpg" "" >}}
+![](06.jpg)
 
 This would have been SO perfect if I lined it up beter and focused correctly. Cars were distracting us in the street.
 
-{{< imgproc "07.jpg" "" >}}
+![](07.jpg)
 
 Getting dark and blurry – I blame it on the alcohol.
 
-{{< imgproc "08.jpg" "" >}}
+![](08.jpg)
 <br />
-{{< imgproc "09.jpg" "" >}}
+![](09.jpg)
 <br />
-{{< imgproc "10.jpg" "" >}}
+![](10.jpg)
 <br />
-{{< imgproc "11.jpg" "" >}}
+![](11.jpg)
 
 Last shot was a timer shot on a rooftop brew pub just before we went home. Timer works, shot is just underexposed by about 6 clicks.
 
-{{< imgproc "12.jpg" "" >}}
+![](12.jpg)
 
 Thanks for reading!

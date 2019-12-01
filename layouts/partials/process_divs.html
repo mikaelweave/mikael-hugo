@@ -1,0 +1,29 @@
+{{/* 
+<!-- 
+    FUNCTION PAGE
+
+    Takes content and adds  img.html shortcode for responsive images
+--> 
+*/}}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "Content" .input }}
+{{ $ctx := .ctx }}
+
+<!-- Replace markdown links with imgproc shortcode where approperiate -->
+{{ $divs := findRE "<div[^>]*>.*?</div>" ($scratch.Get "Content")  }}
+{{ range $divs }}
+    {{ $header := findRE "<div[^>]*>" . }}
+        
+    {{ $content := substr . (len (index $header 0)) }}
+    {{ $content = replace $content "</div>" "" }}
+    {{ $content = $content | safeHTML | markdownify }}
+    {{ $newContent := $content  }}
+
+    {{ $replace := (printf "%s%s</div>" (index $header 0) $newContent) | safeHTML }}
+    {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) . $replace) }}
+{{ end }}
+
+{{ safeHTML ($scratch.Get "Content") }}
+
+

@@ -23,15 +23,15 @@ Microsoft has a technology called RemoteApp programs. It’s not documented very
 
 On my remote system, I installed RemoteApp Tool, opened it up, and added a new RemoteApp for Visual Studio (Preview, because I ride on the bleeding edge).
 
-{{< imgproc "2018-05-17-11_51_06-Clipboard.png" "RemoteApp Tool Screen Attempt 1" >}}
+![RemoteApp Tool Screen Attempt 1](2018-05-17-11_51_06-Clipboard.png)
 
 Now with the RemoteApp created, I clicked “Create Client Connection” to make a RDP file for my local computer. Leaving everything at the defaults, it spits out a RDP file!
 
-{{< imgproc "2018-05-17-12_00_06-spf-it-dev1366-Remote-Desktop-Connection.png" "Another RemoteApp Tool Screen" >}}
+![Another RemoteApp Tool Screen](2018-05-17-12_00_06-spf-it-dev1366-Remote-Desktop-Connection.png)
 
 After copying the RDP file to my local machine, I had Visual Studio running seamlessly next to all my local applications! Sweet!
 
-{{< imgproc "2018-05-17-12_04_26-OES.SVC-Microsoft-Visual-Studio-Preview-Administrator-Remote.png" "Visual Studio Running Remotely" >}}
+![Visual Studio Running Remotely](2018-05-17-12_04_26-OES.SVC-Microsoft-Visual-Studio-Preview-Administrator-Remote.png)
 
 I enjoyed my success until I tried to launch two instances of Visual Studio (one for our service solution, one for our web app) and got the following error:  “Another user is signed in. If you continue, they’ll be disconnected. Do you want to sign in anyway?”
 Crap, I guess I am still remoting into a Windows 10 machine which is only licensed for one RDP connection.
@@ -42,14 +42,14 @@ I noticed while playing around in the Visual Studio RemoteApp, when I debug my a
 
 What if I just made a RemoteApp to a specific explorer window with all my application shortcuts?
 
-{{< imgproc "2018-05-17-12_13_54-spf-it-dev1366-Remote-Desktop-Connection.png" "Another RemoteApp Tool Screen" >}}
+![Another RemoteApp Tool Screen](2018-05-17-12_13_54-spf-it-dev1366-Remote-Desktop-Connection.png)
 
 After generating the RDP file (just using the defaults for “Create Client Connection” in RemoteApp Tool) and copying it to my local machine, I now had a “launcher” to open multiple remote applications locally under one RemoteApp and this one RDP session.
 
-{{< imgproc "2018-05-17-12_19_53-Windows-PowerShell.png" "Explorer Running Remotely" >}}
+![Explorer Running Remotely](2018-05-17-12_19_53-Windows-PowerShell.png)
 
 Your local taskbar even shows you which windows are from the RemoteApp and which are local with an overlay.
 
-{{< imgproc "2018-05-17-12_22_21-.png" "Taskbar with Remote Icons" >}}
+![Taskbar with Remote Icons](2018-05-17-12_22_21-.png)
 
 I still have an occasional glitch (usually just connection issues), but I’m much happier developing on my remote VM this way.

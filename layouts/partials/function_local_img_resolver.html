@@ -1,0 +1,37 @@
+{{/* 
+<!-- 
+    FUNCTION PAGE
+
+    Takes a path for an image and resovle its full URL dependent on current location
+--> 
+*/}}
+
+{{/* <!-- Get input variables --> */}}
+{{ $ctx := .ctx }}
+{{ $imgRef := .input }}
+{{ $return := $imgRef }}
+{{ $dir := .ctx.File.Dir }}
+{{ $relDir := .ctx.RelPermalink }}
+
+{{ $localRef := $imgRef | printf "%s%s" (string $dir) }}
+{{ $staticRef := $imgRef | printf "static/%s" }}
+{{ $cloudRef := $imgRef | printf "%s%s" (string $relDir) }}
+
+{{/* <!-- Variables need to be renamed to make sense - but it's all working. --> */}}
+{{ if isset $ctx.Site.Data.srcsets $localRef }}
+    {{/* <!-- If file is already uploaded to Azure (and needs a local ref), use that. --> */}}
+    {{ $return = $localRef }}
+{{ else if isset $ctx.Site.Data.srcsets $imgRef }}
+    {{/* <!-- Image doesn't need changing --> */}}
+{{ else if and (fileExists $localRef) (not (eq hugo.Environment "production")) }}
+    {{/* <!-- If file exists next to image or in srcset file --> */}}
+    {{ $return = $cloudRef }}
+{{ else if and (fileExists $staticRef) (not (eq hugo.Environment "production")) }}
+    {{/* <!-- If file exists in static do nothing --> */}}
+{{ else if or (hasPrefix $imgRef "https://") (hasPrefix $imgRef "http://") }}
+    {{/* <!-- image is an external reference, do nothing --> */}}
+{{ else if eq hugo.Environment "production" }}
+    {{ errorf "Image %s not found in file %s" $imgRef $relDir }}
+{{ end }}
+
+{{ chomp (trim $return " \n") }}

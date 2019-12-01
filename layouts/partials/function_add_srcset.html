@@ -1,0 +1,27 @@
+{{/* 
+<!-- 
+    FUNCTION PAGE
+
+    Takes content and adds  img.html shortcode for responsive images
+--> 
+*/}}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "Content" .input }}
+{{ $ctx := .ctx }}
+
+<!-- Replace markdown links with imgproc shortcode where approperiate -->
+{{ $imgs := (($scratch.Get "Content") | findRE "<img src=\"[^\"]*\" alt=\"[^\"]*\" ?/?>" ) }}
+{{ range $imgs }}
+    {{ $src := (strings.TrimRight "\"" (substr (index (findRE "src=\"[^\"]*\"" .) 0) 5)) }}
+    {{/* <!-- #FIXME - Figure out why this chomp/trim is required :| -->*/}}
+    {{ $scratch.SetInMap "img" "src" (chomp (trim $src " \n")) }}
+
+    {{ $alt := (strings.TrimRight "\"" (substr (index (findRE "alt=\"[^\"]*\"" .) 0) 5)) }}
+    {{ $scratch.SetInMap "img" "alt" $alt }}
+
+    {{ $replace := partial "img.html" (dict "img" ($scratch.Get "img") "lazy" true "ctx" $ctx ) }}
+    {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) . $replace) }}
+{{ end }}
+
+{{ safeHTML ($scratch.Get "Content") }}

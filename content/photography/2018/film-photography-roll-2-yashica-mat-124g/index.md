@@ -1,18 +1,10 @@
 ---
 title: 'Film Photography #2 – Oregon Coast & Guatemala'
-author: Mikael Stadden
+author: Mikael Weaver
 type: post
 date: 2018-04-30T23:42:00+00:00
 url: /2018/04/30/film-photography-roll-2-yashica-mat-124g/
 featured_image: 01-1.jpg
-blogger_blog:
-  - mikaelsnavy.blogspot.com
-blogger_author:
-  - Mikael Stadden
-blogger_permalink:
-  - /2018/04/film-photography-roll-2-yashica-mat-124g.html
-blogger_internal:
-  - /feeds/3632865599668819031/posts/default/6322567756904895890
 categories:
   - Medium Format
   - Oregon
@@ -37,41 +29,41 @@ The first things I noticed when I got this roll back is the vertical lines throu
 
 Here is James O'Shea with his Rolleiflex.
 
-{{< imgproc "01-1.jpg" "man with very old camera" >}}
+![man with very old camera](01-1.jpg)
 
 My friends, Kyle and Jamie recently got engaged so they got the A-list treatment this weekend (including photography from 4 cameras).
 
-{{< imgproc "02-1.jpg" "couple on beach in black and white hipster photo" >}}
+![couple on beach in black and white hipster photo](02-1.jpg)
 
 SUPER blurry from playing around indoors. It took me a while to get used to the focusing mechanism.
 
-{{< imgproc "03-1.jpg" "man in house with glass of whiskey looking annoyed" >}}
+![man in house with glass of whiskey looking annoyed](03-1.jpg)
 
 Here is the first photo from Guatemala from the [Utopia Eco Hotel ](https://www.utopiaecohotel.com/)near Lanquin. The common eating / bar / hangout area was a HUGE balcony looking directly into the canopy. Photos taken on February 26th – 28th, 2018.
 
-{{< imgproc "04-1.jpg" "emergent tree poking out of forest in cloudy rainforest" >}}
+![emergent tree poking out of forest in cloudy rainforest](04-1.jpg)
 <br />
-{{< imgproc "05-1.jpg" "woman with binoculars bird watching in black and white " >}}
+![woman with binoculars bird watching in black and white ](05-1.jpg)
 <br />
-{{< imgproc "06-1.jpg" "Two women near a river in black and white photo" >}}
+![Two women near a river in black and white photo](06-1.jpg)
 
 Trouble in paradise – I got lazy with focusing. With all the autofocusing and smartphone technology I have experienced in my life, I DEFINITELY did not take proper care.
 
-{{< imgproc "07-1.jpg" "Woman in jungle holding binoculars" >}}
+![Woman in jungle holding binoculars](07-1.jpg)
 <br />
-{{< imgproc "08-1.jpg" "Marcela, Katy, and Mikael smiling in Guatemala" >}}
+![Marcela, Katy, and Mikael smiling in Guatemala](08-1.jpg)
 
 Next, we moved to Antigua, Guatemala. Photos taken February 25th and 26th, 2018. I was obviously struggling with focusing more but still had some fun with the cityscapes at night.
 
-{{< imgproc "09-1.jpg" "Blurry photo of street in Antigua, Guatemala" >}}
+![Blurry photo of street in Antigua, Guatemala](09-1.jpg)
 <br />
-{{< imgproc "10-1.jpg" "Building at night in black and white" >}}
+![Building at night in black and white](10-1.jpg)
 <br />
-{{< imgproc "11-1.jpg" "" >}}
+![](11-1.jpg)
 
 My bad ass partners in crime, [Katy Weaver ](https://www.katyweaver.com/){:target=\"_blank\"}and [Marcela Pulido](https://www.mgpulido.co/){:target=\"_blank\"}.
 
-{{< imgproc "12-1.jpg" "" >}}
+![](12-1.jpg)
 
 Thanks for reading!
 

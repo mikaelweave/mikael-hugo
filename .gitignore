@@ -1,2 +1,35 @@
-public/
-resources/
+# Images which are pushed directly to Azure
+*.jpg
+*.JPG
+*.JPEG
+*.jpeg
+*.png
+*.gif
+*.webp
+*.jp2
+
+# Hugo dirs
+resources/*
+public/*
+
+# Node
+node_modules/*
+
+# Secrets
+*.env
+
+# Python
+Pipfile
+Pipfile.lock
+__pycache__/*
+scripts/__pycache__/*
+
+# Image data file (imgs not managed by git)
+data/srcsets.json
+
+# Mac 
+*.DS_Store
+*.afpDeleted*
+
+# Typora
+*._* 

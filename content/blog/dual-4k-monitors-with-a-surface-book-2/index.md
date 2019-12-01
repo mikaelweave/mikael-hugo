@@ -11,7 +11,7 @@ I recently got a new job at Microsoft (yay!) and with that came a new computer t
 
 However…
 
-{{< imgproc "surface_book_with_dock_trouble.png" "Surface Book with Dock is Trouble" "Resize" "660x" >}}
+![Surface Book with Dock is Trouble](surface_book_with_dock_trouble.png)
 
 Needless to say, my Surface Book 2 didn’t drive my 4K monitors out of the box. I was connecting with Mini-DiplayPort to DisplayPort cables and the best resolutions I could get out of either monitor was 2560×1600 pixels (even with the laptop screen off).  What’s going on here?!
 
@@ -21,14 +21,14 @@ According to this [Microsoft site](https://support.microsoft.com/en-us/help/4039
 
 But THERE IS HOPE.
 
-{{< imgproc "i_can_fix_that.gif" "I can fix that Gif" >}}
+![I can fix that Gif](i_can_fix_that.gif)
 
 So the “best” fix for image quality (i.e. if you’re wanting 60Hz refresh rate) is to simply get a USB based 4K display adapter to augment the Surface Dock (something like [this](https://www.amazon.com/dp/B00NI96S2O/ref=asc_df_B00NI96S2O1527937200000?tag=shopz0d-20&ascsubtag=shopzilla_mp_1108-20&15331094461122356976610080301008005&creative=395261&creativeASIN=B00NI96S2O&linkCode=asn)). If you can live with 30Hz refresh rate you can “force” that display mode. Here’s how:
 
 1. Download the Intel Display Management software from [here](https://www.intel.com/content/www/us/en/support/products/126789/graphics-drivers/graphics-for-8th-generation-intel-processors/intel-uhd-graphics-620.html). Install it.
 2. From the Intel Graphics Control Panel, navigate to “Display -> Custom Resolutions”.
 3. For each monitor, enter the optimal resolution with a 30Hz refresh rate (like this).
-{{< imgproc "2018-08-01-00_47_06-Settings-1.png" "Intel Management Software Settings" "Resize" "538x" >}}
+![Intel Management Software Settings](2018-08-01-00_47_06-Settings-1.png)
 4. Reboot your computer.
 5. Go back into the Intel Management Software and change your resolution to your newly defined custom resolution for each monitor (it’s under general settings).
 
@@ -36,6 +36,6 @@ BOOM. Just like that you can rock dual 4K monitors with the Surface Brick Dock. 
 
 I’m calling it a day, I hope my #winning can help you out.
 
-{{< imgproc "winning.gif" "Winning Gif" >}}
+![Winning Gif](winning.gif)
 
 (P.S. [This site](https://dancharblog.wordpress.com/2014/12/20/multi-monitor-docking-with-surface-pro-3-and-lenovo-yoga-3-pro/) was a godsend through my plight. Kudos)

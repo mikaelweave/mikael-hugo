@@ -1,0 +1,29 @@
+{
+  "name": "mikael.dev",
+  "version": "1.0.0",
+  "description": "Statically generated website for Mikael Weaver's personal site.",
+  "dependencies": {
+    "autoprefixer": "^9.4.7",
+    "postcss-cli": "^6.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "preview-local": "hugo serve -D",
+    "pull-srcset": "python3 scripts/pull_srcsets_file.py",
+    "pull-images": "python3 scripts/pull_images.py",
+    "push-images": "python3 scripts/push_images.py",
+    "add-cloud-sizes": "python3 scripts/AzureImageSizer.py",
+    "ADVANCED - rebuilld-srcset": "python3 scripts/build_srcset_file.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikaelweave/mikael-hugo.git"
+  },
+  "keywords": [
+    "katyweaver",
+    "hugo"
+  ],
+  "author": "Mikael Weaver",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/mikaelweave/mikael-hugo#readme"
+}

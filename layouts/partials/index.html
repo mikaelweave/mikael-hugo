@@ -1,0 +1,92 @@
+{{ define "title" }}Portland Wedding Photographer · Katy Weaver Photography{{ end }}
+
+{{ define "style" }}
+        {{ $home_styles := resources.Get "scss/home.scss" | resources.ExecuteAsTemplate "homet.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $home_styles.Permalink }}" integrity="{{ $home_styles.Data.Integrity }}" media="screen">
+{{ end }}
+
+{{ define "meta" }}
+        {{ if isset .Params "meta_description" }}
+            <meta name="description" content="{{ .Params.meta_description}}">
+            <meta property="og:description" content="{{ .Params.meta_description }}">
+        {{ end }}
+
+        {{/* <!-- Facebook Metadata --> */}}
+        {{ if isset .Params "featured_image"}}
+            {{ $featured_image_url := chomp (trim ( partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image )) " \n") }}
+            <meta property="og:image" content="{{ chomp (trim (partial "optimizer_img.html" (dict "ctx" . "img" $featured_image_url )) " \n") }}">
+        {{ end }}
+
+        <meta property="og:title" content="{{ .Params.meta_description }}">
+        <meta property="og:url" content="{{ .Permalink }}">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_US">
+{{ end }}
+
+{{ define "content" }}
+
+<div class="banner triangle-container-desktop">
+  <div class="triangle-1-wrapper">
+      <svg class="mustard-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 100 0, 50 70 "/>
+      </svg>
+  </div>
+  <div class="triangle-3-wrapper">
+      <svg class="foam-green-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 100, 100 100, 100 0"/>
+      </svg>
+  </div>
+  <div class="triangle-4-wrapper">
+      <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 0 60, 100 60"/>
+      </svg>
+  </div>
+  <div class="triangle-6-wrapper">
+      <svg class="lightgray-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 100 0, 50 70 "/>
+      </svg>
+  </div>
+  <div class="triangle-8-wrapper">
+      <svg class="brown-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="50 15, 100 100, 0 100"/>
+      </svg>
+  </div>  
+  <div class="triangle-9-wrapper">
+      <svg class="tan-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 100 0, 50 70 "/>
+      </svg>
+  </div>
+  <div class="triangle-10-wrapper">
+      <svg class="brown-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="50 50, 80 100, 30 100"/>
+      </svg>
+  </div>
+  <div class="triangle-11-wrapper">
+      <svg class="orange-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0 , 0 100, 100 100"/>
+      </svg>
+  </div>
+  <div class="triangle-14-wrapper">
+      <svg class="foam-green-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 100, 100 100, 100 0 "/>
+      </svg>
+  </div>
+  <div class="triangle-15-wrapper">
+      <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 0 100, 100 100 "/>
+      </svg>
+  </div>
+  <div class="triangle-18-wrapper">
+      <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 0, 0 100, 100 100 "/>
+      </svg>
+  </div>
+  <div class="text-13">{{ with .Params.tagline_three }}{{ . | safeHTML }}{{ end }}</div>
+  <div class="triangle-12-wrapper">
+      <svg class="dark-teal-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+          <polygon points="0 100, 50 50, 100 100 "/>
+      </svg>
+  </div> 
+</div>
+
+{{ end }}

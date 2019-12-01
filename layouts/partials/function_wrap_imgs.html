@@ -1,0 +1,27 @@
+{{/* 
+    <!-- 
+        FUNCTION
+    
+        Wraps images in divs so they can not be added to paragraphs
+    --> 
+    */}}
+    
+    {{ $scratch := newScratch }}
+    {{ $scratch.Set "Content" .input }}
+    {{ $ctx := .ctx }}
+    {{ $removeSpacing := index . "removeSpacing" | default "false" }}
+    
+    {{/* <!-- Replace markdown links with imgproc shortcode where approperiate --> */}}
+    {{ $imgs := (($scratch.Get "Content") | findRE "<img src=\"[^\"]*\" alt=\"[^\"]*\" ?/?>" ) }}
+    {{ range $imgs }}
+        {{if eq $removeSpacing "true" }}
+                {{ $imgWithBreaks :=  (printf "%s<br /><br>" .) | safeHTML }}
+                {{ $replacement := printf "<div class=\"image-wrap\">%s</div>" . }}
+                {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) $imgWithBreaks $replacement) }}
+        {{ end }}
+
+        {{ $replace2 := printf "<div class=\"image-wrap\">%s</div>" . }}
+        {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) . $replace2) }}
+    {{ end }}
+
+    {{ safeHTML ($scratch.Get "Content") }}

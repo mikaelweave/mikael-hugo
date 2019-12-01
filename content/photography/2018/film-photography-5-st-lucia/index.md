@@ -1,18 +1,10 @@
 ---
 title: 'Film Photography #5 – St. Lucia'
-author: Mikael Stadden
+author: Mikael Weaver
 type: post
 date: 2018-06-13T03:30:00+00:00
 url: /2018/06/13/film-photography-5-st-lucia/
 featured_image: 01.jpg
-blogger_blog:
-  - mikaelsnavy.blogspot.com
-blogger_author:
-  - Mikael Stadden
-blogger_permalink:
-  - /2018/06/film-photography-5-st-lucia.html
-blogger_internal:
-  - /feeds/3632865599668819031/posts/default/7315229705496401241
 categories:
   - Medium Format
   - Travel
@@ -26,34 +18,34 @@ These shots were taken on 120 with my precious Yashica. It was my third roll thr
 **Camera:** Yashica Mat 124G
 **Film:** Kodak Portra 400 (120)
 
-{{< imgproc "02.jpg" "" >}}
+![](02.jpg)
 
 Katy's clients were happy to let me snap a couple photos.
 
-{{< imgproc "03.jpg" "" >}}
+![](03.jpg)
 
 Some discarded cocoa shells.
 
-{{< imgproc "04.jpg" "" >}}
+![](04.jpg)
 
 We made friends!
 
-{{< imgproc "05.jpg" "" >}}
+![](05.jpg)
 <br />
-{{< imgproc "06.jpg" "" >}}
+![](06.jpg)
 
 Petit Piton in the front and Gros Piton in the back from our second Airbnb in Soufrière.
 
-{{< imgproc "07.jpg" "" >}}
+![](07.jpg)
 <br />
-{{< imgproc "08.jpg" "" >}}
+![](08.jpg)
 
 Back-focused photos from New Jerusalem Hot Springs.
 
-{{< imgproc "09.jpg" "" >}}
+![](09.jpg)
 <br />
-{{< imgproc "10.jpg" "" >}}
+![](10.jpg)
 <br />
-{{< imgproc "12.jpg" "" >}}
+![](12.jpg)
 
 Using up the film on the last day. I hoard it over trips and then use the rest so quickly.
