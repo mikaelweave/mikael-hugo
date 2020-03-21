@@ -11,7 +11,8 @@
     "preview-local": "hugo serve -D",
     "pull-srcset": "python3 scripts/pull_srcsets_file.py",
     "pull-images": "python3 scripts/pull_images.py",
-    "push-images": "python3 scripts/push_images.py",
+    "push-changed-images": "python3 scripts/push_images.py",
+    "push-all-images": "python3 scripts/push_images.py True",
     "add-cloud-sizes": "python3 scripts/AzureImageSizer.py",
     "ADVANCED - rebuilld-srcset": "python3 scripts/build_srcset_file.py"
   },
