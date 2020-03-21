@@ -17,6 +17,9 @@
         {{ $general_styles := resources.Get "/scss/general.scss" | resources.ExecuteAsTemplate "generalt.scss" . | toCSS | postCSS | minify | fingerprint }}
         <link rel="stylesheet" href="{{ $general_styles.Permalink }}" integrity="{{ $general_styles.Data.Integrity }}" media="screen">
 
+        {{ $navbar_styles := resources.Get "scss/navbar.scss" | resources.ExecuteAsTemplate "navbart.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $navbar_styles.Permalink }}" integrity="{{ $navbar_styles.Data.Integrity }}" media="screen">
+
         {{ block "style" . }}{{ end }}
         
         {{ if eq hugo.Environment "production" }}
@@ -24,8 +27,7 @@
         {{ end }}
     </head>
     <body>
-        {{ partial "header_mobile.html" . }}
-        {{ partial "header_desktop.html" . }}
+        {{ partial "header.html" . }}
         <div class="nav-spacer"></div>
         
         <div class="container">
