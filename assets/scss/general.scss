@@ -45,3 +45,21 @@ a:hover {
     list-style-position: inside;
     margin: auto;
 }
+
+img {
+    max-width: 80vw;
+}
+
+///// TODO - these are to center blog pictures. Make it better!
+.thumbnail-post-content {
+    width: 100vw;
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+.feature-thumbnail-container {
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+////////////////

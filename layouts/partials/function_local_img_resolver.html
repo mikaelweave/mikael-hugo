@@ -13,25 +13,37 @@
 {{ $dir := .ctx.File.Dir }}
 {{ $relDir := .ctx.RelPermalink }}
 
-{{ $localRef := $imgRef | printf "%s%s" (string $dir) }}
+{{ $fileRef := $imgRef | printf "%s%s" (string $dir) }}
 {{ $staticRef := $imgRef | printf "static/%s" }}
-{{ $cloudRef := $imgRef | printf "%s%s" (string $relDir) }}
+{{ $pageRef := $imgRef | printf "%s%s" (string $relDir) }}
 
-{{/* <!-- Variables need to be renamed to make sense - but it's all working. --> */}}
-{{ if isset $ctx.Site.Data.srcsets $localRef }}
-    {{/* <!-- If file is already uploaded to Azure (and needs a local ref), use that. --> */}}
-    {{ $return = $localRef }}
-{{ else if isset $ctx.Site.Data.srcsets $imgRef }}
-    {{/* <!-- Image doesn't need changing --> */}}
-{{ else if and (fileExists $localRef) (not (eq hugo.Environment "production")) }}
-    {{/* <!-- If file exists next to image or in srcset file --> */}}
-    {{ $return = $cloudRef }}
-{{ else if and (fileExists $staticRef) (not (eq hugo.Environment "production")) }}
-    {{/* <!-- If file exists in static do nothing --> */}}
-{{ else if or (hasPrefix $imgRef "https://") (hasPrefix $imgRef "http://") }}
-    {{/* <!-- image is an external reference, do nothing --> */}}
-{{ else if eq hugo.Environment "production" }}
-    {{ errorf "Image %s not found in file %s" $imgRef $relDir }}
+{{/* <!-- Finds srcset in the page specific folder --> */}}
+{{ $srcSets := .ctx.Site.Data.img.srcsets }}
+{{ $pageSrcSetRef := .ctx.Site.Data }}
+{{ range (split .ctx.File.Dir "/") }}
+    {{ if isset $pageSrcSetRef "srcsets" }}
+        {{ $srcSets = merge $srcSets (index $pageSrcSetRef "srcsets") }}
+    {{ end }}
+    {{ if isset $pageSrcSetRef . }}
+        {{ $pageSrcSetRef = index  $pageSrcSetRef . }}
+    {{ end }}
+{{ end }}
+
+{{/* <!-- If image exists locally and we're not forcing a remote image then --> */}}
+{{/* <!--      return a ref where the page is rendered (img will be copied there in build --> */}}
+{{ if and (fileExists $fileRef) (not $ctx.Site.Params.force_remote_imgs) }}
+    {{ $return = $pageRef }}
+
+{{/* <!-- If image exists in static folder locally and we're not forcing a remote image then --> */}}
+{{/* <!--      return the static ref --> */}}
+{{ else if and (fileExists $staticRef) (not $ctx.Site.Params.force_remote_imgs) }}
+    {{ $return = $staticRef }}
+
+{{/* <!-- else file exists in our srcsets return srcset image ref --> */}}
+{{ else if (isset $srcSets $fileRef) }}
+    {{ $return = $fileRef }}
+
+{{/* <!-- If file is remote or not found do nothing --> */}}
 {{ end }}
 
 {{ chomp (trim $return " \n") }}

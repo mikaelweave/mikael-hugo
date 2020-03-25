@@ -1,6 +1,9 @@
 from azure.storage.blob import BlockBlobService, PublicAccess, baseblobservice
+from concurrent.futures import ThreadPoolExecutor
 import os, pathlib, re, asyncio, sys
 from git import Repo
+
+DOP = 16
 
 def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
     """
@@ -15,16 +18,11 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
         repo = Repo(os.getcwd())
         return repo.untracked_files + [o.b_path for o in repo.index.diff(None)]
 
-    async def push_imgs_in_dir(directory, blob_container_name, prefix = ''):
+    def push_imgs_in_dir(directory, blob_container_name, prefix = ''):
         print(f"Processing {directory}...")
         block_blob_service = BlockBlobService(account_name=STORAGE_ACCOUNT_NAME, account_key=STORAGE_ACCOUNT_KEY)
         block_blob_service.create_container(blob_container_name)
         block_blob_service.set_container_acl(blob_container_name, public_access=PublicAccess.Container)
-
-        # Load srcset 
-        #with open(srcset_file_path) as f:
-        #    srcsets = json.load(f)
-        #QUICK_PROCESS = True
 
         blob_reference = {}
         # It's helpful to just have a list of blobs in the container
@@ -36,6 +34,7 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
                 blob_reference[blob.name] = blob.properties.content_length
 
         last_dir = ""
+        blobs_to_push = []
         for subdir, dirs, files in os.walk(directory):
             if last_dir != subdir:
                 last_dir = subdir
@@ -50,26 +49,36 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
                     if blob_name in blob_reference and blob_reference[blob_name] == os.path.getsize(file_path):
                         continue
 
-                    # Write blob and associated metadata
-                    print(f'Pushing image {file_path}...')
-                    block_blob_service.create_blob_from_path(container_name=blob_container_name, blob_name=blob_name, file_path=file_path)
+                    # Save info for parallel write
+                    blobs_to_push.append((blob_name, file_path))
+                    #print(f'Pushing image {file_path}...')
+                    #block_blob_service.create_blob_from_path(container_name=blob_container_name, blob_name=blob_name, file_path=file_path)
+
+        def push_image(blob_info):
+            print(f'Pushing image {blob_info[1]}...')
+            block_blob_service.create_blob_from_path(container_name=blob_container_name, blob_name=blob_info[0], file_path=blob_info[1])
+
+        with ThreadPoolExecutor(max_workers=DOP) as executor:
+            running_tasks = [executor.submit(push_image, item) for item in blobs_to_push]
+            for running_task in running_tasks:
+                    running_task.result()
 
     try:
         push_paths = filter(lambda x: len(x) > 0, [os.path.dirname(x) for x in find_git_changes()])
 
         if push_everything:
             # Push static images
-            asyncio.run(push_imgs_in_dir("static/img/", "img"))
+            push_imgs_in_dir("static/img/", "img")
             # Iterate through content dirs, if they have a single image, process whole dir
             for directory in next(os.walk('content/'))[1]:
-                asyncio.run(push_imgs_in_dir(os.path.join("content/", directory), directory))
+                push_imgs_in_dir(os.path.join("content/", directory), directory)
         else:
             # Push static images if changes detected
             if any(path.startswith('layouts') or path == 'static' for path in push_paths):
-                asyncio.run(push_imgs_in_dir("static/img/", "img"))
+                push_imgs_in_dir("static/img/", "img")
             # Push content images
             for path in filter(lambda p: p.startswith('content') and p != "content/_index.md", push_paths):
-                asyncio.run(push_imgs_in_dir(path, path.split('/')[1], '/'.join(path.split('/')[1:-1])))
+                push_imgs_in_dir(path, path.split('/')[1], '/'.join(path.split('/')[1:-1]))
 
     except Exception as err:
         print(f"Error pushing to Azure. {err}") 

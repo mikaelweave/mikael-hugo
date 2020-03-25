@@ -23,20 +23,32 @@
 {{ $pathNoExtension := substr $srcStr 0 -4 }}
 {{ $orig_extension := substr $srcStr (sub (len $srcStr) 3) }}
 
+{{/* <!-- Finds srcset in the page specific folder --> */}}
+{{ $srcSets := .ctx.Site.Data.img.srcsets }}
+{{ $pageSrcSetRef := .ctx.Site.Data }}
+{{ range (split .ctx.File.Dir "/") }}
+    {{ if isset $pageSrcSetRef "srcsets" }}
+        {{ $srcSets = merge $srcSets (index $pageSrcSetRef "srcsets") }}
+    {{ end }}
+    {{ if isset $pageSrcSetRef . }}
+        {{ $pageSrcSetRef = index  $pageSrcSetRef . }}
+    {{ end }}
+{{ end }}
+
 {{/* Throw an error if we expect the image but it's not there! */}}
-{{ if and (eq .ctx.Site.Params.fail_image_not_in_srcset true) (not (isset .ctx.Site.Data.srcsets $srcStr)) }}
-    {{/* errorf "Failed to find image for srcset processing %s" $srcStr */}}
+{{ if and (eq .ctx.Site.Params.fail_image_not_in_srcset true) (not (isset $srcSets $srcStr)) }}
+    {{ errorf "Failed to find image for srcset processing %s" $srcStr }}
 {{ end }}
 
 {{ $combinedSizes := slice }}
-{{ range $extension, $sizes := (index .ctx.Site.Data.srcsets $srcStr) }} {{range $sizes }}
+{{ range $extension, $sizes := (index $srcSets $srcStr) }} {{range $sizes }}
         {{ $combinedSizes = $combinedSizes | union  (slice .) }}
 {{end }}{{ end }}
 
 {{ if gt (index (sort $combinedSizes "value" "desc") 0) 1199 }}
     {{ $scratch.Set "srcset" slice }}
 
-    {{ range $extension, $sizes := (index .ctx.Site.Data.srcsets $srcStr) }}
+    {{ range $extension, $sizes := (index $srcSets $srcStr) }}
         {{/* <!-- If different format, use picture--> */}}
         {{ if not (eq $orig_extension $extension) }}
             {{ range (sort $sizes "value" "desc") }}

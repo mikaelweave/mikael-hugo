@@ -1,0 +1,3 @@
+params:
+  fail_image_not_in_srcset: true
+  force_remote_imgs: true

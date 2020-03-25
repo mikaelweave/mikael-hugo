@@ -18,9 +18,10 @@
         {{/* <!-- Use the image resolver to reformat the URL (if needed) --> */}}
         {{ $imgRef := strings.TrimRight "\"" (substr . 5) }}
         {{ $newRef := chomp (trim (partial "function_local_img_resolver.html" (dict "ctx" $ctx "input" $imgRef )) " \n") }}
+        
         {{/* <!-- If there is an update to the URL location, then replace all instances in the file --> */}}
         {{ if not (eq $imgRef $newRef) }}
-            {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) $imgRef $newRef) }}
+            {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) (printf "src=\"%s" $imgRef) (printf "src=\"%s" $newRef)) }}
         {{ end }}
     {{ end }}
 {{ end }}

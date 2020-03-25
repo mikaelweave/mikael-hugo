@@ -3,14 +3,13 @@ title: 'Film Photography #4 – St. Lucia'
 author: Mikael Weaver
 type: post
 date: 2018-06-13T03:27:00+00:00
-url: /2018/06/13/film-photography-4-st-lucia/
 featured_image: 32a.jpg
 categories:
   - 35mm
   - Travel
 
 ---
-I traveled to St. Lucia for my fourth and fifth rolls of film! My fiancée [Katy](http://www.katyweaver.com/){:target=\"_blank\"} was doing photography for a beautiful elopement there and captured some amazing moments. Her [day before photos are here](https://katyweaverblog.com/2018/04/21/st-lucia-pre-wedding-photos-calabash-cove/){:target=\"_blank\"}, [elopement day photos are here](https://katyweaverblog.com/2018/04/25/calabash-cove-st-lucia-wedding/){:target=\"_blank\"}, and [day after photos are here](https://katyweaverblog.com/2018/05/16/wedding-photos-soufriere-st-lucia/){:target=\"_blank\"}. I was lucky enough to be able to travel with her and we spent a few days in and around Soufrière after the elopement. All of these photos were taken there.
+I traveled to St. Lucia for my fourth and fifth rolls of film! My fiancée [Katy](http://www.katyweaver.com/) was doing photography for a beautiful elopement there and captured some amazing moments. Her [day before photos are here](https://katyweaverblog.com/2018/04/21/st-lucia-pre-wedding-photos-calabash-cove/), [elopement day photos are here](https://katyweaverblog.com/2018/04/25/calabash-cove-st-lucia-wedding/), and [day after photos are here](https://katyweaverblog.com/2018/05/16/wedding-photos-soufriere-st-lucia/). I was lucky enough to be able to travel with her and we spent a few days in and around Soufrière after the elopement. All of these photos were taken there.
 
 Katy had an old Canon EOS 3 laying around so I picked it up to try out 35mm film after getting used to 120. I wanted to try something easier, cheaper, and more accessible to balance out the extreme hesitation I was finding I had with my Yashica.
 

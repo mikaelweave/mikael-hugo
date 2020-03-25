@@ -4,7 +4,7 @@ author: Mikael Weaver
 type: post
 date: 2018-04-30T23:32:00+00:00
 url: /2018/04/30/film-photography-roll-1-bronica-etrsi-400tx/
-featured_image: 01-2.jpg
+featured_image: 01.jpg
 categories:
   - Bronica ETRSi
   - Medium Format
@@ -22,43 +22,43 @@ Here is the first shot I took with the camera with help from James on January 6t
 **Camera**: Bronica ETRSi
 **Film**: 400TX (120)
 
-![Looking over the bridge on opal creek](01-2.jpg)
+![Looking over the bridge on opal creek](01.jpg)
 
 Next I decided to venture off and try some photos on my own. The forest was so dark I adjusted the shutter speed SUPER low on some of the shots to compensate and it shows.
 
-![Photo of water on ground at Opal Creek](02-2.jpg)
+![Photo of water on ground at Opal Creek](02.jpg)
 <br />
-![Photo of ferns taken at low light.](03-2.jpg)
+![Photo of ferns taken at low light.](03.jpg)
 <br />
-![Blurry photo of moss and water at low light](04-2.jpg)
+![Blurry photo of moss and water at low light](04.jpg)
 
 Here is the money shot – the photo Blue Moon wanted to use for their social media account. My friend Kyle wanted to dip his face into the creek. Mind you, it was only barely above freezing outsize and the creek was crisp. I decided to try to capture this moment on film. I myself was precariously on the edge of the creek and set the camera on a rock, set the aperture / shutter speed to a guess, and took the photo from my hip. I got very lucky.
 
-![Man with head in ice cold creek](05-2.jpg)
+![Man with head in ice cold creek](05.jpg)
 
 I love this next shot from January 7th. This is the famous James with his Hasselblad. I took WAY too long to take this shot (probably about 3 minutes).
 
-![James O'Shea outside Opal Creek on mountains](06-2.jpg)
+![James O'Shea outside Opal Creek on mountains](06.jpg)
 <br />
-![Ridge with trees in black and white](07-2.jpg)
+![Ridge with trees in black and white](07.jpg)
 
 I continued this roll on January 13th, 2018 at Ecola State park. All these photos were taken near the end of the day.
 
-![Blurry beach at Cannon Beach](08-2.jpg)
+![Blurry beach at Cannon Beach](08.jpg)
 
 This portrait of myself and [Katy Weaver](https://www.katyweaver.com/){:target=\"_blank\"} was taken by [Luke Wenker Photography](http://www.lukewenkerphotography.com/){:target=\"_blank\"}.
 
-![Katy and Mikael at Ecola State Park](09-2.jpg)
+![Katy and Mikael at Ecola State Park](09.jpg)
 
 Here is a shot of Luke himself.
 
-![Man next to creek on beach in forest](10-2.jpg)
+![Man next to creek on beach in forest](10.jpg)
 <br />
-![Indian Beach ecola state park at dusk black and white](11-2.jpg)
+![Indian Beach ecola state park at dusk black and white](11.jpg)
 
 I finished off this role South of Lincoln City on  February 17th, 2018.
 
-![dock in bay with wood and seagulls](12-2.jpg)
+![dock in bay with wood and seagulls](12.jpg)
 <br />
 ![lovers james and melissa at the beach in black and white](13.jpg)
 

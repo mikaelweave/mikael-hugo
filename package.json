@@ -9,12 +9,11 @@
   "devDependencies": {},
   "scripts": {
     "preview-local": "hugo serve -D",
-    "pull-srcset": "python3 scripts/pull_srcsets_file.py",
+    "preview-local-production": "hugo serve -D --environment production",
+    "pull-srcsets": "python3 scripts/pull_srcsets_files.py",
     "pull-images": "python3 scripts/pull_images.py",
     "push-changed-images": "python3 scripts/push_images.py",
-    "push-all-images": "python3 scripts/push_images.py True",
-    "add-cloud-sizes": "python3 scripts/AzureImageSizer.py",
-    "ADVANCED - rebuilld-srcset": "python3 scripts/build_srcset_file.py"
+    "push-all-images": "python3 scripts/push_images.py True"
   },
   "repository": {
     "type": "git",
@@ -25,6 +24,6 @@
     "hugo"
   ],
   "author": "Mikael Weaver",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "homepage": "https://github.com/mikaelweave/mikael-hugo#readme"
 }

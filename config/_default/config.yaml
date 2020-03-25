@@ -1,9 +1,9 @@
 baseURL: https://www.mikael.dev/
-srcsetFileName: data/srcsets.json
 title: Mikael Weaver
 languagecode: en
 pluralizelisttitles: false
-paginate: 20
+paginate: 21
+disableKinds: ["taxonomyTerm"]
 
 params:
   img_sizes: [480, 768, 1200, 1400, 1700, 2000, 2436]
