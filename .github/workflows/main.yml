@@ -28,8 +28,7 @@ jobs:
       run: pip install -r requirements.txt
     
     - name: "Pull Srcset files"
-      run: |
-        BLOB_ACCOUNT_NAME=${{ secrets.BLOB_ACCOUNT_NAME }} BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name mikaeldevsite --output tsv --query '[0].value') npm run-script pull-srcsets
+      run: BLOB_ACCOUNT_NAME=${{ secrets.BLOB_ACCOUNT_NAME }} BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name mikaeldevsite --output tsv --query '[0].value') npm run-script pull-srcsets
     
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
