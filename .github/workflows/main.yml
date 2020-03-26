@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: "Login to az cli"
+      run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: "Setup Node 12"
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+        
+    - name: "Install Node Packages"
+      run: npm install
+        
+    - name: Setup Python
+      uses: actions/setup-python@v1.2.0
+    
+    - name: "Install Python Packages"
+      run: pip install -r requirements.txt
+    
+    - name: "Pull Srcset files"
+      run: |
+        BLOB_ACCOUNT_NAME=${{ secrets.BLOB_ACCOUNT_NAME }} BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name mikaeldevsite --output tsv --query '[0].value') npm run-script pull-srcsets
+    
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+
+    - name: Build Hugo Sitedev
+      run: hugo --minify
+    
+    - name: "Upload as Artifact"
+      uses: actions/upload-artifact@v1
+      with:
+        name: HugoBuildOutput
+        path: ./public
+        
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    
+    - name: "Install azcopy"
+      uses: kheiakiyama/install-azcopy-action@v1
+    
+    - name: Download Artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: HugoBuildOutput
+        path: ./public
+    
+    - name: "Azcopy login"
+      run: azcopy login --service-principal --application-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id=${{ secrets.AZURE_TENANT_ID }}
+      env:
+        AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    
+    - name: "Copy Static Site to Azure"
+      run: azcopy copy ./public/* "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
