@@ -65,4 +65,4 @@ jobs:
         path: ./public
     
     - name: "Copy Static Site to Azure"
-      run: azcopy_v10 copy "./public/*" "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive --overwrite
+      run: azcopy_v10 copy "./public/*" "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
