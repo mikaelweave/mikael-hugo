@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
-    - name: "Login to az cli"
-      run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: "Setup Node 12"
       uses: actions/setup-node@v1
@@ -28,7 +28,11 @@ jobs:
       run: pip install -r requirements.txt
     
     - name: "Pull Srcset files"
-      run: BLOB_ACCOUNT_NAME=${{ secrets.BLOB_ACCOUNT_NAME }} BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name mikaeldevsite --output tsv --query '[0].value') npm run-script pull-srcsets
+      run: |
+        export BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
+        npm run-script pull-srcsets
+      env:
+        BLOB_ACCOUNT_NAME: ${{ secrets.BLOB_ACCOUNT_NAME }}
     
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -48,6 +52,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: "Install azcopy"
       uses: kheiakiyama/install-azcopy-action@v1
@@ -58,10 +65,10 @@ jobs:
         name: HugoBuildOutput
         path: ./public
     
-    - name: "Azcopy login"
-      run: azcopy login --service-principal --application-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id=${{ secrets.AZURE_TENANT_ID }}
-      env:
-        AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-    
     - name: "Copy Static Site to Azure"
-      run: azcopy copy ./public/* "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
+      run: |
+        end=`date -u -d "5 minutes" '+%Y-%m-%dT%H:%M:%SZ'`
+        sas=$(az storage account generate-sas --permissions cdlruwap --account-name ${{ secrets.BLOB_ACCOUNT_NAME }} --services b --resource-types sco --expiry $end)
+        sas="${sas%\"}"
+        sas="${sas#\"}"
+        azcopy copy ./public/* "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web?$sas" --recursive --overwrite
