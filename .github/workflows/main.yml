@@ -67,5 +67,4 @@ jobs:
     - name: "Copy Static Site to Azure"
       run: |
         end=`date -u -d "5 minutes" '+%Y-%m-%dT%H:%M:%SZ'`
-        sas=$(az storage account generate-sas --output tsv --account-name "${{ secrets.BLOB_ACCOUNT_NAME }}" --services b --resource-types sco --permissions cdlruwap  --expiry $end)
-        azcopy_v10 copy --source "./public/*" --destination "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web?$sas" --recursive --overwrite
+        azcopy_v10 --source "./public/*" --destination "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
