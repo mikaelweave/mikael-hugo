@@ -64,6 +64,7 @@
                         {{ $srcStr = $srcSetPath }}
                         {{ $srcStrReplaced = true }}
                 {{ end }}
+                
             {{ end }}
             {{ if gt (len ($scratch.Get "srcset")) 0 }}
                 {{ $srcsetStr = delimit ($scratch.Get "srcset") ", " }}
