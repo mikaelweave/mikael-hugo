@@ -29,7 +29,7 @@ jobs:
     
     - name: "Pull Srcset file"
       run: |
-        export BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
+        export BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.CDN_BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
         npm run-script pull-srcsets
       env:
         CDN_BLOB_ACCOUNT_NAME: ${{ secrets.CDN_BLOB_ACCOUNT_NAME }}
@@ -65,4 +65,4 @@ jobs:
         path: ./public
     
     - name: "Copy Static Site to Azure"
-      run: azcopy_v10 copy "./public/*" "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
+      run: azcopy_v10 copy "./public/*" "https://${{ secrets.SITE_BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
