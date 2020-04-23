@@ -73,5 +73,5 @@ jobs:
         azcopy_v10 copy "./public/*" "https://${{ secrets.SITE_BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web" --recursive
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        $AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
