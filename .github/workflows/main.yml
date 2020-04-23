@@ -15,7 +15,7 @@ jobs:
       with:
         node-version: 12
         
-    - name: "Install Node Packages"
+    - name: "Install Node Packages" 
       run: npm install
         
     - name: Setup Python
@@ -25,7 +25,7 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: "Login to Azure CLI"
-      run: az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" t "$ARM_TENANT_ID"
+      run: az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" -t "$ARM_TENANT_ID"
       env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
