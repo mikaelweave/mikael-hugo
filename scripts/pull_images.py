@@ -71,6 +71,6 @@ def run(BLOB_ACCOUNT_NAME, BLOB_ACCOUNT_KEY):
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-BLOB_ACCOUNT_NAME = os.getenv("BLOB_ACCOUNT_NAME")
-BLOB_ACCOUNT_KEY = os.getenv("BLOB_ACCOUNT_KEY")
+BLOB_ACCOUNT_NAME = os.getenv("CDN_BLOB_ACCOUNT_NAME")
+BLOB_ACCOUNT_KEY = os.getenv("CDN_BLOB_ACCOUNT_KEY")
 run(BLOB_ACCOUNT_NAME, BLOB_ACCOUNT_KEY)

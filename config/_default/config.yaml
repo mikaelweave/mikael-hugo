@@ -7,7 +7,7 @@ disableKinds: ["taxonomyTerm"]
 
 params:
   img_sizes: [480, 768, 1200, 1400, 1700, 2000, 2436]
-  srcset_img_prefix: https://mikaeldevsite.blob.core.windows.net/
+  srcset_img_prefix: https://cdn.mikael.dev/
   header_logo: {alt: '', src: img/Mikael-0233-zoomed.jpg}
 
 relativeURLs: false

@@ -8,8 +8,8 @@ from concurrent.futures import ThreadPoolExecutor
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-BLOB_ACCOUNT_NAME = os.getenv("BLOB_ACCOUNT_NAME")
-BLOB_ACCOUNT_KEY = os.getenv("BLOB_ACCOUNT_KEY")
+BLOB_ACCOUNT_NAME = os.getenv("CDN_BLOB_ACCOUNT_NAME")
+BLOB_ACCOUNT_KEY = os.getenv("CDN_BLOB_ACCOUNT_KEY")
 DOP = 16
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

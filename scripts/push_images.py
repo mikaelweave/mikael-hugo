@@ -89,8 +89,8 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-BLOB_ACCOUNT_NAME = os.getenv("BLOB_ACCOUNT_NAME")
-BLOB_ACCOUNT_KEY = os.getenv("BLOB_ACCOUNT_KEY")
+BLOB_ACCOUNT_NAME = os.getenv("CDN_BLOB_ACCOUNT_NAME")
+BLOB_ACCOUNT_KEY = os.getenv("CDN_BLOB_ACCOUNT_KEY")
 
 # if true is passed, push everything
 if len(sys.argv) > 1 and sys.argv[1] == 'True':

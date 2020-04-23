@@ -27,12 +27,12 @@ jobs:
     - name: "Install Python Packages"
       run: pip install -r requirements.txt
     
-    - name: "Pull Srcset files"
+    - name: "Pull Srcset file"
       run: |
         export BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
         npm run-script pull-srcsets
       env:
-        BLOB_ACCOUNT_NAME: ${{ secrets.BLOB_ACCOUNT_NAME }}
+        CDN_BLOB_ACCOUNT_NAME: ${{ secrets.CDN_BLOB_ACCOUNT_NAME }}
     
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -68,7 +68,7 @@ jobs:
     - name: "Copy Static Site to Azure"
       run: |
         end=`date -u -d "5 minutes" '+%Y-%m-%dT%H:%M:%SZ'`
-        sas=$(az storage account generate-sas --permissions cdlruwap --account-name ${{ secrets.BLOB_ACCOUNT_NAME }} --services b --resource-types sco --expiry $end)
+        sas=$(az storage account generate-sas --permissions cdlruwap --account-name ${{ secrets.SITE_BLOB_ACCOUNT_NAME }} --services b --resource-types sco --expiry $end)
         sas="${sas%\"}"
         sas="${sas#\"}"
-        azcopy copy ./public/* "https://${{ secrets.BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web?$sas" --recursive --overwrite
+        azcopy copy ./public/* "https://${{ secrets.SITE_BLOB_ACCOUNT_NAME }}.blob.core.windows.net/\$web?$sas" --recursive --overwrite
