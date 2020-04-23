@@ -60,7 +60,6 @@ jobs:
     - uses: kheiakiyama/install-azcopy-action@v1
       with:
         version: 'v10'
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: Download Artifact
       uses: actions/download-artifact@v1
