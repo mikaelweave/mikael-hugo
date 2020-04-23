@@ -29,7 +29,7 @@ jobs:
     
     - name: "Pull Srcset file"
       run: |
-        export BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.CDN_BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
+        export CDN_BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name ${{ secrets.CDN_BLOB_ACCOUNT_NAME }} --output tsv --query '[0].value')
         npm run-script pull-srcsets
       env:
         CDN_BLOB_ACCOUNT_NAME: ${{ secrets.CDN_BLOB_ACCOUNT_NAME }}
