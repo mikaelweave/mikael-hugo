@@ -2,22 +2,16 @@
   <h1 class="title">{{ .Title }}</h1>
   <div class="article">
     {{ range .Paginator.Pages }}
-    <article class="post excerpt">
-      {{ $featured := .Params.featured_image }}
-      {{ $title := .Title }}
+    <article class="post excerpt column">
       <div class="feature-thumbnail-container">
-        {{ with .Resources }}
-          {{ with .GetMatch $featured }}
-              {{ $cover := .Resize "600x" }}
-              {{ with $cover }}
-                    <img src="{{ .Permalink }}" alt="{{ $title }}"/>
-              {{ end }}
+          {{ if isset .Params "featured_image" }}
+              {{ $previewImageUrl := (partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image)) }}
+              <a href="{{ .RelPermalink }}">{{ partial "function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $previewImageUrl .Title )) }}</a> 
           {{ end }}
-        {{ end }}
       </div>
       <div class="thumbnail-post-content">
-        <h2 class="title"><a href="{{ .URL }}">{{ .Title }}</a></h2>
-        <span class="entry-meta">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
+          <h2 class="blog-title"><a href="{{ .RelPermalink }}">{{ upper .Title }}</a></h2>
+          <span class="entry-meta">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
       </div>
     </article>
     {{ end }}
