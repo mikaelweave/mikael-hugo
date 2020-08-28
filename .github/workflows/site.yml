@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: "Setup Node 12"
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+        
+    - name: Setup Python
+      uses: actions/setup-python@v1.2.0
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+        extended: true
+
+    - name: Build and Deploy
+      run: |
+        ./scripts/deploy/site.sh
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+        CDN_BLOB_ACCOUNT_NAME: ${{ secrets.CDN_BLOB_ACCOUNT_NAME }}
+        SITE_BLOB_ACCOUNT_NAME: ${{ secrets.SITE_BLOB_ACCOUNT_NAME }}
