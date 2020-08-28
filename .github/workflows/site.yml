@@ -1,4 +1,4 @@
-name: CI
+name: Deploy-Site
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       run: |
         echo "installing hugo"
         sudo mkdir -p /home/hugo/
-        curl -L https://github.com/gohugoio/hugo/releases/download/v0.74.3/hugo_0.74.3_Linux-64bit.tar.gz | tar -zxf - --directory /home/hugo/
+        curl -L https://github.com/gohugoio/hugo/releases/download/v0.74.3/hugo_extended_0.74.3_Linux-64bit.tar.gz | tar -zxf - --directory /home/hugo/
         sudo mv /home/hugo/hugo /usr/bin/
         echo "installing azcopy"
         sudo mkdir -p /home/azcopy/
