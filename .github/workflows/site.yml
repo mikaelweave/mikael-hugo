@@ -33,7 +33,7 @@ jobs:
       run: alias azcopy='azcopy_v10'
 
     - name: Build and Deploy
-      run: make deploy site
+      run: make deploy-site
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
