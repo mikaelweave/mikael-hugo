@@ -23,10 +23,17 @@ jobs:
       with:
         hugo-version: 'latest'
         extended: true
+    
+    - name: Install azcopy
+      uses: kheiakiyama/install-azcopy-action@v1
+      with:
+        version: 'v10'
+    
+    - name: Alias azcopy
+      run: alias azcopy='azcopy_v10'
 
     - name: Build and Deploy
-      run: |
-        ./scripts/deploy/site.sh
+      run: make deploy site
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
