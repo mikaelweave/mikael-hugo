@@ -17,17 +17,17 @@ jobs:
         
     - name: Setup Python
       uses: actions/setup-python@v1.2.0
-
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: 'latest'
-        extended: true
     
-    - name: Install azcopy
-      uses: kheiakiyama/install-azcopy-action@v1
-      with:
-        version: 'v10'
+    - name: Install hugo + azcopy
+      run: |
+        echo "installing hugo"
+        sudo mkdir -p /home/hugo/
+        curl -L https://github.com/gohugoio/hugo/releases/download/v0.74.3/hugo_0.74.3_Linux-64bit.tar.gz | tar -zxf - --directory /home/hugo/
+        sudo mv /home/hugo/hugo /usr/bin/
+        echo "installing azcopy"
+        sudo mkdir -p /home/azcopy/
+        curl -L https://aka.ms/downloadazcopy-v10-linux | tar -zxf - --directory /home/azcopy/
+        sudo mv $(find /home/azcopy/ -type f -name azcopy) /usr/bin/
 
     - name: Build and Deploy
       run: |

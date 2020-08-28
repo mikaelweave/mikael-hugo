@@ -50,5 +50,5 @@ then
 fi
 
 # Upload site to Azure
-azcopy copy "./public/*" "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/builds/${GITHUB_SHA::8}?${buildsSas}" --recursive=true
-azcopy copy "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/builds/${GITHUB_SHA::8}/*?${buildsSas}" "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/\$web?${webSas}" --recursive=true
+azcopy sync "./public/*" "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/builds/${GITHUB_SHA::8}?${buildsSas}" --delete-destination=true
+azcopy sync "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/builds/${GITHUB_SHA::8}/*?${buildsSas}" "https://${SITE_BLOB_ACCOUNT_NAME}.blob.core.windows.net/\$web?${webSas}" --delete-destination=true
