@@ -1,0 +1,57 @@
+{{/* <!-- 
+    SHORTCODE:   highlightFile
+    DESCRIPTION: Display a file with syntax and highlighting using the Hugo Highlight shortcode.
+                 This shortcode was made to avoid duplicating code in a sample repository into a 
+                 blog post about the sample repository.
+    PARAMETERS:
+                0 - Path to the file, relative to the repository root or the content folder
+                1 - The language of the file to pass to the highlight shortcode
+                2 - The highlight shortcode options [Optional]
+                3 - Range of lines to show [Optional]
+
+               
+--> */}}
+{{ $input := readFile (.Get 0) }}
+{{ if len .Params | eq 4 }}
+    {{ $lineRange := (split (.Get 3) "-") }}
+
+    {{/*  Get the correct sub-lines of the file */}}
+    {{ $choppedInput := "" }}
+    {{ range $elem_index, $elem_val := (split $input "\n") }}
+        {{ $lineIdx := add $elem_index 1 }}
+        {{ if and (ge $lineIdx (index $lineRange 0)) (le $lineIdx (index $lineRange 1)) }}
+            {{  $choppedInput = (print $choppedInput $elem_val "\n") }}
+        {{ end }}
+    {{ end }}
+
+     {{/*  Fix the highlight parameters */}}
+     {{ $lineOffset := index $lineRange 0 }}
+     {{ $highlightOptions := print "linenostart=" $lineOffset }}
+     {{ range (split (.Get 2) ",") }}
+        {{ if hasPrefix . "hl_lines=" }}
+            {{ $nums := slice }}
+            {{ range (split (substr . 9) " ")}}
+
+                {{/* TODO - clean up this logic */}}
+                {{ $this := split . "-" }}
+                {{ $thisAdded := slice}}
+                
+                {{ range $this }}
+                    {{ $thisAdded = $thisAdded | append (add (sub (int .) (int $lineOffset)) 1) }}
+                {{ end }}
+                
+                {{ $nums = $nums | append (delimit $thisAdded "-") }}
+
+            {{ end }}
+            {{ $highlightOptions = print $highlightOptions ",hl_lines=" (delimit $nums " ") }}
+        {{ else }}
+            {{ $highlightOptions = print $highlightOptions "," . }}
+        {{ end }}
+     {{ end }}
+
+    {{ highlight $choppedInput (.Get 1) $highlightOptions }}
+{{ else if len .Params | eq 3 }}
+    {{ highlight $input (.Get 1) (.Get 2) }}
+{{ else }}
+    {{ highlight $input (.Get 1) "" }}
+{{ end }}

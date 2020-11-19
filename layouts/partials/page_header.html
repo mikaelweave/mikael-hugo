@@ -1,0 +1,16 @@
+<nav class="page-nav">
+    <div class="page-img-name">
+        <div class="page-nav-logo">
+            {{ partial "img.html" (dict "img" $.Site.Params.header_logo "ctx" $ "class" "page-nav-logo" "sizes" "(min-width: 1px) 270px") }}
+        </div>
+        <p>MIKAEL WEAVER</p>
+    </div>
+    <ul class="menu" id="menu">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="/blog">Blog</a>
+        </li>
+    </ul>
+</nav>

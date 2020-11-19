@@ -17,8 +17,6 @@ SCREEN SIZES
 $mobileNavHeight: 150px;
 $desktopNavHeight: 220px;
 
-$maxSiteWidth: 2000px;
-
 // Small tablets and large smartphones (landscape view)
 $screen-sm-min: 576px;
 
@@ -28,8 +26,11 @@ $screen-md-min: 768px;
 // Tablets and small desktops
 $screen-lg-min: 992px;
 
-// Large tablets and desktops
-$screen-xl-min: 1200px;
+// Large tablets and desktops\
+// Not needed as we are restricting the site width to 1200 px
+// $screen-xl-min: 1200px;
+
+// $maxSiteWidth: 2000px;
 
 // Site size helpers - (css defaults mobile)
 // Small devices
@@ -54,18 +55,24 @@ $screen-xl-min: 1200px;
  }
  
  // Extra large devices
- @mixin xl {
-    @media (min-width: #{$screen-xl-min}) {
-        @content;
-    }
- }
+ // Not needed as we are restricting the site width to 1200 px
+ //@mixin xl {
+ //   @media (min-width: #{$screen-xl-min}) {
+ //       @content;
+ //   }
+ //}
+ //
+ //// Above max screen width for size
+ //@mixin max {
+ //   @media (min-width: #{$maxSiteWidth}) {
+ //       @content;
+ //   }
+ //}
 
- // Abovr max screen width for size
- @mixin max {
-    @media (min-width: #{$maxSiteWidth}) {
-        @content;
-    }
- }
+// Scaling numbers for width changes
+$small-scale-factor: 1;
+$medium-scale-factor: 1.5;
+$large-scale-factor: 2;
 
 
 /*********************************************************
@@ -157,6 +164,9 @@ $white: white;
 }
 .white-bg {
     background: $white;
+}
+.test-bg {
+    background: #f0e7e1;
 }
 
 // Text Helpers

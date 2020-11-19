@@ -1,20 +1,20 @@
-{{ define "title" }}Mikael Weaver - Software Engineer{{ end }}
+{{ define "title" }}Mikael Weaver{{ end }}
 
 {{ define "style" }}
-
+    {{ $home_styles := resources.Get "/scss/home.scss" | resources.ExecuteAsTemplate "homet.scss" . | toCSS | postCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $home_styles.Permalink }}" integrity="{{ $home_styles.Data.Integrity }}" media="screen">
 {{ end }}
 
 {{ define "content" }}
-<div>
-    <ul class="link-row">
-        <li><a href="/blog/">Tech Blog</a> • </li>
-        <li><a href="/photography">Photography</a></li>
-    </ul>
-    <br />
-    <ul class="link-row">
-        <li><a href="mailto:mikael.weaver@gmail.com">Email</a> • </li>
-        <li><a href="https://twitter.com/mikaelweave">Twitter</a> • </li>
-        <li><a href="https://www.linkedin.com/in/mikaelweave/">LinkedIn</a></li>
-    </ul>
-</div>
+    <div id="about-box" class="center test-bg">
+        <h2 class="center">About Me</h2>
+
+        <p class="center">I'm a Technical Program Manager in Healthcare at Microsoft. I have a background in Software Engineering and Electrical Engineering. I live in Portland, Oregon.</p>
+    </div>
+
+    <h2 class="center">Latest Posts</h2>
+
+    {{ range first 10 (where site.RegularPages "Section" "==" "blog")}}
+        {{ partial "blog_preview_square.html" . }}
+    {{ end }}
 {{ end }}

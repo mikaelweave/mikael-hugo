@@ -1,8 +1,12 @@
 {{/* 
 <!-- 
-    FUNCTION PAGE
+    IMAGE RENDERER
 
-    Takes a path for an image and resovle its full URL dependent on current location
+    Given a site image, render the correct source. Options are:
+        - Relative to the current page's URL location
+        - In the static folder
+        - Via the srcsets file (processed by image processor in Azure)
+        - Keep existing link
 --> 
 */}}
 
@@ -13,6 +17,7 @@
 {{ $dir := .ctx.File.Dir }}
 {{ $relDir := .ctx.RelPermalink }}
 
+{{/* <!-- Locations where images may exist --> */}}
 {{ $fileRef := $imgRef | printf "%s%s" (string $dir) }}
 {{ $staticRef := $imgRef | printf "static/%s" }}
 {{ $pageRef := $imgRef | printf "%s%s" (string $relDir) }}

@@ -1,0 +1,26 @@
+<section class="container list">
+    <h1 class="title">{{ .Title | safeHTML }}</h1>
+    <div class="text-container">
+        {{  .Params.intro_text | safeHTML }}
+    </div>
+    <br />
+    {{ if or (eq .RelPermalink "/blog/") (in .RelPermalink "/categories/") }}
+        {{ partial "category_buttons.html" . }}
+    {{ end }}
+    <div class="article">
+      {{ $scratch := newScratch }}
+      {{ $scratch.Set "i" 0 }}
+      {{ range .Paginator.Pages }}
+        {{ if modBool ( $scratch.Get "i" ) 3 }}
+            {{/* <!-- https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01 -->*/}}
+            <div class="row column-responsive">
+        {{ end }}
+        {{ $scratch.Set "i" (add ($scratch.Get "i" ) 1) }}
+        {{ partial "blog_preview_square.html" . }}
+        {{ if modBool ($scratch.Get "i" ) 3 }}
+            </div>
+        {{ end }}
+      {{ end }}
+    </div>
+    {{ partial "pagination.html" . }}
+  </section>

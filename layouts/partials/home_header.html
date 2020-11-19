@@ -1,0 +1,91 @@
+<nav class="navbar" id="navbar">
+    <div class="banner triangle-container">
+        <div class="triangle-1-wrapper">
+            <svg class="mustard-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 100 0, 50 70 "/>
+            </svg>
+        </div>
+        <div class="triangle-2-wrapper">
+            <svg class="foam-green-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 100, 100 100, 100 0"/>
+            </svg>
+        </div>
+        <div class="triangle-3-wrapper">
+            <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 0 60, 100 60"/>
+            </svg>
+        </div>
+        <div class="triangle-4-wrapper">
+            <svg class="lightgray-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 100 0, 50 70 "/>
+            </svg>
+        </div>
+        <div class="triangle-5-wrapper">
+            <svg class="brown-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="50 15, 100 100, 0 100"/>
+            </svg>
+        </div>  
+        <div class="triangle-6-wrapper">
+            <svg class="tan-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 100 0, 50 70 "/>
+            </svg>
+        </div>
+        <div class="triangle-7-wrapper">
+            <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="50 50, 80 100, 30 100"/>
+            </svg>
+        </div>
+        <div class="triangle-8-wrapper">
+            <svg class="orange-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0 , 0 100, 100 100"/>
+            </svg>
+        </div>
+        <div class="triangle-9-wrapper">
+        <svg class="dark-teal-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+            <polygon points="0 100, 50 50, 100 100 "/>
+        </svg>
+    </div> 
+        <div class="triangle-10-wrapper">
+            <svg class="foam-green-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 100, 100 100, 100 0 "/>
+            </svg>
+        </div>
+        <div class="triangle-11-wrapper">
+            <svg class="mustard-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 0 100, 100 100 "/>
+            </svg>
+        </div>
+        <div class="triangle-12-wrapper">
+            <svg class="salmon-fill" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                <polygon points="0 0, 0 100, 100 100 "/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="navbar-logo">
+        {{ partial "img.html" (dict "img" $.Site.Params.header_logo "ctx" $ "class" "nav-logo" "sizes" "(min-width: 1px) 270px") }}
+    </div>
+
+    {{/*  This will keep the header order correct */}}
+    {{ if eq .RelPermalink "/" }}
+        <h1 class="header-text">MIKAEL WEAVER</h1>
+    {{ else }}
+        <p class="header-text">MIKAEL WEAVER</p>
+    {{ end }}
+    <div>
+        <ul class="link-row">
+            <li>
+                <a href="/"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFGElEQVR4Xu2bV+hdRRDGf1FRYsUEkgfFB/VBjIhGhKA+KPZeY00kmEQUG6ixi4pdrCFKLA82YtTEVIxREgUlqKj4YEVEFBQLGntvfGEv3JzsnDt72r2XnHn5879ndmfm2zm7387uGcF6LiP6GP/OwPnB/j3A+/3wpV8AnAA8DmwSgv4DmATMaxqEfgBwDjAT2CAT7L/AecB9TYLQNADXA1f1CPAG4OqmQGgKgA2B2cA0Z2APAmcD/zj1C6s1AcBI4Ang6EQvFwEnA78ntktSrxuArYHFwD6GV1+F38caz18GjgK+T4oqQblOALYBlgPjDH8+Bg4C5IP0djD03gEOAT5PiMutWhcAO4WgtjM8eQs4FPi6KwOWAbsb+p8BBwMfuCNzKtYBwARgKTDa8GEFcCzwU+b5FsACYH+j3bfAEcCrzthcalUDcDjwFLCpYV3PJgN/Gs83Bh4FTjKe/wpMBJ51RedQqhKAKYCWr40Mu7OACwARnjyRT6LGIkUx+Tssp4844uupUhUAlwE351gT+bmxpzdrK1wO3JTTRjZvTexzHfWyAKj9XWFkY76IyJwFPFTQ0TOABwARqZjcDVwI/Few/zVLUFHR+/owcIrRwW/hmQhNGTkSeBIQoYrJHECv319FjBQFYHPgGeBAw6iIixx/pYhTkTZ7AUuAUUZ/LwDHAT+n2isCwJgwC+9hGPsirNkiMFWK6gciTNsanb4BHAZ8k2I0FYDtgxM7GkY+DMF/muJEgq6CFwgCIyYfBfufePtMAWA34DnA4u2vhxEQYalTtL8Q0dJrEZMvA8t82+OEF4D9gIXAlkanAkZVnl88RivQ0YSoiVHzTEx+BI4BXuxlywOAmJfKV5r1Y/IYoOVKBKVJ0dKoJVK2Y6Iym1jn03lO9QLg3MDKsuWrTp93ADPKrMMVICaCdYXRj1inCq/3WnbyAFBp6kqjoYjHJcDtFQRQRReizSJF1kCZZbYYAEqt+4GphmdKdaWdUn+Q5MTgk/Wqio2Kla5VZssCoMllbqjCxILTJKc5QXv3QRRtpbWl1tY6JmKlYq5iqWukGwAtL2JbexuNtbxpu/vaIEbe5ZOKKhoga7kWO1WZbXU3AJsBq4BdjeBqq8jUBKYI2/M5Zbb3Qp1ydScD8ia8WmtyNQGgbkXZlQnjDRuawGd0AFClRu92VpQuIhu1VWVrBEBday7Qpu2AiB0dw03sAHA6kK2wNFKXrxkAdW+V2U4D5nQA0N/rgIuDQ3cC1zRxMtMAAJ257tJA2hTrbcAt2VVA/3cqL7UfSTUUeE8zvahwzw6GXSEPAFV39w0BvtSHzU5ZbF3+WwCo5LUS2DN4ob2+WFZyyalsFAXbu/23ALg2TILd9jVJ6vdhELf/FgAxXqB9tTYcwyBu/y0ARBKOz0Q6P1R9hgEAt/8tAMZwuhHMSQdVaVQ02apkyvwQjsDyjt6yJtz+15UB2nPrxKZKOTVctfH02XcAFLx1ZOYJIKaje0YCwSN9ByDmgMfxPJ2USbgFwLuK1TUHxEZAV1tURvfIRYCu2nTL0GdALQGUXcWazIAWgAQm6Z7E2gyII+AGsH0FyqbQsLdvM2DYR7Cs/20GlEVw2Nu3GZAwgvpgwXtVXTxeH0x0S7/bR5loSgZ4NjGDrNMCEKPiVgbo+tn0QR7OAr7pW4Yzs+0sAPSh05tdn7YWsDdQTXRnUHeb3/UCIL1dwh0764b2QEWY48x34a7jOsGrzXp/Ovw/4D5KUDaSQQAAAAAASUVORK5CYII=" /></a>
+            </li>
+            <li>
+                <a href="mailto:mikael.weaver@gmail.com"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADEklEQVR4Xu2aS6hNURjHf9ejMJABMhMzkZnIUFFmiDwLiURKCTGh0DUQkiIkkcdIkYGJUspESRkoSilJ90okiYT+Wvvad9119ln77L3P2dtaX53JOWt/j//3+p/d6iNw6Qs8fiIAsQICRyC2QOAFEIegWmAFcB6YElg1fAC2CoCBAINPcj0oAH4Hlvlh4UYAPCrgPrDRtEqTimUacBVYnOW0bwW8BzYADxqCwBLgGjC1nb8uALQVLgOTrIc1K/qBQ8DPdop79PtY4Aiw32H/I7AZuJP+zQWAvpsO3AAWOhQ9BtYBb3oUZCuzM4CbwHzHgUfG57d2y7cCQDrGAIeBgzCCMH0CtgC3awLCKuASMNHy55epiKOpqh229bIASHQtAq4DGiq2nAP2AN96BMQE4BSwzWH/HbAeeOho5aGvfADQYQ2TK8BSh6HnwGrgRZdBmAPcAmY77N4z/S62Z0vuCkgUjAJ2A8cBDZu0qAJ2meFZNbFS0pTx08A4y48fwD7gTMZ67xiAxNY8g/xMB7rKyHbgc0XVoM10EVjp0P8KWAM8bWO7MADSr2GjP1BrHcZeG0eelAzCAgO8NpQt2vk7gS8eNksBQHZUipuAs4CGUVrEEw4AJwFN4iKi1tsLHANGW4q+AjsM4/O1URoAicFZJjNzHR4UpdFZdPaZGb4vfSM350oHQHrHAydMNmx/OqXRWXRWQ07D7nvO4HW8EgASP5aXQKN96OzdDgJPHqkUABkpQqN96WyB+KutgMSxTmh0HjpbewASB31otLZJXjrbGADkaBaNVj/qo1VnSxadbRQAcjaLRtvB+NDZxgGQOJxFo3XGl842FgA53opG56GzjQZAzic0Wv8sRZX1CksvMLshlfOAbgRRxEYEII2e7xuhIojX7dlYAbECUgjEFnC8PPzfr83EGRBnQJwB/xCIQzAOwZF3hOIWqBt3LdmfuAbjGoxrMK7BIQR8r8mVPIfqoy4CAAwCk+uTk656MqAKWAZcCPDGuG7J/70uH7REAIJOv+MKbHB4xBYILuVWwLECQq+AP3Dl0YavxZYCAAAAAElFTkSuQmCC" /></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/mikaelweave"><img src="data:image/png;base64,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" /></a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/mikaelweave/"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFLUlEQVR4Xu2bf0xVZRjHv+/ldygQKqABQZPJRb1EtEVlCLYkqEG16WatmomBzWFmS7PlSleatQQnE5N+LWsqNRcSNFDEX8lW4g8EAQMUQrgFF4ELXPBy3vYeh7nL9Zz3sjbOuZz3v7P7Pe99ns95z/O8P85DYNP0mUXzKISVRMBTlCAUgLetRmXX/YSihepQRqDbeznv2Ut32k9GL6KWHHQf8ffcQYBMADqVOclrrkCBPBeTZW1twdJhdpMIgDkv+HuWAFjE25PKdeU6kyWZQRABzMkozCXAGyp3ykHzaW7dnrTVRHznqXDBiYf93cAIhOiiSWRmYQ4oshzE5xRyApJD9K8X1lICPY9H3p6umOXvBR0haO8eRO/ATZ7bFKshFJdJZEahWS7VhQdOwYYlc/F41Ay46G4lDoFSnL1iwscFl1DX2qtYJ2UMMzMAVEr03KMh2PySAW6u9jPjiECx9WANvq9oViUESQBhgd449N5CeLq7SDp30ypg6baTqPtLfSNBEsCOlbF4OnYW15MtPdeONXv+4NIqSSQJ4PSnSfCf6s5lb0f3IBLfPcKlVZJIEkBVTgq8PKSH/6gzLChGry6GdURQkn+ytkgCOLB+AQzh98p2wgRNHWY888ExLq2SRJIA1j2vR3rSbC5795+4hg9/uMilVZJIEgCb+BRuShAnP1Lt7x4LUjdXoKdffRMj2XmAPsQXn614CA8ETbHLoNloxvqvz6H66g0lPVhuW2QBsJ7cXXV4eVE4Eg1BuG+aF9ii+nrXACqqjfiuvBnDVnUFvjvpcAHgxqlCoQZAbi2gwofqkMmqGAFsLTI31BcBfp7w8XJD/5AVXX3DuGo0o9006JDDtmJJAA9HTMOLCWFcf7CvvBlVjaYx2szkCOhDfbn6sF1LzA/zQ0ZyBBLmB95ehtt2xLJQ+QUjvjnSiM7eIa7/4Q6CqY8E45PlMVydvv1lFX75vW2Mdm9WHBZEzeDqQ595WNSx9cfWV2MQPy+A6z4mGhwawVdljdhd3AC2ROdtkiNgIgAET78H+VlxuD9gfMcRx6uNeCu/CgNDVi4GigIQt+5Xcf9hpszMU86zyvpOrMiuFHet5JqiABy7aESiIVDOZq7fc36uQ17JFVmtogDIWuuAgMWBpPfL0dY1IHmX0wJgXn97tAnbCmomLwCzxYon3imFZXjkrhAUOQLY8D1w4hrKzrfjz+t9ovFzgn2wbGEYnowOcuBFAJZnn0FlXad6AJj6hvFa9hnUt9nfYWYTozfTIrkh7CqqR25RgzoAsCe/bPsp2b2FHzfGi1Njnna69h+k76xUB4CCUy3YtI+d00q3Fx4LwUevPCgnE39vaOtF2pbj6gDAnv75pm5ZxzzcdKjamSKeUco14w0LEjaUqQNA7JoS7insye2LMd3HQ85/MQPEZBWrA0DUqsPgmL2Kzvy0MR5RnHFgdJFlj4Ki0qCUobbGswUTO63maU4JYDzLbKcaARqAcWy0aCPADgHVBkHtFdBeAcc3W7UYoMWAsQS0ICh1NjgR5wI8U1um0bKAlgW0LODwmaOWBrU06GAaNIT5ITUumCswH/qtFTUtPWO0bC9/9sypXH1s2V/NpWOi/6tfVXwhwk1lHEKugolx9KuWW8wOlcyoxSteO2+VzEz6oqlJXDanE2DQCifZ+zLZSmcpcNTFZEm5XTr7HwSPzwGyyomrSAWA7vamHWvPfpEhfts/5nSRldKC0nRQupgShACw/508b6ideJ2ZULSCkFIQkm9bPv8vVlY5h9LQnz0AAAAASUVORK5CYII=" /></a>
+            </li>
+        </ul>
+    </div>
+</nav>

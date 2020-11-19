@@ -1,15 +1,12 @@
 @import "assets/scss/site_params.scss";
 
-$lgHeaderFontSize: 1em;
-$xlHeaderFontSize: 1.2em;
-
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-p, ul {
+p, ul, h2, h3 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -17,12 +14,9 @@ h1 {
     font-family: monospace;
 }
 
-ul.link-row {
-    text-align: center;
-    li {
-        display: inline;
-        font-size: 2.2vw;
-    }
+h2 {
+    font-size: 40px;
+    padding-bottom: 10px;
 }
 
 a {
@@ -32,10 +26,14 @@ a:hover {
     color: $orange;
 }
 
-.footer {
-    p {
-        font-size: 1vw;
-    }
+p, ul {
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.container {
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .center {
@@ -44,10 +42,6 @@ a:hover {
     align-items: center;
     list-style-position: inside;
     margin: auto;
-}
-
-img {
-    max-width: 80vw;
 }
 
 ///// TODO - these are to center blog pictures. Make it better!

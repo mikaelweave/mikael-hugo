@@ -9,7 +9,7 @@
         {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
         {{ with .Site.Params.keywords }}<meta name="keywords" content="{{ . }}">{{ end }}
         
-        <base href="{{ .Site.BaseURL }}">
+        <!--<base href="{{ .Site.BaseURL }}">-->
         <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
         
         <link rel="canonical" href="{{ .Permalink }}">
@@ -17,8 +17,8 @@
         {{ $general_styles := resources.Get "/scss/general.scss" | resources.ExecuteAsTemplate "generalt.scss" . | toCSS | postCSS | minify | fingerprint }}
         <link rel="stylesheet" href="{{ $general_styles.Permalink }}" integrity="{{ $general_styles.Data.Integrity }}" media="screen">
 
-        {{ $navbar_styles := resources.Get "scss/navbar.scss" | resources.ExecuteAsTemplate "navbart.scss" . | toCSS | postCSS | minify | fingerprint }}
-        <link rel="stylesheet" href="{{ $navbar_styles.Permalink }}" integrity="{{ $navbar_styles.Data.Integrity }}" media="screen">
+        {{ $header_styles := resources.Get "scss/header.scss" | resources.ExecuteAsTemplate "headert.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $header_styles.Permalink }}" integrity="{{ $header_styles.Data.Integrity }}" media="screen">
 
         {{ block "style" . }}{{ end }}
         
@@ -27,9 +27,14 @@
         {{ end }}
     </head>
     <body>
-        {{ partial "header.html" . }}
-        <div class="nav-spacer"></div>
-        
+        {{ if .IsHome }}
+            {{ partial "home_header.html" . }}
+            <div class="nav-spacer"></div>
+        {{ else }}
+            {{ partial "page_header.html" . }}
+            <div class="nav-spacer"></div>
+        {{ end }}
+
         <div class="container">
             {{ block "content" . }}{{ end }}
         </div>

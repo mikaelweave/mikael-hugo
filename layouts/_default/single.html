@@ -2,46 +2,60 @@
   {{ .Title }} · {{ .Site.Title }}
 {{ end }}
 
+{{ define "style" }}
+  {{ if eq ( .FirstSection | string ) "Page(/blog)" }}
+        {{ $blog_post_style := resources.Get "/scss/blog_post.scss" | resources.ExecuteAsTemplate "blog_postt.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $blog_post_style.Permalink }}" integrity="{{ $blog_post_style.Data.Integrity }}" media="screen">
+  {{ else if eq ( .FirstSection | string ) "Page(/photography)" }}
+        {{ $photography_post_style := resources.Get "/scss/photography_post.scss" | resources.ExecuteAsTemplate "photography_postt.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $photography_post_style.Permalink }}" integrity="{{ $photography_post_style.Data.Integrity }}" media="screen">
+  {{ end}}
+
+  {{ $toc_post_style := resources.Get "/scss/toc.scss" | resources.ExecuteAsTemplate "toct.scss" . | toCSS | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $toc_post_style.Permalink }}" integrity="{{ $toc_post_style.Data.Integrity }}" media="screen">
+{{ end }}
+
 {{ define "content" }}
   <section class="container page">
     <article>
-      <header class="center">
-        {{/* <!-- Ensure featured image is formatted correctly --> */}}
-        {{ if isset .Params "featured_image" }}
-                {{ $featuredImageUrl := (partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image)) }}
-                {{ partial "function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $featuredImageUrl .Title )) }}
-        {{ end }}
-
+      <header class="header center">
         {{ $showTitle := index .Params "show_title" | default "True" }}
         {{ $titleColor := index .Params "show_title" | default "True" }}
         {{ $titleText := index .Params "page_title" | default .Title}}
 
         {{ if $showTitle }}
                 {{ if isset .Params "title_color" }}
-                    <h1 class="{{ .Params.title_color }}-color">{{ $titleText }}</h1>
+                    <h1 class="title {{ .Params.title_color }}-color">{{ $titleText }}</h1>
                 {{ else if isset .Site.Params "title_color"}}
-                    <h1 class="{{ .Site.Params.title_color }}-color">{{ $titleText }}</h1>
+                    <h1 class="title {{ .Site.Params.title_color }}-color">{{ $titleText }}</h1>
                 {{ else }}
-                    <h1>{{ $titleText }}</h1>
+                    <h1 class="title">{{ $titleText }}</h1>
                 {{ end }}
         {{ end }}
 
-        {{ if and (isset .Params "table_of_contents") (.Params.table_of_contents) }}
-            {{ if isset .Params "toc_headings_to_ignore" }}
-                {{- partial "table-of-contents.html" (dict "ctx" . "headings_to_ignore" .Params.toc_headings_to_ignore) -}}
-            {{ else }}
-                {{- partial "table-of-contents.html" (dict "ctx" .) -}}
-            {{ end }}
+        {{/* <!-- Ensure featured image is formatted correctly --> */}}
+        {{ if isset .Params "featured_image" }}
+                {{ $featuredImageUrl := (partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image)) }}
+                {{ partial "function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $featuredImageUrl .Title )) }}
         {{ end }}
       </header>
-      <div class="container center page">
+      <div class="container page">
+            {{ if and (isset .Params "table_of_contents") (.Params.table_of_contents) }}
+                {{/* OLD IMPLEMENTATION<!-- if isset .Params "toc_headings_to_ignore" }}
+                    {{- partial "table-of-contents.html" (dict "ctx" . "headings_to_ignore" .Params.toc_headings_to_ignore) -}}
+                {{ else }}
+                    {{- partial "table-of-contents.html" (dict "ctx" .) -}}
+                {{ end --> */}}
+                <div id="toc">
+                  <h3 class="toc-heading">Table of Contents</h3>
+                  {{ replace .TableOfContents `href="#` (printf `href="%s#` .Permalink) | safeHTML }} {{/* <!-- https://github.com/gohugoio/hugo/issues/4735#issuecomment-469381532 --> */}}
+                </div>
+            {{ end }}
+
             {{ $content := .Content }}
-            {{ $content = replace $content "\n" "<br>" | safeHTML }}
-            {{ $content = partial "process_divs.html" (dict "ctx" . "input" $content) }}
-            {{ $content = partial "function_color.html" (dict "ctx" . "input" $content) }}
-            {{ $content = partial "function_wrap_imgs.html" (dict "ctx" . "input" $content "removeSpacing" "true") }}
-            {{ $content = partial "function_local_imgs.html" (dict "ctx" . "input" $content) }}
-            {{ $content = partial "function_add_srcset.html" (dict "ctx" . "input" $content) }}
+            {{/* $content = replace $content "\n\n" "<br />" | safeHTML */}}
+            {{/* $content = partial "function_color.html" (dict "ctx" . "input" $content) */}}
+            {{/* $content = partial "function_add_srcset.html" (dict "ctx" . "input" $content) */}}
             {{ $content }}
 
             {{ if and (isset .Params "num_blog_previews") (isset .Params "blog_preview_category") }}

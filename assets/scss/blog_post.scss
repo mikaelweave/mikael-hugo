@@ -1,0 +1,79 @@
+@import "assets/scss/site_params.scss";
+
+.header{
+    h1 {
+        font-size: 60px;
+        max-width: 80%;
+        margin: 0 auto;
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+
+    img, picture {
+        padding-bottom: 60px;
+    }
+
+    margin-bottom: 20px;
+}
+
+img {
+    max-width: 100%;
+}
+
+article {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    //padding-left: 10%;
+    //padding-right: 10%;
+
+    div.image-wrap {
+        margin: 0 auto;
+        text-align: center;
+
+        img,
+        picture {
+            margin: 0 auto;
+        }
+    }
+}
+
+ul,
+ol {
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.highlight {
+    font-size: 18px;
+
+    > pre {
+        //width: fit-content;
+        padding: 2em;
+
+        overflow-x: auto;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+
+    > div {
+        //width: fit-content !important;
+    
+        padding: 1.5em;
+    
+        /*> table {
+            width: fit-content !important;
+    
+            td {
+                width: fit-content !important;
+            }
+    
+            pre {
+                width: fit-content;
+            }
+        }*/
+    }
+}

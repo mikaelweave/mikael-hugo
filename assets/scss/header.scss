@@ -1,0 +1,52 @@
+.page-nav {
+    max-width: 1200px;
+    height: 100px;
+    line-height: 100px;
+    margin: 0 auto;
+    padding-top: 15px;
+
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: column;
+
+    p, ul {
+        justify-self: right;
+        align-self: center;
+    }
+
+    .page-img-name {
+        display: flex;
+        margin-left: 20px;
+    
+        > * {
+            justify-self: center;
+            align-self: center;
+        }
+    
+        .page-nav-logo {
+            img, picture {
+                width: 6em;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 50%;
+            }
+    
+            margin-right: 20px;
+        }
+    
+        p {
+            font-family: monospace;
+            font-size: 24px;
+        }
+    }
+    
+    .menu {
+        display: flex;
+        list-style-type: none;
+        
+        li {
+            padding-left: 40px;
+        }
+    }
+}
