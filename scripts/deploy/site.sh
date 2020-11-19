@@ -26,6 +26,9 @@ az account set --subscription $SUBSCRIPTION_ID
 export CDN_BLOB_ACCOUNT_KEY=$(az storage account keys list --account-name $CDN_BLOB_ACCOUNT_NAME --output tsv --query '[0].value')
 npm run-script pull-srcsets
 
+## Pull code files
+npm run-script pull-code-files
+
 # Build Hugo
 hugo --minify
 
