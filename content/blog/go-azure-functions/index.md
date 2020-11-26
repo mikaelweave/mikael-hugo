@@ -1,7 +1,7 @@
 ---
 author: mikael
 # categories: [azure-functions]
-date: 2020-08-18 15:00:00
+date: 2020-10-18 15:00:00
 noindex: false
 featured_image: go-on-azure-functions-header.png
 tag: [azure functions, golang, go, custom handler]

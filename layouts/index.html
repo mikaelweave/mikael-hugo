@@ -6,13 +6,13 @@
 {{ end }}
 
 {{ define "content" }}
+    <!--
     <div id="about-box" class="center test-bg">
-        <h2 class="center">About Me</h2>
-
-        <p class="center">I'm a Technical Program Manager in Healthcare at Microsoft. I have a background in Software Engineering and Electrical Engineering. I live in Portland, Oregon.</p>
+        <p class="center">Health care, software, solutions for humans</p>
     </div>
+    -->
 
-    <h2 class="center">Latest Posts</h2>
+    <h2 class="center"></h2>
 
     {{ range first 10 (where site.RegularPages "Section" "==" "blog")}}
         {{ partial "blog_preview_square.html" . }}

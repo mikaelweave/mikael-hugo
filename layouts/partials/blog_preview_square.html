@@ -6,7 +6,7 @@
         {{ end }}
     </div>
     <div class="thumbnail-post-content">
-        <h2 class="blog-title"><a href="{{ .RelPermalink }}">{{ upper .Title }}</a></h2>
+        <h2 class="blog-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
         <span class="entry-meta">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
     </div>
 </article>

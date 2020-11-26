@@ -1,5 +1,50 @@
 @import "assets/scss/site_params.scss";
 
+.navbar {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+    padding-top: 4vw;
+    padding-bottom: 2em;
+    margin: 0 auto;
+    background-color: $white;
+    z-index: -10;
+
+    .navbar-logo {
+        img, picture {
+            width: 9em;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+
+            @include md {
+                width: 13.5em;
+            }
+
+            @include lg {
+                width: 18em;
+            }
+        }
+    }
+
+    // Fix off centering of menu due to word length difference
+    div.navbar-links.dropdown:not(:first-child) {
+        padding-left: 15px;
+    }
+
+    // Header for the page (Mikael Weaver)
+    h1.header-text {
+        position: relative;
+        text-align: center;
+        font-family: monospace;
+        width: 100%;
+        font-size: 4em;
+        font-weight: 700;
+    }
+}
+
 #about-box {
     margin-bottom: 2em;
     padding: 1em;
@@ -24,194 +69,138 @@
     }
 }
 
+h2.blog-title {
+    font-size: 24px;
+
+    @include md {
+        font-size: 32px;
+    }
+
+    @include lg {
+        font-size: 32px;
+    }
+}
+
 @mixin styling($headerMultiplier) {
-    
-    //////////////////////
-    // Navbar
-    //////////////////////
-    .navbar {
-        width: 100%;
-        max-width: 1200px;
-        position: relative;
-        transition: top 0.3s; /* Transition effect when sliding down (and up) */
-        padding-top: 4vw;
-        padding-bottom: 2em; 
-        margin: 0 auto;
-        background-color: $white;
-        z-index: -10;
+    .triangle-container {
+        position: absolute;
+        width: 80%;
+        left: 10%;
+        top: $headerMultiplier * 10%;
 
-        .navbar-logo {
-            img, picture {
-                width: $headerMultiplier * 9em;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                border-radius: 50%;
-            }
-        }
-
-        // Fix off centering of menu due to word length difference
-        div.navbar-links.dropdown:not(:first-child) {
-            padding-left: 15px;
-        }
-
-        .triangle-container {
+        .triangle-1-wrapper {
             position: absolute;
-            width: 80%;
-            left: 10%;
-            top: $headerMultiplier * 10%;
-
-            .triangle-1-wrapper {
-                position: absolute;
-                width: 8%;
-                z-index: -3;
-                margin-left: -5%;
-            }
-
-            .triangle-2-wrapper {
-                width: 8%;
-                position: absolute;
-                margin-left: 0%;
-                margin-top: 26%;
-                transform: rotate(250deg);
-                transform-origin: 0 0;
-                z-index: -1;
-            }
-            .triangle-3-wrapper {
-                width: 17%;
-                position: absolute;
-                margin-left: -10%;
-                margin-top: 5%;
-                transform: scaleX(-1) rotate(20deg);
-                z-index: -1;
-            }
-            .triangle-4-wrapper {
-                width: 22%;
-                position: absolute;
-                z-index: -1;
-                margin-left: 8%;
-                margin-top: 10%;
-                transform: rotate(4deg);
-            }
-            .triangle-5-wrapper {
-                width: 28%;
-                position: absolute;
-                margin-left: 18%;
-                margin-top: -9%;
-                transform: rotate(-19deg);
-                z-index: -2;
-            }
-            .triangle-6-wrapper {
-                width: 7%;
-                position: absolute;
-                z-index: -5;
-                margin-left: 40%;
-                margin-top: 11%;
-                transform: rotate(-9deg);
-            }
-            .triangle-7-wrapper {
-                width: 20%;
-                position: absolute;
-                margin-left: 40%;
-                margin-top: -10%;
-                transform: rotate(10deg);
-                z-index: -1;
-            }
-            .triangle-8-wrapper {
-                width: 18%;
-                position: absolute;
-                margin-left: 56%;
-                margin-top: 4%;
-                transform: rotate(12deg);
-                z-index: -3;
-            }
-            .triangle-9-wrapper {
-                width: 20%;
-                position: absolute;
-                z-index: -1;
-                margin-left: 85%;
-                margin-top: 0%;
-                transform: rotate(-15deg);
-            }
-            .triangle-10-wrapper {
-                width: 17%;
-                position: absolute;
-                z-index: -7;
-                margin-left: 70%;
-                margin-top: 0%;
-                transform: rotate(20deg);
-            }
-            .triangle-11-wrapper {
-                width: 8%;
-                position: absolute;
-                margin-left: 68%;
-                margin-top: 0%;
-                z-index: -1;
-                transform: rotate(-5deg);
-            }
-            .triangle-12-wrapper {
-                width: 12%;
-                position: absolute;
-                z-index: -1;
-                margin-left: 98%;
-                margin-top: -4%;
-                transform: rotate(5deg);
-            }
-            .desktop-nav {
-                background-color: white;
-                position: absolute;
-                width: 100%;
-                top: 35%;
-                z-index: -1;
-                display: flex;
-                justify-content: space-between;
-                height: 10%;
-            }
+            width: 8%;
+            z-index: -3;
+            margin-left: -5%;
         }
 
-        .header-text {
-            position: relative;
-            text-align: center;
-            font-family: monospace;
+        .triangle-2-wrapper {
+            width: 8%;
+            position: absolute;
+            margin-left: 0%;
+            margin-top: 26%;
+            transform: rotate(250deg);
+            transform-origin: 0 0;
+            z-index: -1;
+        }
+        .triangle-3-wrapper {
+            width: 17%;
+            position: absolute;
+            margin-left: -10%;
+            margin-top: 5%;
+            transform: scaleX(-1) rotate(20deg);
+            z-index: -1;
+        }
+        .triangle-4-wrapper {
+            width: 22%;
+            position: absolute;
+            z-index: -1;
+            margin-left: 8%;
+            margin-top: 10%;
+            transform: rotate(4deg);
+        }
+        .triangle-5-wrapper {
+            width: 28%;
+            position: absolute;
+            margin-left: 18%;
+            margin-top: -9%;
+            transform: rotate(-19deg);
+            z-index: -2;
+        }
+        .triangle-6-wrapper {
+            width: 7%;
+            position: absolute;
+            z-index: -5;
+            margin-left: 40%;
+            margin-top: 11%;
+            transform: rotate(-9deg);
+        }
+        .triangle-7-wrapper {
+            width: 20%;
+            position: absolute;
+            margin-left: 40%;
+            margin-top: -10%;
+            transform: rotate(10deg);
+            z-index: -1;
+        }
+        .triangle-8-wrapper {
+            width: 18%;
+            position: absolute;
+            margin-left: 56%;
+            margin-top: 4%;
+            transform: rotate(12deg);
+            z-index: -3;
+        }
+        .triangle-9-wrapper {
+            width: 20%;
+            position: absolute;
+            z-index: -1;
+            margin-left: 85%;
+            margin-top: 0%;
+            transform: rotate(-15deg);
+        }
+        .triangle-10-wrapper {
+            width: 17%;
+            position: absolute;
+            z-index: -7;
+            margin-left: 70%;
+            margin-top: 0%;
+            transform: rotate(20deg);
+        }
+        .triangle-11-wrapper {
+            width: 8%;
+            position: absolute;
+            margin-left: 68%;
+            margin-top: 0%;
+            z-index: -1;
+            transform: rotate(-5deg);
+        }
+        .triangle-12-wrapper {
+            width: 12%;
+            position: absolute;
+            z-index: -1;
+            margin-left: 98%;
+            margin-top: -4%;
+            transform: rotate(5deg);
+        }
+        .desktop-nav {
+            background-color: white;
+            position: absolute;
             width: 100%;
-            font-size: $headerMultiplier * 2.8em;
-            font-weight: 700;
-        }
-
-        ul.link-row {
-            text-align: center;
-            li {
-                display: inline;
-                font-size: 2%;
-            }
-            
-            // Mobile
-            img {
-                width: 3.5%;
-                margin-left: 1.25%;
-                margin-right: 1.25%;
-            }
-            
-            // Tablet
-            @include md {
-                img {
-                    width: 3%;
-                    margin-left: 1%;
-                    margin-right: 1%;
-                }
-            }
-
-            // Desktop
-            @include lg {
-                img {
-                    width: 2%;
-                    margin-left: 0.75%;
-                    margin-right: 0.75%;
-                }
-            }
+            top: 35%;
+            z-index: -1;
+            display: flex;
+            justify-content: space-between;
+            height: 10%;
         }
     }
 }
+
+// Scaling numbers for width changes
+$small-scale-factor: 1;
+$medium-scale-factor: 1.5;
+$large-scale-factor: 2;
 
 @include styling($headerMultiplier: $small-scale-factor);
 @include md {
