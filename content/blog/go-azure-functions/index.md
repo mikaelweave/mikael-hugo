@@ -375,7 +375,7 @@ For more information on Azure Function custom handlers, check out the following 
 - [Official Documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-custom-handlers)
 - [Official Samples](https://github.com/Azure-Samples/functions-custom-handlers)
 - [Blog post - Write Azure Functions in *any* language with the HTTP Worker (Custom Handler)](https://itnext.io/write-azure-functions-in-any-language-with-the-http-worker-34d01f522bfd)
-- [Blog Post](https://www.serverless360.com/blog/azure-function-custom-handlers)
+- [Blog Post - Detailed view on Azure Function Custom Handlers](https://www.serverless360.com/blog/azure-function-custom-handlers)
 
 &nbsp;
 &nbsp;
