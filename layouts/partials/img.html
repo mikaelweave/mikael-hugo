@@ -45,30 +45,29 @@
         {{ $combinedSizes = $combinedSizes | union  (slice .) }}
 {{end }}{{ end }}
 
-{{ if gt (index (sort $combinedSizes "value" "desc") 0) 1199 }}
-    {{ $scratch.Set "srcset" slice }}
 
-    {{ range $extension, $sizes := (index $srcSets $srcStr) }}
-        {{/* <!-- If different format, use picture--> */}}
-        {{ if not (eq $orig_extension $extension) }}
-            {{ range (sort $sizes "value" "desc") }}
-                {{ $usePicture = true }}
-                {{ $picturePath := delimit (slice $srcsetPrefix (replace (delimit (slice $pathNoExtension "_" . "w." $extension) "") " " "%20")) ""  }}
-                {{ $pictureStr = printf "%s %s" $pictureStr (printf "<source type=\"image/%s\" media=\"(min-width: %spx)\" srcset=\"%s\" />" $extension (string .) $picturePath) }}
+{{ $scratch.Set "srcset" slice }}
+
+{{ range $extension, $sizes := (index $srcSets $srcStr) }}
+    {{/* <!-- If different format, use picture--> */}}
+    {{ if not (eq $orig_extension $extension) }}
+        {{ range (sort $sizes "value" "desc") }}
+            {{ $usePicture = true }}
+            {{ $picturePath := delimit (slice $srcsetPrefix (replace (delimit (slice $pathNoExtension "_" . "w." $extension) "") " " "%20")) ""  }}
+            {{ $pictureStr = printf "%s %s" $pictureStr (printf "<source type=\"image/%s\" media=\"(min-width: %spx)\" srcset=\"%s\" />" $extension (string .) $picturePath) }}
+        {{ end }}
+    {{ else }}
+        {{range sort $sizes }}
+            {{ $srcSetPath := (replace (delimit (slice $srcsetPrefix $pathNoExtension "_" . "w." $extension) "") " " "%20") }}
+            {{ $scratch.Add "srcset" (delimit  (slice $srcSetPath " " . "w") "") }}
+            {{ if and (eq $srcStrReplaced false) (gt . $mobileMaxSize) }}
+                    {{ $srcStr = $srcSetPath }}
+                    {{ $srcStrReplaced = true }}
             {{ end }}
-        {{ else }}
-            {{range sort $sizes }}
-                {{ $srcSetPath := (replace (delimit (slice $srcsetPrefix $pathNoExtension "_" . "w." $extension) "") " " "%20") }}
-                {{ $scratch.Add "srcset" (delimit  (slice $srcSetPath " " . "w") "") }}
-                {{ if and (eq $srcStrReplaced false) (gt . $mobileMaxSize) }}
-                        {{ $srcStr = $srcSetPath }}
-                        {{ $srcStrReplaced = true }}
-                {{ end }}
-                
-            {{ end }}
-            {{ if gt (len ($scratch.Get "srcset")) 0 }}
-                {{ $srcsetStr = delimit ($scratch.Get "srcset") ", " }}
-            {{ end }}
+            
+        {{ end }}
+        {{ if gt (len ($scratch.Get "srcset")) 0 }}
+            {{ $srcsetStr = delimit ($scratch.Get "srcset") ", " }}
         {{ end }}
     {{ end }}
 {{ end }}
@@ -87,7 +86,7 @@
         alt="{{ $alt }}"
         class="{{ $class }}"
 
-        {{ if not (eq $srcsetStr "") }}    
+        {{ if not (eq $srcsetStr "") }}
             {{ if eq $lazy true }}
                 {{ printf "data-srcset=%q" $srcsetStr | safeHTMLAttr }}
             {{ else }}
