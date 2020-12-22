@@ -17,15 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-    - name: "Setup Node 12"
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-        
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
+      - name: "Setup Node 12"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
       - name: Install Python Dependencies
         run: pip install -r python_requirements.txt
