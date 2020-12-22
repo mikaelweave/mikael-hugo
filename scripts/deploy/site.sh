@@ -30,7 +30,7 @@ npm run-script pull-srcsets
 npm run-script pull-code-files
 
 # Build Hugo
-hugo --minify
+hugo --minify --environment production
 
 # Get end date for SAS token for upload
 if [[ "$OSTYPE" == "darwin"* ]]; then

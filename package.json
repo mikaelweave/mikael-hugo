@@ -14,7 +14,8 @@
     "pull-images": "python3 scripts/pull_images.py",
     "pull-code-files": "python3 scripts/pull_code_files.py",
     "push-changed-images": "python3 scripts/push_images.py",
-    "push-all-images": "python3 scripts/push_images.py True"
+    "push-all-images": "python3 scripts/push_images.py True",
+    "build": "hugo --environment production"
   },
   "repository": {
     "type": "git",

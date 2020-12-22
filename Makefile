@@ -14,7 +14,7 @@ help:
 
 build:
 	python3 scripts/pull_code_files.py
-	hugo --minify
+	hugo --minify --environment production
 
 deploy-infra: 
 	bash scripts/deploy/infrastructure.sh
