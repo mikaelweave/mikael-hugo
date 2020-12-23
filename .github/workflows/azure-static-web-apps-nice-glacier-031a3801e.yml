@@ -25,8 +25,13 @@ jobs:
       - name: Install Python Dependencies
         run: pip install -r python_requirements.txt
 
-      - name: Pull Code Files
-        run: python3 scripts/pull_code_files.py
+      - name: Pull Code and Srcset Files
+        run: |
+          python3 scripts/pull_code_files.py
+          python3 scripts/pull_srcsets_files.py
+        env:
+          CDN_BLOB_ACCOUNT_NAME: ${{ secrets.CDN_BLOB_ACCOUNT_NAME }}
+          CDN_BLOB_ACCOUNT_KEY: ${{ secrets.CDN_BLOB_ACCOUNT_KEY }}
 
       - name: Build And Deploy
         id: builddeploy
