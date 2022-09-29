@@ -22,7 +22,7 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
         print(f"Processing {directory}...")
         block_blob_service = BlockBlobService(account_name=STORAGE_ACCOUNT_NAME, account_key=STORAGE_ACCOUNT_KEY)
         block_blob_service.create_container(blob_container_name)
-        block_blob_service.set_container_acl(blob_container_name, public_access=PublicAccess.Container)
+        block_blob_service.set_container_acl(blob_container_name, public_access=PublicAccess.Blob)
 
         blob_reference = {}
         # It's helpful to just have a list of blobs in the container
@@ -41,9 +41,14 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
                 print(f'Subdirectory {last_dir}...') 
 
             for file in files:
-                if pathlib.Path(file).suffix.lower() in ['.jpg', '.jpeg', '.png', 'gif']:
+                if pathlib.Path(file).suffix.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
                     file_path = os.path.realpath(os.path.join(subdir, file))
-                    blob_name = file_path.replace(f'{os.path.realpath(directory)}/', "")
+                    # Remove the content or static dirs and container name
+                    blob_name = f'{"/".join(subdir.split("/")[2:])}/{file}'.strip('/')
+
+                    # Skip files that start with a dot
+                    if os.fsdecode(file).startswith('.'):
+                        continue
 
                     # Skip unchanged files - probably could use a better approach here
                     if blob_name in blob_reference and blob_reference[blob_name] == os.path.getsize(file_path):
@@ -55,7 +60,7 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
                     #block_blob_service.create_blob_from_path(container_name=blob_container_name, blob_name=blob_name, file_path=file_path)
 
         def push_image(blob_info):
-            print(f'Pushing image {blob_info[1]}...')
+            print(f'Pushing image {blob_info[1]} to {blob_info[0]}...')
             block_blob_service.create_blob_from_path(container_name=blob_container_name, blob_name=blob_info[0], file_path=blob_info[1])
 
         with ThreadPoolExecutor(max_workers=DOP) as executor:
@@ -64,7 +69,7 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
                     running_task.result()
 
     try:
-        push_paths = filter(lambda x: len(x) > 0, [os.path.dirname(x) for x in find_git_changes()])
+        push_paths = list(filter(lambda x: len(x) > 0, [os.path.dirname(x) for x in find_git_changes()]))
 
         if push_everything:
             # Push static images
@@ -77,7 +82,7 @@ def run(STORAGE_ACCOUNT_NAME, STORAGE_ACCOUNT_KEY, push_everything):
             if any(path.startswith('layouts') or path == 'static' for path in push_paths):
                 push_imgs_in_dir("static/img/", "img")
             # Push content images
-            for path in filter(lambda p: p.startswith('content') and p != "content/_index.md", push_paths):
+            for path in list(filter(lambda p: p.startswith('content') and p != "content/_index.md", push_paths)):
                 push_imgs_in_dir(path, path.split('/')[1], '/'.join(path.split('/')[1:-1]))
 
     except Exception as err:
@@ -93,7 +98,7 @@ BLOB_ACCOUNT_NAME = os.getenv("CDN_BLOB_ACCOUNT_NAME")
 BLOB_ACCOUNT_KEY = os.getenv("CDN_BLOB_ACCOUNT_KEY")
 
 # if true is passed, push everything
-if len(sys.argv) > 1 and sys.argv[1] == 'True':
+if True:
     run(BLOB_ACCOUNT_NAME, BLOB_ACCOUNT_KEY, True)
 else:
     run(BLOB_ACCOUNT_NAME, BLOB_ACCOUNT_KEY, False)

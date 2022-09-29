@@ -1,0 +1,21 @@
+{{ $mobileMaxSize := .ctx.Site.Params.mobile_max_size | default 1000 }}
+{{ $srcsetPrefix := .ctx.Site.Params.srcset_img_prefix | default "" }}
+{{ $srcStr := .img }}
+
+
+{{ if (isset .ctx.Site.Data.srcsets $srcStr) }}
+    {{ $pathNoExtension := substr $srcStr 0 -4 }}
+    {{ $orig_extension := substr $srcStr (sub (len $srcStr) 3) }}
+
+    {{ range $extension, $sizes := (index .ctx.Site.Data.srcsets $srcStr) }}
+        {{ if (eq $orig_extension $extension) }}
+            {{ range (sort $sizes "value" "desc") }}
+                {{ if (gt . $mobileMaxSize) }}
+                        {{ $srcStr = (replace (delimit (slice $srcsetPrefix $pathNoExtension "_" . "w." $extension) "") " " "%20") }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ $srcStr }}

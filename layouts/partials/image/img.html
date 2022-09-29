@@ -1,0 +1,154 @@
+{{/* 
+    FUNCTION: img.html
+
+    Main function to hold all logic for rendering images for the site. The goal is to take a single image
+    reference like "blog/post/123.jpg" and convert is to something like:
+        <picture>
+            <source type="image/webp" media="min-width and scaling factor for retina" srcset="remote link of correctly sized image">
+            <img (here for fallback on old browsers)>
+        </picture>
+    
+    Yes, this file is complicated, I am sorry. But hey - at least the logic is all in the same place??
+
+    This file is not meant to be simple. This file is also not meant to be called from common code. There
+    are other functions in this folder which make adding a well sized image more simple. This monster was
+    created because I kept duplicating logic in different places.
+
+    Hopefully the comments help, if not I AM SORRY! There is a debug example commented out below. I use it as needed,
+    don't feel guilty if you need to! 
+*/}}
+
+{{/* START: Prep */}}
+{{/* START: Populate variables from input and site params */}}
+{{ $srcStr := .src }}
+{{ $alt := .alt | default "" }}
+{{ $class := .class | default "" }}
+{{ $trace := (printf "%s - img.html" .trace) | default "img.html" }}
+{{ $lazy := false }}
+{{ if isset . "lazy" }} {{ $lazy = true }} {{ $class = (delimit (slice "lazyload" $class) " ") }} {{ end }}
+{{ $ctx := .ctx }}
+{{ $imgTagSizes := .sizes | default "(min-width: 2000px) 2000px, 50vw" }}
+
+{{ $prefix := $ctx.Site.Params.img_prefix | default "" }}
+{{ $srcsetPrefix := $ctx.Site.Params.srcset_img_prefix | default "" }}
+{{ $mobileMaxSize := $ctx.Site.Params.mobile_max_size | default 1000 }}
+{{ $imgScaleFactors := $ctx.Site.Params.img_scale_factors | default (slice 1.5 2 3) }}
+{{/* END: Populate variables from input and site params */}}
+
+{{/* START: Setup img parameters these are just defaults for inputs, loops, etc */}}
+{{ $srcsetStr := "" }}
+{{ $pictureStrings := slice }}
+{{ $imageData := slice }}
+{{/* END Setup img parameters */}}
+{{/* END: Prep */}}
+
+{{ $debug := false }}
+{{ if eq $srcStr "https://mikaeldevcdn.blob.core.windows.net/blog/easy-postman-and-azure-fhir-configuration/postman-get-token-recording.gif" }}
+    {{ $debug = true }}
+{{ end }}
+
+{{/* START: GENERATE ORDERED PICTURE/IMG DATA */}}
+{{/* Figure out image location */}}
+{{ if eq $srcStr "" }}
+    {{ errorf "Input cannot be null in img - %s" . }}
+{{ end }}
+{{ $srcStr := partial "image/function_local_img_resolver.html" (dict "input" $srcStr "ctx" $ctx "trace" $trace) }}
+
+
+{{/* Figure out image detail */}}
+{{ $pathNoExtension := substr $srcStr 0 -4 }}
+{{ $orig_extension := substr $srcStr (sub (len $srcStr) 3) }}
+
+{{/* Filter out external images */}}
+{{ if and (not (hasPrefix $srcStr "https://")) (not (hasPrefix $srcStr "http://")) }}
+
+    {{/* Throw an error if we expect the image but it's not there! */}}
+    {{ if and (eq .ctx.Site.Params.fail_image_not_in_srcset true) (not (isset $ctx.Site.Data.srcsets $srcStr)) }}
+        {{ errorf "Failed to find image for srcset processing %s" $srcStr }}
+    {{ end }}
+
+    {{/* Get available file types and sizes from image optimization pipeline data file */}}
+    {{ $availableExtensionsSizes := index $ctx.Site.Data.srcsets $srcStr }}
+
+    {{ range $extension, $sizes := $availableExtensionsSizes }}
+        {{/* Convert image data to more robust object that can be used to create HTML */}}
+        {{ range $sizes }}
+            {{ $picturePath := delimit (slice $srcsetPrefix (replace (delimit (slice $pathNoExtension "_" . "w." $extension) "") " " "%20")) "" }} {{/* <!-- #TODO: Split this out to a function --> */}}
+            {{ $imageData = $imageData | append (dict "extension" $extension "scaleFactor" 1 "width" . "path" $picturePath) }}
+        {{ end }}
+
+        {{ if eq (len $sizes) 0 }}
+            {{ $imageData = $imageData | append (dict "extension" $extension "scaleFactor" 1 "width" 0 "path" (printf "%s%s.%s" $srcsetPrefix $pathNoExtension $extension) ) }}
+        {{ end }}
+    {{ end }}
+
+    {{/* Add scale factors to image for retina displays (like iPhones). Look at this partial for more details. */}}
+    {{ $imageData = partial "image/function_add_scale_factor_to_img.html" (dict "imageData" $imageData "ctx" $ctx) }}
+
+    {{/* Create sorted slice of picture strings for rendering */}}
+    {{ $pictureStrings = partial "image/function_generate_picture_strings.html" (dict "imageData" $imageData "sizes" $imgTagSizes "lazy" $lazy "ctx" $ctx) }}
+
+    {{/* Generate fallback img */}}
+    {{ $srcsetStr = partial "image/function_generate_srcset_string.html" (dict "imageData" $imageData "ctx" $ctx) }}
+
+    {{/* Find a reasonably sized default image */}}
+    {{ range $extension, $sizes := $availableExtensionsSizes }}
+        {{ if ne $extension "webp" }}
+            {{ range (sort $sizes) }}
+                {{ if lt . $mobileMaxSize }}
+                    {{ $srcStr = delimit (slice $srcsetPrefix (replace (delimit (slice $pathNoExtension "_" . "w." $extension) "") " " "%20")) "" }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+
+    {{/* If the image is in the data file with no alt sizes, just use the orig size */}}
+    {{ if and (or (eq $availableExtensionsSizes nil) (eq (len $availableExtensionsSizes) 0)) (isset $ctx.Site.Data.srcsets $srcStr) }}
+        {{ $srcStr = printf "%s%s" $srcsetPrefix $srcStr }}
+    {{ end }}
+
+    {{/* DEBUG EXAMPLE */}}
+    {{/* if eq $srcStr "blog/prineville-reservoir-elopement/painted-hills-prineville-elopement-0001.jpg" }}
+        {{ range $imageData }}
+            {{ warnf "POOP - %s" . }}
+        {{ end }}
+    {{ end */}}
+{{ end }}
+{{/* END: GENERATE ORDERED PICTURE/IMG DATA */}}
+
+
+{{/* START: RENDER HTML */}}
+{{- if gt (len $pictureStrings) 0 -}}
+    <picture>
+        {{- range $pictureStrings -}} {{- . | safeHTML -}} {{- end -}}
+{{- end -}}
+        <img
+        alt="{{ $alt }}"
+        class="{{ $class }}"
+
+        {{ if not (eq $srcsetStr "") }}
+            {{ if eq $lazy true }}
+                {{ printf "data-srcset=%q" $srcsetStr | safeHTMLAttr }}
+            {{ else }}
+                {{ printf "srcset=%q" $srcsetStr | safeHTMLAttr }}
+            {{ end }}
+        {{ end }}
+
+        {{ if eq $lazy true }}
+            data-src='{{ $srcStr }}'
+            {{ if isset . "sizes" }}
+                data-sizes="{{ .sizes }}"
+            {{ else }}
+                data-sizes="auto"
+            {{ end }}
+        {{ else }}
+            {{ if isset . "sizes" }}
+                sizes="{{ .sizes }}"
+            {{ end }}
+            src='{{ $srcStr }}'
+        {{end}}
+        >
+{{- if gt (len $pictureStrings) 0 -}}
+    </picture>
+{{- end -}}
+{{/* END: RENDER HTML */}}

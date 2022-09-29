@@ -5,8 +5,8 @@
     <article class="post excerpt column">
       <div class="feature-thumbnail-container">
           {{ if isset .Params "featured_image" }}
-              {{ $previewImageUrl := (partial "function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image)) }}
-              <a href="{{ .RelPermalink }}">{{ partial "function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $previewImageUrl .Title )) }}</a> 
+              {{ partial "image/img.html" (dict "ctx" . "src" .Params.featured_image "trace" "list.html")}}</a> 
+              <a href="{{ .RelPermalink }}">{{ partial "image/img.html" (dict "src" .Params.featured_image "alt" .Title "ctx" . "trace" "list.html") }}</a>
           {{ end }}
       </div>
       <div class="thumbnail-post-content">

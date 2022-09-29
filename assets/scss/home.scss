@@ -51,20 +51,44 @@
     width: 75%;
 }
 
+.post {
+    position: relative;
+}
+
+article {
+    margin-bottom: 4rem;
+}
+
 .feature-thumbnail-container {
-    img {
-        max-width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    position: relative;
+
+    max-width: 1200px;
+
+    a {
+        flex: 1;
+    }
+    picture {
+        img {
+            width: 100%;
+            height: auto;
+        }
     }
 
     @include md {
-        img {
-            max-width: 60%;
+        width: 60%;
+        picture {
+            max-width: 900px;
         }
     }
 
     @include lg {
-        img {
-            max-width: 40%;
+        width: 40%;
+        picture {
+            max-width: 600px;
         }
     }
 }

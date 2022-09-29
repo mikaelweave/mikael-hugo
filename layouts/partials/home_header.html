@@ -63,7 +63,7 @@
     </div>
 
     <div class="navbar-logo">
-        {{ partial "img.html" (dict "img" $.Site.Params.header_logo "ctx" $ "class" "nav-logo" "sizes" "(min-width: 1px) 270px") }}
+        {{ partial "image/img.html" (merge .Site.Params.header_logo (dict "ctx" . "class" "nav-logo" "sizes" "(min-width: 1px) 270px" "trace" "home_header.html")) }}
     </div>
 
     {{/*  This will keep the header order correct */}}

@@ -26,6 +26,15 @@ deploy-all:
 	bash scripts/deploy/infrastructure.sh
 	bash scripts/deploy/site.sh
 
+pull-images:
+	python3 scripts/pull_images.py
+
+push-images:
+	python3 scripts/push_images.py
+
+pull_srcsets_files:
+	python3 scripts/pull_srcsets_files.py
+
 run:
 	python3 scripts/pull_code_files.py
 	hugo serve -D

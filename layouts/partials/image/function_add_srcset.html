@@ -1,0 +1,33 @@
+{{/* 
+    FUNCTION: function_add_srcset.html
+
+    Takes content and adds img.html function for converting single img reference to a
+    optimized html with different sizes and formats for devices.
+
+    Look at the img.html function and the README for the image optimization pipeline for more details.
+*/}}
+
+{{/* Setup for function */}}
+{{ $scratch := newScratch }}
+{{ $scratch.Set "Content" .input }}
+{{ $ctx := .ctx }}
+
+{{/* Get images from content input */}}
+{{ $imgs := (($scratch.Get "Content") | findRE "<img src=\"[^\"]*\" alt=\"[^\"]*\" ?/?>" ) }}
+
+{{/* For all found imgs */}}
+{{ range $imgs }}
+
+    {{/* Extract src property */}}
+    {{ $src := (strings.TrimRight "\"" (substr (index (findRE "src=\"[^\"]*\"" .) 0) 5)) }}
+
+    {{/* Extract alt property */}}
+    {{ $alt := (strings.TrimRight "\"" (substr (index (findRE "alt=\"[^\"]*\"" .) 0) 5)) }}
+
+    {{/* Replace with result of img function */}}
+    {{ $replace := partial "image/img.html" (dict "src" $src "alt" $alt "lazy" true "ctx" $ctx "trace" "function_add_srcset.html") }}
+    {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) . $replace) }}
+{{ end }}
+
+{{/* Output HTML */}}
+{{ safeHTML ($scratch.Get "Content") }}

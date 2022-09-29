@@ -9,8 +9,11 @@
         margin-bottom: 60px;
     }
 
+    position: relative;
+
     img, picture {
-        padding-bottom: 60px;
+        padding-bottom: 4rem;
+        width: 70%;
     }
 
     margin-bottom: 20px;
@@ -47,33 +50,15 @@ ol {
 .highlight {
     font-size: 18px;
 
-    > pre {
-        //width: fit-content;
-        padding: 2em;
-
+    pre {
         overflow-x: auto;
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
     }
 
-    > div {
-        //width: fit-content !important;
-    
-        padding: 1.5em;
-    
-        /*> table {
-            width: fit-content !important;
-    
-            td {
-                width: fit-content !important;
-            }
-    
-            pre {
-                width: fit-content;
-            }
-        }*/
+    div {
+        overflow-x: auto;
+    }
+
+    table {
+        padding: 1rem !important;
     }
 }

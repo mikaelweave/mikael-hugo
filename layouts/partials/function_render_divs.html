@@ -19,7 +19,7 @@
     {{ $alt := (strings.TrimRight "\"" (substr (index (findRE "alt=\"[^\"]*\"" .) 0) 5)) }}
     {{ $scratch.SetInMap "img" "alt" $alt }}
 
-    {{ $replace := partial "img.html" (dict "img" ($scratch.Get "img") "lazy" true "ctx" $ctx ) }}
+    {{ $replace := partial "image/img.html" (dict "img" ($scratch.Get "img") "lazy" true "ctx" $ctx "trace" "function_render_divs.html") }}
     {{ $scratch.Set "Content" (replace (string ($scratch.Get "Content")) . $replace) }}
 {{ end }}
 

@@ -1,0 +1,87 @@
+{{/*
+    FUNCTION:    image/function_generate_picture_strings.html
+
+    DESCRIPTION: Takes a slice of image detail objects as an input and returns a sorted list
+                 of picture source elements for rendering.
+
+    INPUT:       
+                imageData: Slice (Hugo list) of image detail objects. These objects are expected to have
+                           the following properties:
+                            - extension: image extension as we are dealing with webp and the orig format
+                            - scaleFactor: used for sorting as higher scale factors need to be made available first
+                            - width: the original image width
+                            - path: the path to the image to be rendered on the page
+
+                sizes: Used if we know the width of the element 
+                ctx: Hugo context
+
+
+    OUTPUT:      The same slice object as the input EXCEPT with records set for scale factors > 1.
+
+    REFERENCES:  https://iosref.com/res
+                 https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/image-size-and-resolution/
+                 https://ericportis.com/posts/2014/srcset-sizes/
+                 https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
+                 https://www.smashingmagazine.com/2014/05/responsive-images-done-right-guide-picture-srcset/
+                 https://webdesign.tutsplus.com/tutorials/quick-tip-how-to-use-html5-picture-for-responsive-images--cms-21015
+*/}}
+
+{{/* Setup for function */}}
+{{ $ctx := .ctx }}
+{{ $imageData := .imageData }}
+{{ $sizes := .sizes | default nil }}\
+{{ $lazyPrefix := "" }} 
+{{ if and (isset . "lazy") (eq (index . "lazy") true) }}{{ $lazyPrefix = "data-" }} {{ end }}
+
+{{ $uniqExtensions := slice }}
+{{ range $imageData }}
+    {{ $uniqExtensions = uniq ($uniqExtensions | append (index . "extension")) }}
+{{ end }}
+
+{{ $uniqWidths := slice }}
+{{ range $imageData }}
+    {{ $uniqWidths = uniq ($uniqWidths | append (index . "width")) }}
+{{ end }}
+
+{{ $uniqScaleFactor := slice }}
+{{ range $imageData }}
+    {{ $uniqScaleFactor = uniq ($uniqScaleFactor | append (index . "scaleFactor")) }}
+{{ end }}
+
+{{ $pictureStrings := slice }}
+
+{{ range $extension := (sort $uniqExtensions "value" "desc") }} {{/* This is a kludge to render webp first */}}
+    {{ range $scaleFactor := (sort $uniqScaleFactor "value" "desc") }}
+
+        {{ $thisString := printf "<source type=\"image/%s\" media=\"" $extension }} {{/* " */}}
+
+        {{ if ne $scaleFactor 1 }}
+            {{ $thisString = printf "%s(-webkit-min-device-pixel-ratio: %s)" $thisString (string $scaleFactor) }}
+        {{ end }}
+
+        {{ $srcSets := slice }}
+        {{ range $width := (sort $uniqWidths "value" "desc") }}
+            {{ $thisRecord := index (where (where (where $imageData "extension" $extension) "width" $width) "scaleFactor" $scaleFactor) 0 }}
+
+            {{ if isset $thisRecord "path" }}
+                {{ if eq $width 0}}
+                    {{ $srcSets = $srcSets | append (printf "%s" (index $thisRecord "path")) }}
+                {{ else }}
+                    {{ $srcSets = $srcSets | append (printf "%s %sw" (index $thisRecord "path") (string (mul $width $scaleFactor))) }}
+                {{ end }}
+            {{ end }}
+        {{ end }} 
+
+        {{ $thisString = printf "%s\" %ssrcset=\"%s\"" $thisString $lazyPrefix (delimit $srcSets ",") }} {{/* " */}}
+        
+        {{ if ne $sizes nil }}
+            {{ $thisString = printf "%s %ssizes=\"%s\"" $thisString $lazyPrefix $sizes}}
+        {{ end }}
+
+        {{ $thisString = printf "%s />" $thisString }}
+        {{ $pictureStrings = $pictureStrings | append $thisString }}Z
+    {{ end }}
+{{ end }}
+
+{{/* Return input image data combined with new data with proper scale sizes */}}
+{{ return $pictureStrings }}

@@ -1,0 +1,103 @@
+{{/*
+    FUNCTION:    image/function_add_scale_factor_to_img.html
+
+    DESCRIPTION: Takes a slice of image detail objects as an input and adds more records
+                 for different screen scale factors. For example, the iPhone 12 has a 
+                 screen width of 390px but a 3x scale factor. If we did not take this 
+                 scale factor into account, the image would be low quality for the user.
+
+    INPUT:       Slice (Hugo list) of image detail objects. These objects are expected to have
+                 the following properties:
+                    - extension: image extension as we are dealing with webp and the orig format
+                    - scaleFactor: we need records with this = 1 or this not populated
+                    - width: the original image width
+                    - path: the path to the image to be rendered on the page
+
+    OUTPUT:      The same slice object as the input EXCEPT with records set for scale factors > 1.
+
+    REFERENCES:  https://iosref.com/res
+                 https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/image-size-and-resolution/
+                 https://ericportis.com/posts/2014/srcset-sizes/
+                 https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
+                 https://www.smashingmagazine.com/2014/05/responsive-images-done-right-guide-picture-srcset/
+                 https://webdesign.tutsplus.com/tutorials/quick-tip-how-to-use-html5-picture-for-responsive-images--cms-21015
+*/}}
+
+{{/* Setup for function */}}
+{{$ctx := .ctx }}
+{{/* Only blank or 1 scale factors, set all to 1 */}}
+{{$origImageData :=  slice }}
+{{range .imageData }} 
+    {{if or (eq (index . "scaleFactor") 1) (eq (index . "scaleFactor") nil) }}
+        {{$origImageData = $origImageData | append (dict "extension" (index . "extension") "scaleFactor" 1 "width" (index . "width") "path" (index . "path")) }}
+    {{end }}
+{{end }}
+{{$newImageData := slice }}
+{{ $imgScaleFactors := $ctx.Site.Params.img_scale_factors | default (slice 1.5 2 3) }}
+
+{{/* Different extensions could have different sizes, we want to process them separately */}}
+{{$uniqExtensions := slice }}
+{{range $origImageData }}
+    {{$uniqExtensions = uniq ($uniqExtensions | append (index . "extension")) }}
+{{end }}
+
+{{range $extension:= $uniqExtensions }}
+
+    {{/* We need to know what sizes are available */}}
+    {{$uniqWidths := slice }}
+    {{range (where $origImageData "extension" $extension) }}
+        {{$uniqWidths = uniq ($uniqWidths | append (index . "width")) }}
+    {{end }}
+    
+    {{/* For each scale factor we need to account for */}}
+    {{range $scaleFactor := (sort $imgScaleFactors "value" "desc") }}
+
+        {{/* For each image size from input */}}
+        {{ $break := false}}
+        {{range $origWidth := (sort $uniqWidths) }}
+
+            {{ if not $break }}
+                {{/* Find the closest size match for scale factor */}}
+                {{$closestMatch := $origWidth }}
+                {{$perfectMatch := mul $origWidth $scaleFactor }}
+                {{range (sort $uniqWidths) }}
+                    {{$currentDifference := cond (ge $perfectMatch $closestMatch) (sub $perfectMatch $closestMatch) (sub $closestMatch $perfectMatch) }}
+                    {{$testMatch := . }}
+                    {{$testDifference := cond (ge $perfectMatch $testMatch) (sub $perfectMatch $testMatch) (sub $testMatch $perfectMatch) }}
+
+                    {{/* TEST DEBUG STATEMENT */}}
+                    {{/* if gt (len $origImageData) 0 }}
+                        {{ if isset (index $origImageData 0) "path" }}
+                            {{ if in (index (index $origImageData 0) "path") "about-katy-blonde" }}
+                                {{ if eq $scaleFactor 3 }}
+                                    {{ if eq (int $origWidth) 320 }}
+                                        {{ warnf "POOP - %s - %s ----- %s %s %s" . $closestMatch $currentDifference $testMatch $testDifference }}
+                                    {{ end }}
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end */}}
+
+                    {{ if lt $testDifference $currentDifference }}
+                        {{ $closestMatch = . }}
+                    {{ end }}
+                {{ end }}
+
+                {{/* Append to newImageData output */}}
+                {{$scaledPath := index (index (where (where $origImageData "extension" $extension) "width" $closestMatch) 0) "path" }}
+                {{$newImageData = $newImageData | append (dict "extension" $extension "scaleFactor" $scaleFactor "width" $origWidth "path" $scaledPath) }}
+
+                {{/* Break if at the largest size (reduces duplication - we don't need to explicitly say use the largest size multiple times) */}}
+                {{if eq $closestMatch (index (sort $uniqWidths "value" "desc") 0) }}
+                    {{ $break = true }}
+                {{end }}
+            {{end }}
+        {{end }}
+    {{end }}
+{{end }}
+
+{{/* Return input image data combined with new data with proper scale sizes */}}
+{{range $origImageData }}
+    {{ $newImageData = $newImageData | append .}}
+{{end }}
+{{return $newImageData }}

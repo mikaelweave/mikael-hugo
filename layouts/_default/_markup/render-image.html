@@ -1,3 +1,6 @@
 <div class="image-wrap">
-    {{ $src := chomp (trim (partial "function_local_img_resolver.html" (dict "ctx" .Page "input" .Destination )) " \n") }} {{ partial "img.html" (dict "img" (dict "src" $src "alt" .Text ) "lazy" true "ctx" .Page ) }}
+    {{ if eq .Destination "" }}
+        {{ errorf "Input cannot be null in render-image - %s" .Page }}
+    {{ end }}
+    {{ partial "image/img.html" (dict "ctx" .Page "src" .Destination "trace" "render-image.html") }}
 </div>

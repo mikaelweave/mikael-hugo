@@ -1,0 +1,168 @@
+{{/* 
+    FUNCTION: img_mobile_desktop.html
+
+    Function to allow for different images to be rendered on desktop vs mobile platforms. This is done via 
+    the screen width.
+        <picture>
+            <source type="image/webp" media="min-width and scaling factor for retina" srcset="remote link of correctly sized image for desktop">
+            <source type="image/webp" media="min-width and scaling factor for retina" srcset="remote link of correctly sized image for mobile">
+            <img (here for fallback on old browsers)>
+        </picture>
+*/}}
+
+
+{{/* START: Prep */}}
+{{/* START: Populate variables from input and site params */}}
+{{ $desktop_srcStr := .desktop_src }}
+{{ $mobile_srcStr := .mobile_src }}
+{{ $alt := .alt | default "" }}
+{{ $class := .class | default "" }}
+{{ $trace := .trace | default slice "empty" }}
+{{ $lazy := false }}
+{{ if isset . "lazy" }} {{ $lazy = true }} {{ $class = (delimit (slice "lazyload" $class) " ") }} {{ end }}
+{{ $ctx := .ctx }}
+
+{{ $prefix := $ctx.Site.Params.img_prefix | default "" }}
+{{ $srcsetPrefix := $ctx.Site.Params.srcset_img_prefix | default "" }}
+{{ $mobileMaxSize := $ctx.Site.Params.mobile_max_size | default 1000 }}
+{{ $imgScaleFactors := $ctx.Site.Params.img_scale_factors | default (slice 1.5 2 3) }}
+{{/* END: Populate variables from input and site params */}}
+
+{{/* START: Setup img parameters these are just defaults for inputs, loops, etc */}}
+{{ $srcsetStr := "" }}
+{{ $desktop_imageData := slice }}
+{{ $mobile_imageData := slice }}
+{{ $imageData := slice }}
+{{/* END Setup img parameters */}}
+{{/* END: Prep */}}
+
+
+{{/* START: GENERATE ORDERED PICTURE/IMG DATA */}}
+{{/* Figure out image location */}}
+{{ if eq $desktop_srcStr "" }}
+    {{ errorf "Input cannot be null in img_mobile_desktop - %s" .Page }}
+{{ end }}
+{{ if eq $mobile_srcStr "" }}
+    {{ errorf "Input cannot be null in img_mobile_desktop - %s" .Page }}
+{{ end }}
+{{ $desktop_srcStr := partial "image/function_local_img_resolver.html" (dict "input" $desktop_srcStr "ctx" $ctx "trace" ($trace | append "img_mobile_desktop.html")) }}
+{{ $mobile_srcStr := partial "image/function_local_img_resolver.html" (dict "input" $mobile_srcStr "ctx" $ctx "trace" ($trace | append "img_mobile_desktop.html")) }}
+
+{{/* Figure out image detail */}}
+{{ $desktop_pathNoExtension := substr $desktop_srcStr 0 -4 }}
+{{ $desktop_orig_extension := substr $desktop_srcStr (sub (len $desktop_srcStr) 3) }}
+{{ $mobile_pathNoExtension := substr $mobile_srcStr 0 -4 }}
+{{ $mobile_orig_extension := substr $mobile_srcStr (sub (len $mobile_srcStr) 3) }}
+
+{{/* Throw an error if we expect the image but it's not there! */}}
+{{ if eq .ctx.Site.Params.fail_image_not_in_srcset true }}
+    {{ if (not (isset $ctx.Site.Data.srcsets $desktop_srcStr)) }}
+        {{ errorf "Failed to find desktop image for srcset processing %s" $desktop_srcStr }}
+    {{ end }}
+    {{ if (not (isset $ctx.Site.Data.srcsets $mobile_srcStr)) }}
+        {{ errorf "Failed to find mobile image for srcset processing %s" $mobile_srcStr }}
+    {{ end }}
+{{ end }}
+
+{{/* Get available file types and sizes from image optimization pipeline data file */}}
+{{ $desktop_availableExtensionsSizes := index $ctx.Site.Data.srcsets $desktop_srcStr }}
+{{ $mobile_availableExtensionsSizes := index $ctx.Site.Data.srcsets $mobile_srcStr }}
+
+{{ range $extension, $sizes := $desktop_availableExtensionsSizes }}
+    {{/* Convert image data to more robust object that can be used to create HTML */}}
+    {{ range $sizes }}
+        {{ $picturePath := delimit (slice $srcsetPrefix (replace (delimit (slice $desktop_pathNoExtension "_" . "w." $extension) "") " " "%20")) "" }} {{/* <!-- #TODO: Split this out to a function --> */}}
+        {{ $desktop_imageData = $desktop_imageData | append (dict "extension" $extension "scaleFactor" 1 "width" . "path" $picturePath) }}
+    {{ end }}
+{{ end }}
+{{ range $extension, $sizes := $mobile_availableExtensionsSizes }}
+    {{/* Convert image data to more robust object that can be used to create HTML */}}
+    {{ range $sizes }}
+        {{ $picturePath := delimit (slice $srcsetPrefix (replace (delimit (slice $mobile_pathNoExtension "_" . "w." $extension) "") " " "%20")) "" }} {{/* <!-- #TODO: Split this out to a function --> */}}
+        {{ $mobile_imageData = $mobile_imageData | append (dict "extension" $extension "scaleFactor" 1 "width" . "path" $picturePath) }}
+    {{ end }}
+{{ end }}
+
+{{/* Add scale factors to image for retina displays (like iPhones). Look at this partial for more details. */}}
+{{ $desktop_imageData = partial "image/function_add_scale_factor_to_img.html" (dict "imageData" $desktop_imageData "ctx" $ctx) }}
+{{ $mobile_imageData = partial "image/function_add_scale_factor_to_img.html" (dict "imageData" $mobile_imageData "ctx" $ctx) }}
+
+{{/* range $desktop_imageData }}
+    {{ if gt .width $mobileMaxSize }}
+        {{ $imageData = $imageData | append .}}
+    {{ end }}
+{{ end }}
+{{ range $mobile_imageData }}
+    {{ if lt .width $mobileMaxSize }}
+        {{ $imageData = $imageData | append (merge . (dict "maxWidth" $mobileMaxSize)) }}
+    {{ end }}
+{{ end */}}
+
+{{/* Create sorted slice of picture strings for rendering */}}
+{{ $desktop_pictureStrings := partial "image/function_generate_picture_strings.html" (dict "imageData" $desktop_imageData "lazy" $lazy "ctx" $ctx) }}
+
+{{ $mobile_pictureStrings := slice }}
+{{ range (partial "image/function_generate_picture_strings.html" (dict "imageData" $mobile_imageData "lazy" $lazy "ctx" $ctx)) }}
+        {{ $thisStr := . }}
+        {{ $thisStr =  replace . "media=\"" (printf "media=\"(max-width: %spx) and " (string $mobileMaxSize)) }}
+        {{ $thisStr = replace $thisStr "and \"" "\"" }}
+        {{ $mobile_pictureStrings = $mobile_pictureStrings | append $thisStr }}
+{{end}}
+
+{{ $pictureStrings := union $mobile_pictureStrings $desktop_pictureStrings }}
+
+
+{{/* Generate fallback img */}}
+{{ $srcsetStr = partial "image/function_generate_srcset_string.html" (dict "imageData" $imageData "ctx" $ctx) }}
+
+{{/* Find a reasonably sized default image */}}
+{{ range $extension, $sizes := $desktop_availableExtensionsSizes }}
+    {{ if ne $extension "webp" }}
+        {{ range (sort $sizes) }}
+            {{ if gt . $mobileMaxSize }}
+                {{ $desktop_srcStr = delimit (slice $srcsetPrefix (replace (delimit (slice $desktop_pathNoExtension "_" . "w." $extension) "") " " "%20")) "" }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{/* DEBUG EXAMPLE */}}
+{{/* if eq $srcStr "blog/prineville-reservoir-elopement/painted-hills-prineville-elopement-0001.jpg" }}
+    {{ range $imageData }}
+        {{ warnf "POOP - %s" . }}
+    {{ end }}
+{{ end */}}
+{{/* END: GENERATE ORDERED PICTURE/IMG DATA */}}
+
+
+{{/* START: RENDER HTML */}}
+<picture>
+    {{ range $pictureStrings }} {{ . | safeHTML }} {{ end }}
+    <img
+    alt="{{ $alt }}"
+    class="{{ $class }}"
+
+    {{ if not (eq $srcsetStr "") }}
+        {{ if eq $lazy true }}
+            {{ printf "data-srcset=%q" $srcsetStr | safeHTMLAttr }}
+        {{ else }}
+            {{ printf "srcset=%q" $srcsetStr | safeHTMLAttr }}
+        {{ end }}
+    {{ end }}
+
+    {{ if eq $lazy true }}
+        data-src='{{ $desktop_srcStr }}'
+        {{ if isset . "sizes" }}
+            sizes="{{ .sizes }}"
+        {{ else }}
+            data-sizes="auto"
+        {{ end }}
+    {{ else }}
+        {{ if isset . "sizes" }}
+            sizes="{{ .sizes }}"
+        {{ end }}
+        src='{{ $desktop_srcStr }}'
+    {{end}}
+    >
+</picture>
+{{/* END: RENDER HTML */}}

@@ -47,6 +47,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 content_files = glob.glob(SCRIPT_DIR + '/../content/**/*.md', recursive=True)
 
 for file in content_files:
+    print(f'Downloading code files for {file}...')
     front_matter, markdown = load_content_file(file)
 
     if 'download-files' in front_matter:

@@ -4,9 +4,8 @@
   "description": "Statically generated website for Mikael Weaver's personal site.",
   "dependencies": {
     "autoprefixer": "^9.4.7",
-    "postcss-cli": "^6.1.1"
+    "postcss-cli": "^6.1.3"
   },
-  "devDependencies": {},
   "scripts": {
     "preview-local": "hugo serve -D",
     "preview-local-production": "hugo serve -D --environment production",

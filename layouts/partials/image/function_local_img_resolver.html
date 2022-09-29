@@ -1,0 +1,87 @@
+{{/* 
+    FUNCTION: function_local_img_resolver.html
+
+    Takes a path for an image and resolve its full URL dependent on current location.
+*/}}
+
+{{/* Setup for function */}}
+{{ $inputStr := (print (chomp .input)) }}
+{{ $ctx := .ctx }}
+{{ $trace := (printf "%s - function_local_img_resolver.html" .trace) | default "function_local_img_resolver.html" }}
+{{ $return := ""}}
+{{ $scratch := newScratch }}
+
+{{ if eq $inputStr "" }}
+    {{ errorf "Input cannot be null in default - %s -%s" $trace $ctx }}
+{{ end }}
+
+{{/* If a specified search path is found, check that first */}}
+{{ if isset $ctx.Params "image_path" }}
+    {{/* Use either a slice of multiple values or a single value */}}
+    {{ range $index, $element := cond (reflect.IsSlice $ctx.Params.image_path) $ctx.Params.image_path (slice $ctx.Params.image_path) }}
+        {{ $pathName := (string $index) | printf "imagePath_%s" }}
+        {{ $pathValue := $inputStr | printf "%s/%s" (strings.TrimRight "/" $element) }}
+        {{ $scratch.SetInMap "possible_paths" $pathName $pathValue }}
+    {{ end }}
+{{ end }}
+
+{{/* Next, look at specified URL */}}
+{{ if isset $ctx.Params "url" }}
+    {{ $scratch.SetInMap "possible_paths" "url_path" ($inputStr | printf "%s/%s" (strings.TrimRight "/" $ctx.Params.url)) }}
+{{ end }}
+
+{{/* Next, look at old page URLs (aliases) */}}
+{{ if isset $ctx.Params "aliases" }}
+    {{ range $index, $element := $ctx.Params.aliases }}
+        {{ $scratch.SetInMap "possible_paths" ((string $index) | printf "alias_%s") ($inputStr | printf "%s/%s" (strings.TrimRight "/" $element)) }}
+    {{ end }}
+{{ end }}
+
+{{/* Check the exact value passed in to the image tag */}}
+{{ $scratch.SetInMap "possible_paths" "exact_path" $inputStr }}
+
+{{/* Use the page file path to search */}}
+{{ with $ctx.File }}
+    {{ $scratch.SetInMap "possible_paths" "page_file_path" ($inputStr | printf "%s%s" (string (.Dir))) }}
+
+    {{/* Lastly, see if the image exists on disk */}}
+    {{ $scratch.SetInMap "possible_paths" "file_path" ($inputStr | printf "%s%s" (string .Dir)) }}
+{{ end }}
+
+{{/* If already a web link, just use the web link */}}
+{{ if (hasPrefix $inputStr "https://") }}
+    {{ $return = $inputStr }}
+{{ end }}
+
+{{/* Loop through possible paths, set the return if found (and return not set) */}}
+{{ range $k, $v := ($scratch.Get "possible_paths") }}
+    {{ if eq $return "" }}
+        {{ if isset $ctx.Site.Data.srcsets $v }}
+            {{ $return = $v }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{/* If the file exists locally and this is not production */}}
+{{ if eq $return "" }}
+    {{ if and (isset ($scratch.Get "possible_paths") "file_path") (fileExists (index ($scratch.Get "possible_paths") "file_path")) }}
+        {{ if ne hugo.Environment "production"}}
+            {{ $return = $inputStr | printf "%s%s" (string $ctx.File.Dir) }}
+            {{ warnf "Image not found in cloud image store: %s" $inputStr }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{/* If there is no return value, error */}}
+{{ if eq $return "" }}
+    {{ $possibleMatches := slice }}
+    {{ range $k, $v := $ctx.Site.Data.srcsets }}
+        {{ if eq (index (last 1 (split $k "/")) 0) $inputStr }}
+            {{ $possibleMatches = ($possibleMatches | append (string $k)) }}
+        {{ end }}
+    {{ end }}
+    {{ errorf "Image Reference Not Found.\nInput String: %s\nTested Paths: %s \nPossible Matches: %s" $inputStr ($scratch.Get "possible_paths") (string (delimit $possibleMatches ",")) }}
+{{ end }}
+
+{{/* Return what we decided. Remember that return must be the last statement in the template. */}}
+{{ return $return}}

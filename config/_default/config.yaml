@@ -8,10 +8,11 @@ disableKinds: ["taxonomyTerm"]
 params:
   img_sizes: [480, 768, 1200, 1400, 1700, 2000, 2436]
   srcset_img_prefix: https://mikaeldevcdn.blob.core.windows.net/
-  header_logo: {alt: '', src: img/Mikael-0233-zoomed.jpg}
+  header_logo:
+    alt: ''
+    src: img/Mikael-0233-zoomed.jpg
 
 relativeURLs: false
-title: mikael.dev
 
 markup:
   defaultMarkdownHandler: goldmark
@@ -41,8 +42,8 @@ markup:
     guessSyntax: false
     hl_Lines: ""
     lineNoStart: 1
-    lineNos: false
-    lineNumbersInTable: true
+    lineNos: true
+    lineNumbersInTable: false
     noClasses: true
     style: monokai
     tabWidth: 4

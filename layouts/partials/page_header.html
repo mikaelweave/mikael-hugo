@@ -1,7 +1,7 @@
 <nav class="page-nav">
     <div class="page-img-name">
         <div class="page-nav-logo">
-            {{ partial "img.html" (dict "img" $.Site.Params.header_logo "ctx" $ "class" "page-nav-logo" "sizes" "(min-width: 1px) 270px") }}
+            {{ partial "image/img.html" (merge .Site.Params.header_logo (dict "ctx" $ "class" "page-nav-logo" "sizes" "(min-width: 1px) 270px" "trace" "page_header.html")) }}
         </div>
         <p>MIKAEL WEAVER</p>
     </div>
