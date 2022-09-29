@@ -50,6 +50,7 @@ Now click the "Get New Access Token" button. This will initiate the login proces
 ## How Does It Work?
 
 This works seamlessly by using the existing application id from the Azure CLI. Instead of registering a new application, we can piggyback off of Azure CLI, which already exists in every Azure tenant. This is not something I would have thought of, but I found the Azure SDK for .NET is doing this to support the [InteractiveBrowserCredential Class in Azure.Identity](https://learn.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential).
+&nbsp;
 
 **azure-sdk-for-net/sdk/identity/Azure.Identity/src/Credentials/InteractiveBrowserCredential.cs**
 {{< highlightFile "blog/easy-postman-and-azure-fhir-configuration/InteractiveBrowserCredential.cs" "c#" "linenos=table,hl_lines=36-36" "32-37" >}}
