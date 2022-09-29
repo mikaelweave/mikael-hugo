@@ -35,8 +35,7 @@
 
         {{/* <!-- Ensure featured image is formatted correctly --> */}}
         {{ if isset .Params "featured_image" }}
-                {{ $featuredImageUrl := (partial "image/function_local_img_resolver.html" (dict "ctx" . "input" .Params.featured_image "trace" "single.html")) }}
-                {{ partial "image/function_add_srcset.html" (dict "ctx" . "input" (printf "<img src=\"%s\" alt=\"%s\">" $featuredImageUrl .Title )) }}
+                {{ partial "image/img.html" (dict "ctx" . "src" .Params.featured_image "alt" .Title ) }}
         {{ end }}
       </header>
       <div class="container page">

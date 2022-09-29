@@ -6,7 +6,7 @@
       <div class="feature-thumbnail-container">
           {{ if isset .Params "featured_image" }}
               {{ partial "image/img.html" (dict "ctx" . "src" .Params.featured_image "trace" "list.html")}}</a> 
-              <a href="{{ .RelPermalink }}">{{ partial "image/img.html" (dict "src" .Params.featured_image "alt" .Title "ctx" . "trace" "list.html") }}</a>
+              <a href="{{ .RelPermalink }}">{{ partial "image/img.html" (dict "src" .Params.featured_image "alt" .Title "ctx" . "sizes" "100vw" "trace" "list.html") }}</a>
           {{ end }}
       </div>
       <div class="thumbnail-post-content">
