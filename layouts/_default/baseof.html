@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="{{ $header_styles.Permalink }}" integrity="{{ $header_styles.Data.Integrity }}" media="screen">
 
         {{ block "style" . }}{{ end }}
+
+        {{ block "meta" . }}{{ end }}
         
         {{ if eq hugo.Environment "production" }}
             {{ template "_internal/google_analytics_async.html" . }}
