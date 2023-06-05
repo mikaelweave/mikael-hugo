@@ -13,7 +13,8 @@
 				"verify"
 			],
 			"alg": "RS384",
-            "ext": true
+            "ext": true,
+            "issuer": "https://www.mikael.dev"
 		}
     ]
 }
