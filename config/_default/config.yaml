@@ -14,6 +14,11 @@ params:
 
 relativeURLs: false
 
+mediaTypes:
+  application/json:
+    suffixes:
+    - ''
+
 markup:
   defaultMarkdownHandler: goldmark
   tableOfContents:
