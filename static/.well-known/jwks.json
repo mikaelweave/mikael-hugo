@@ -14,7 +14,8 @@
 			],
 			"alg": "RS384",
             "ext": true,
-            "issuer": "https://www.mikael.dev"
+            "issuer": "https://www.mikael.dev",
+            "use": "sig"
 		}
     ]
 }
