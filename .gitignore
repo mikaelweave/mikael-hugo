@@ -7,25 +7,21 @@
 *.gif
 *.webp
 *.jp2
+*.tif
+*.tiff
+*.TIF
+*.TIFF
+
+# Mac Finder text clippings
+*.textClipping
+*.textclipping
 
 # Hugo dirs
 resources/*
 public/*
 
-# Node
-node_modules/*
-
 # Secrets
 *.env
-
-# Python
-Pipfile
-Pipfile.lock
-__pycache__/*
-scripts/__pycache__/*
-
-# Image data file (imgs not managed by git)
-data/srcsets.json
 
 # Mac 
 *.DS_Store
@@ -34,6 +30,21 @@ data/srcsets.json
 # Typora
 *._* 
 
-srcsets.json
+.env
+package-lock.json
 
-azure-web-img-dwnszr.zip
+.hugo_build.lock
+
+__*
+
+**/.vs/*
+**/bin/*
+**/obj/*
+
+node_modules/*
+
+repomix-output.txt
+repomix.config.json
+.repomixignore
+
+hugo_stats.json

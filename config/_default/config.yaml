@@ -1,9 +1,13 @@
 baseURL: https://www.mikael.dev/
 title: Mikael Weaver
-languagecode: en
+defaultcontentlanguage: en
+languageCode: en-us
 pluralizelisttitles: false
-paginate: 21
-disableKinds: ["taxonomyTerm"]
+pagination:
+  pagerSize: 21
+disableKinds: ["taxonomy"]
+enableRobotsTXT: true
+relativeURLs: false
 
 params:
   img_sizes: [480, 768, 1200, 1400, 1700, 2000, 2436]
@@ -12,13 +16,6 @@ params:
     alt: ''
     src: img/Mikael-0233-zoomed.jpg
 
-relativeURLs: false
-
-mediaTypes:
-  application/json:
-    suffixes:
-    - ''
-
 markup:
   defaultMarkdownHandler: goldmark
   tableOfContents:
@@ -26,22 +23,16 @@ markup:
     ordered: false
     startLevel: 2
   goldmark:
-    extensions:
-      definitionList: true
-      footnote: true
-      linkify: true
-      strikethrough: true
-      table: true
-      taskList: true
-      typographer: true
     parser:
-      attribute: true
+      wrapStandAloneImageWithinParagraph: false
+      attribute:
+        block: true
+        title: true
       autoHeadingID: true
       autoHeadingIDType: github
     renderer:
       hardWraps: true
       unsafe: false
-      xhtml: false
   highlight:
     codeFences: true
     guessSyntax: false
@@ -53,7 +44,29 @@ markup:
     style: monokai
     tabWidth: 4
 
-
 taxonomies:
   category: categories
   tag: tag
+
+build:
+  buildStats:
+    enable: true
+  cachebusters:
+  - source: assets/notwatching/hugo_stats\.json
+    target: css
+  - source: (postcss|tailwind)\.config\.js
+    target: css
+  - source: assets/css/main.css
+    target: css
+
+module:
+  hugoVersion:
+    min: "0.134.2"
+  mounts:
+  - source: assets
+    target: assets
+  - disableWatch: true
+    source: hugo_stats.json
+    target: assets/notwatching/hugo_stats.json
+  - source: node_modules
+    target: assets

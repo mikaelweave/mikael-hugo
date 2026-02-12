@@ -1,4 +1,11 @@
-googleAnalytics: UA-184056377-1
+services:
+  googleAnalytics:
+    ID: UA-184056377-1
+
+minify:
+  tdewolff:
+    html:
+      keepWhitespace: false
 
 params:
   fail_image_not_in_srcset: true

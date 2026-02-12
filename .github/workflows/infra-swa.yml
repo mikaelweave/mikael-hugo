@@ -1,0 +1,217 @@
+name: Infra-Static-Web-Apps
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - infra/static-web-apps/**
+      - .github/workflows/infra-swa.yml
+  push:
+    branches:
+      - main
+    paths:
+      - infra/static-web-apps/**
+      - .github/workflows/infra-swa.yml
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Choose 'what-if' to preview changes or 'apply' to deploy.
+        required: true
+        default: what-if
+        type: choice
+        options:
+          - what-if
+          - apply
+      resource_group:
+        description: Resource group for the Static Web App (optional override).
+        required: false
+        type: string
+      location:
+        description: Azure region (optional override).
+        required: false
+        type: string
+      sku_name:
+        description: Static Web App SKU (optional override).
+        required: false
+        type: choice
+        options:
+          - Free
+          - Standard
+      app_name:
+        description: Static Web App name (optional override).
+        required: false
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      - name: Resolve deployment parameters
+        id: params
+        env:
+          DEFAULT_SWA_RESOURCE_GROUP: mikael.dev
+          DEFAULT_SWA_LOCATION: westus2
+          DEFAULT_SWA_SKU_NAME: Free
+          DEFAULT_SWA_APP_NAME: mikaeldevsite
+          INPUT_OPERATION: ${{ github.event.inputs.operation }}
+          INPUT_RESOURCE_GROUP: ${{ github.event.inputs.resource_group }}
+          INPUT_LOCATION: ${{ github.event.inputs.location }}
+          INPUT_SKU_NAME: ${{ github.event.inputs.sku_name }}
+          INPUT_APP_NAME: ${{ github.event.inputs.app_name }}
+          VAR_SWA_RESOURCE_GROUP: ${{ vars.SWA_RESOURCE_GROUP }}
+          VAR_SWA_LOCATION: ${{ vars.SWA_LOCATION }}
+          VAR_SWA_SKU_NAME: ${{ vars.SWA_SKU_NAME }}
+          VAR_SWA_APP_NAME: ${{ vars.SWA_APP_NAME }}
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "push" ]; then
+            operation="apply"
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            operation="what-if"
+          else
+            operation="${INPUT_OPERATION:-what-if}"
+          fi
+
+          resource_group="${INPUT_RESOURCE_GROUP:-${VAR_SWA_RESOURCE_GROUP:-$DEFAULT_SWA_RESOURCE_GROUP}}"
+          location="${INPUT_LOCATION:-${VAR_SWA_LOCATION:-$DEFAULT_SWA_LOCATION}}"
+          sku_name_raw="${INPUT_SKU_NAME:-${VAR_SWA_SKU_NAME:-$DEFAULT_SWA_SKU_NAME}}"
+          app_name="${INPUT_APP_NAME:-${VAR_SWA_APP_NAME:-$DEFAULT_SWA_APP_NAME}}"
+
+          case "${sku_name_raw,,}" in
+            free)
+              sku_name="Free"
+              ;;
+            standard)
+              sku_name="Standard"
+              ;;
+            *)
+              echo "::error::Invalid sku_name '$sku_name_raw'. Use Free or Standard."
+              exit 1
+              ;;
+          esac
+
+          missing=0
+          missing_values=""
+          for value in resource_group location app_name; do
+            if [ -z "${!value}" ]; then
+              missing_values="$missing_values $value"
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "::warning::Skipping infra what-if on PR because required values are missing:$missing_values"
+              echo "skip_infra=true" >> "$GITHUB_OUTPUT"
+              echo "operation=what-if" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "::error::Missing required value(s):$missing_values"
+            exit 1
+          fi
+
+          deployment_name="swa-${{ github.run_number }}-${{ github.run_attempt }}"
+
+          {
+            echo "skip_infra=false"
+            echo "operation=$operation"
+            echo "resource_group=$resource_group"
+            echo "location=$location"
+            echo "sku_name=$sku_name"
+            echo "app_name=$app_name"
+            echo "deployment_name=$deployment_name"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Ensure resource group exists
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'apply'
+        run: |
+          set -euo pipefail
+          if az group show --name "${{ steps.params.outputs.resource_group }}" >/dev/null 2>&1; then
+            echo "Resource group '${{ steps.params.outputs.resource_group }}' already exists. Skipping create."
+          else
+            az group create \
+              --name "${{ steps.params.outputs.resource_group }}" \
+              --location "${{ steps.params.outputs.location }}" \
+              --tags workload=mikael.dev managedBy=github-actions >/dev/null
+          fi
+
+      - name: Check resource group availability for what-if
+        id: whatif_rg
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'what-if'
+        run: |
+          set -euo pipefail
+
+          if az group show --name "${{ steps.params.outputs.resource_group }}" >/dev/null 2>&1; then
+            echo "skip_what_if=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Skipping infra what-if because resource group '${{ steps.params.outputs.resource_group }}' is missing or not readable by this identity."
+            echo "skip_what_if=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: What-if Static Web App infrastructure
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'what-if' && steps.whatif_rg.outputs.skip_what_if != 'true'
+        run: |
+          set -euo pipefail
+          if ! az deployment group what-if \
+            --name "${{ steps.params.outputs.deployment_name }}" \
+            --resource-group "${{ steps.params.outputs.resource_group }}" \
+            --template-file infra/static-web-apps/main.bicep \
+            --parameters \
+              location="${{ steps.params.outputs.location }}" \
+              skuName="${{ steps.params.outputs.sku_name }}" \
+              staticWebAppName="${{ steps.params.outputs.app_name }}"; then
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "::warning::Infra what-if failed on PR. This usually means the OIDC identity does not have sufficient scope yet."
+              exit 0
+            fi
+            exit 1
+          fi
+
+      - name: Apply Static Web App infrastructure
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'apply'
+        run: |
+          set -euo pipefail
+          az deployment group create \
+            --name "${{ steps.params.outputs.deployment_name }}" \
+            --resource-group "${{ steps.params.outputs.resource_group }}" \
+            --template-file infra/static-web-apps/main.bicep \
+            --parameters \
+              location="${{ steps.params.outputs.location }}" \
+              skuName="${{ steps.params.outputs.sku_name }}" \
+              staticWebAppName="${{ steps.params.outputs.app_name }}" \
+            --query properties.outputs -o jsonc
+
+      - name: Output hostname
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'apply'
+        run: |
+          set -euo pipefail
+          app_host=$(az staticwebapp show --name "${{ steps.params.outputs.app_name }}" --resource-group "${{ steps.params.outputs.resource_group }}" --query defaultHostname -o tsv)
+          {
+            echo "### Static Web App"
+            echo "- App: https://$app_host"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Infra workflow skipped
+        if: steps.params.outputs.skip_infra == 'true'
+        run: |
+          echo "Skipping infra deployment because required deployment values were missing."
+
+      - name: Infra what-if skipped
+        if: steps.params.outputs.skip_infra != 'true' && steps.params.outputs.operation == 'what-if' && steps.whatif_rg.outputs.skip_what_if == 'true'
+        run: |
+          echo "Skipping infra what-if because resource group '${{ steps.params.outputs.resource_group }}' is unavailable for this identity."
