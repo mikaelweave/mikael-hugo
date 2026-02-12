@@ -18,14 +18,11 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  id-token: write
   contents: read
   pull-requests: write
 
 env:
   HUGO_VERSION: 0.155.2
-  DEFAULT_SWA_RESOURCE_GROUP: mikael.dev
-  DEFAULT_SWA_APP_NAME: mikaeldevsite
 
 jobs:
   build-and-deploy:
@@ -47,56 +44,11 @@ jobs:
           hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
-      - name: Azure Login with OIDC
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.ARM_CLIENT_ID }}
-          tenant-id: ${{ secrets.ARM_TENANT_ID }}
-          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-
-      - name: Resolve deployment target
-        id: target
-        env:
-          SWA_RESOURCE_GROUP: ${{ vars.SWA_RESOURCE_GROUP || env.DEFAULT_SWA_RESOURCE_GROUP }}
-          SWA_APP_NAME: ${{ vars.SWA_APP_NAME || env.DEFAULT_SWA_APP_NAME }}
-          PROD_BASE_URL: ${{ vars.PROD_BASE_URL }}
-        run: |
-          set -euo pipefail
-
-          app_name="$SWA_APP_NAME"
-          if ! host_name=$(az staticwebapp show --name "$app_name" --resource-group "$SWA_RESOURCE_GROUP" --query defaultHostname -o tsv 2>/dev/null); then
-            if [ "${{ github.event_name }}" = "pull_request" ]; then
-              reason="SWA app '$app_name' in resource group '$SWA_RESOURCE_GROUP' is not available yet. Run the Infra-Static-Web-Apps workflow with operation=apply, then rerun this PR workflow."
-              echo "::warning::$reason"
-              echo "skip_deploy=true" >> "$GITHUB_OUTPUT"
-              {
-                echo "skip_reason<<EOF"
-                echo "$reason"
-                echo "EOF"
-              } >> "$GITHUB_OUTPUT"
-              echo "base_url=https://www.mikael.dev" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            echo "::error::Static Web App '$app_name' was not found in resource group '$SWA_RESOURCE_GROUP'."
-            exit 1
-          fi
-
-          if [ "${{ github.event_name }}" = "push" ] && [ -n "${PROD_BASE_URL:-}" ]; then
-            base_url="$PROD_BASE_URL"
-          else
-            base_url="https://$host_name"
-          fi
-
-          echo "skip_deploy=false" >> "$GITHUB_OUTPUT"
-          echo "app_name=$app_name" >> "$GITHUB_OUTPUT"
-          echo "base_url=$base_url" >> "$GITHUB_OUTPUT"
-          echo "default_url=https://$host_name" >> "$GITHUB_OUTPUT"
-
       - name: Build Hugo Site
         if: github.event.action != 'closed'
         run: |
           set -eou pipefail
-          hugo --gc --minify --templateMetrics --templateMetricsHints --cleanDestinationDir --destination public --environment production --baseURL "${{ steps.target.outputs.base_url }}" 2>&1 | tee hugo-output.txt
+          hugo --gc --minify --templateMetrics --templateMetricsHints --cleanDestinationDir --destination public --environment production --baseURL "https://www.mikael.dev/" 2>&1 | tee hugo-output.txt
 
       - name: Comment if Hugo build failed
         if: failure() && github.event_name == 'pull_request'
@@ -119,7 +71,7 @@ jobs:
 
       - name: Deploy to Azure Static Web Apps (SWA CLI)
         id: deploy
-        if: success() && steps.target.outputs.skip_deploy != 'true' && github.event.action != 'closed'
+        if: success() && github.event.action != 'closed'
         env:
           SWA_DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         run: |
@@ -146,12 +98,12 @@ jobs:
 
           preview_url="$(grep -Eo 'https://[[:alnum:].-]+\.azurestaticapps\.net/?' "$deploy_log" | tail -n 1 || true)"
           if [ -z "$preview_url" ]; then
-            preview_url="${{ steps.target.outputs.default_url }}"
+            preview_url="https://www.mikael.dev"
           fi
           echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
 
       - name: Close PR preview environment
-        if: success() && steps.target.outputs.skip_deploy != 'true' && github.event.action == 'closed'
+        if: success() && github.event.action == 'closed'
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
@@ -159,7 +111,7 @@ jobs:
           action: close
 
       - name: Comment PR preview link
-        if: github.event_name == 'pull_request' && success() && steps.target.outputs.skip_deploy != 'true' && github.event.action != 'closed'
+        if: github.event_name == 'pull_request' && success() && github.event.action != 'closed'
         uses: actions/github-script@v7
         env:
           PREVIEW_URL: ${{ steps.deploy.outputs.preview_url }}
@@ -185,22 +137,6 @@ jobs:
               });
               return;
             }
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              body: message
-            });
-
-      - name: Comment PR deploy skip reason
-        if: github.event_name == 'pull_request' && success() && steps.target.outputs.skip_deploy == 'true'
-        uses: actions/github-script@v7
-        env:
-          SKIP_REASON: ${{ steps.target.outputs.skip_reason }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const message = process.env.SKIP_REASON || "SWA preview deployment was skipped.";
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
