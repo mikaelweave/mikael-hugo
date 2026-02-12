@@ -5,6 +5,7 @@ noindex: false
 tag: [kusto, mcp, azure data explorer, ai, llm]
 title: "Kusto MCP Enhanced: Config-Driven Kusto Tools for AI Agents"
 meta_description: A config-driven MCP server for Azure Data Explorer that lets you declare Kusto query tools in YAML instead of code — and when you should use agent skills instead.
+featured_image: header.png
 type: post
 table_of_contents: true
 url: /kusto-mcp-enhanced
