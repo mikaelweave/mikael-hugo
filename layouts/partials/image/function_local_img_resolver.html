@@ -80,7 +80,7 @@
             {{ $possibleMatches = ($possibleMatches | append (string $k)) }}
         {{ end }}
     {{ end }}
-    {{ warnf "Image Reference Not Found.\nInput String: %s\nTested Paths: %s \nPossible Matches: %s" $inputStr ($scratch.Get "possible_paths") (string (delimit $possibleMatches ",")) }}
+    {{ errorf "Image Reference Not Found.\nInput String: %s\nTested Paths: %s \nPossible Matches: %s" $inputStr ($scratch.Get "possible_paths") (string (delimit $possibleMatches ",")) }}
 {{ end }}
 
 {{/* Return what we decided. Remember that return must be the last statement in the template. */}}
