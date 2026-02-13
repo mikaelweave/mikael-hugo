@@ -25,9 +25,9 @@ public class LocalImage(string imagePath, string relativeImagePath) : IDisposabl
         }
     }
 
-    public int WidthPixels => ImageData.Width;
+    public int WidthPixels => (int)ImageData.Width;
 
-    public int HeightPixels => ImageData.Height;
+    public int HeightPixels => (int)ImageData.Height;
 
     public MagickFormat ImageFormat => ImageData.Format;
 
@@ -43,7 +43,7 @@ public class LocalImage(string imagePath, string relativeImagePath) : IDisposabl
     public string ResizeAndSaveToTemp(WebImageFormat format, int width, int? quality = null)
     {
         var newImage = ImageData.Clone();
-        newImage.Resize(width, 0);
+        newImage.Resize((uint)width, 0);
         string extension;
 
         // Determine the format and set the extension
@@ -72,7 +72,7 @@ public class LocalImage(string imagePath, string relativeImagePath) : IDisposabl
         {
             if (quality is not null && quality.Value > 0 && quality.Value <= 100)
             {
-                newImage.Quality = quality.Value;
+                newImage.Quality = (uint)quality.Value;
             }
         }
 

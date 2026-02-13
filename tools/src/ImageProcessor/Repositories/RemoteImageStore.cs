@@ -297,7 +297,7 @@ public class RemoteImageStore(string connectionString, int[] sizes)
         try
         {
             // Fetch metadata along with blobs to potentially avoid extra GetProperties calls later
-            await foreach (var blob in containerClient.GetBlobsAsync(BlobTraits.Metadata))
+            await foreach (var blob in containerClient.GetBlobsAsync(new GetBlobsOptions { Traits = BlobTraits.Metadata }))
             {
                 blobCount++;
                 if (blobCount % 500 == 0) Console.WriteLine($"  [{containerName}] Scanned {blobCount} blobs...");
@@ -554,7 +554,7 @@ public class RemoteImageStore(string connectionString, int[] sizes)
         {
             await blobClient.DownloadToAsync(tempFilePath);
             using var image = new MagickImage(tempFilePath);
-            return (image.Width, image.Height);
+            return ((int)image.Width, (int)image.Height);
         }
         catch (MagickException magickEx)
         {
