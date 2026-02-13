@@ -22,10 +22,10 @@
 {{ end }}
 
 {{ define "style" }}
-  {{ if eq ( .FirstSection | string ) "Page(/blog)" }}
+  {{ if eq ( .FirstSection | string ) "/blog" }}
         {{ $blog_post_style := resources.Get "/scss/blog_post.scss" | resources.ExecuteAsTemplate "blog_postt.scss" . | toCSS | postCSS | minify | fingerprint }}
         <link rel="stylesheet" href="{{ $blog_post_style.Permalink }}" integrity="{{ $blog_post_style.Data.Integrity }}" media="screen">
-  {{ else if eq ( .FirstSection | string ) "Page(/photography)" }}
+  {{ else if eq ( .FirstSection | string ) "/photography" }}
         {{ $photography_post_style := resources.Get "/scss/photography_post.scss" | resources.ExecuteAsTemplate "photography_postt.scss" . | toCSS | postCSS | minify | fingerprint }}
         <link rel="stylesheet" href="{{ $photography_post_style.Permalink }}" integrity="{{ $photography_post_style.Data.Integrity }}" media="screen">
   {{ end}}
@@ -35,7 +35,7 @@
 {{ end }}
 
 {{ define "content" }}
-  <section class="container page">
+  <section class="page">
     <article>
       <header class="header center">
         {{ $showTitle := index .Params "show_title" | default "True" }}
@@ -57,7 +57,7 @@
                 {{ partial "image/img.html" (dict "ctx" . "src" .Params.featured_image "alt" .Title ) }}
         {{ end }}
       </header>
-      <div class="container page">
+      <div class="page">
             {{ if and (isset .Params "table_of_contents") (.Params.table_of_contents) }}
                 {{/* OLD IMPLEMENTATION<!-- if isset .Params "toc_headings_to_ignore" }}
                     {{- partial "table-of-contents.html" (dict "ctx" . "headings_to_ignore" .Params.toc_headings_to_ignore) -}}
