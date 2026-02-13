@@ -1,6 +1,6 @@
 services:
   googleAnalytics:
-    ID: UA-184056377-1
+    ID: G-DNDDQL2ZMH
 
 minify:
   tdewolff:
