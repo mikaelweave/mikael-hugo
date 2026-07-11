@@ -1,52 +1,71 @@
 .page-nav {
-    max-width: 1200px;
-    height: 100px;
-    line-height: 100px;
-    margin: 0 auto;
-    padding-top: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 5% 10px;
 
-    display: grid;
-    gap: 1rem;
-    grid-auto-flow: column;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
 
-    p, ul {
-        justify-self: right;
-        align-self: center;
+  p,
+  ul {
+    align-self: center;
+  }
+
+  .page-img-name {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+
+    > * {
+      justify-self: center;
+      align-self: center;
     }
 
-    .page-img-name {
-        display: flex;
-        margin-left: 20px;
-    
-        > * {
-            justify-self: center;
-            align-self: center;
-        }
-    
-        .page-nav-logo {
-            img, picture {
-                width: 6em;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                border-radius: 50%;
-            }
-    
-            margin-right: 20px;
-        }
-    
-        p {
-            font-family: monospace;
-            font-size: 24px;
-        }
+    .page-nav-logo {
+      img,
+      picture {
+        width: 4.5em;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 50%;
+      }
+
+      margin-right: 20px;
     }
-    
-    .menu {
-        display: flex;
-        list-style-type: none;
-        
-        li {
-            padding-left: 40px;
-        }
+
+    p {
+      font-family: monospace;
+      font-size: clamp(18px, 3vw, 24px);
+      line-height: 1.1;
+      white-space: nowrap;
     }
+  }
+
+  .menu {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      padding-left: 24px;
+    }
+
+    a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.25em;
+    }
+  }
+
+  @media (max-width: 576px) {
+    align-items: flex-start;
+    flex-direction: column;
+
+    .menu li {
+      padding-left: 0;
+      padding-right: 24px;
+    }
+  }
 }

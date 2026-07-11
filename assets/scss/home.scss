@@ -51,6 +51,203 @@
     width: 75%;
 }
 
+.home-page {
+    color: $dark-teal;
+    margin: 0 auto 6rem;
+    max-width: 920px;
+}
+
+.home-intro {
+    margin: 0 auto 5rem;
+    max-width: 760px;
+    text-align: center;
+
+    h2 {
+        font-family: monospace;
+        font-size: clamp(2rem, 5vw, 4.25rem);
+        line-height: 0.98;
+        padding-bottom: 1.5rem;
+        text-wrap: balance;
+    }
+
+    p {
+        color: rgba($dark-teal, 0.82);
+        font-size: clamp(1.1rem, 2.1vw, 1.45rem);
+        line-height: 1.55;
+        margin: 0 auto;
+        max-width: 62ch;
+        text-wrap: pretty;
+    }
+}
+
+.home-intro__kicker {
+    color: $brown !important;
+    font-family: monospace;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em;
+    line-height: 1.4 !important;
+    margin-bottom: 1.25rem !important;
+}
+
+.home-intro__links {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: monospace;
+    gap: 0.75rem 1.35rem;
+    justify-content: center;
+    margin-top: 2rem;
+
+    a {
+        border-bottom: 1px solid rgba($forest, 0.28);
+        color: $forest;
+        font-size: 1.05rem;
+        padding-bottom: 0.18rem;
+        text-decoration: none;
+        transition: border-color 160ms ease, color 160ms ease;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $orange;
+            color: $orange;
+        }
+
+        &:focus-visible {
+            outline: 2px solid rgba($mustard, 0.6);
+            outline-offset: 0.35rem;
+        }
+    }
+}
+
+.home-section {
+    border-top: 1px solid rgba($dark-teal, 0.18);
+    padding: 3rem 0;
+}
+
+.home-section__header {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+
+    h2 {
+        color: $dark-teal;
+        font-family: monospace;
+        font-size: clamp(1.75rem, 3vw, 2.6rem);
+        line-height: 1.05;
+        padding-bottom: 0;
+        text-wrap: balance;
+    }
+
+    p {
+        color: rgba($dark-teal, 0.74);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        max-width: 58ch;
+        text-wrap: pretty;
+    }
+
+    @include md {
+        align-items: end;
+        grid-template-columns: minmax(14rem, 0.8fr) minmax(18rem, 1fr);
+    }
+}
+
+.home-tools__list,
+.home-writing__list {
+    border-bottom: 1px solid rgba($dark-teal, 0.14);
+}
+
+.home-tool {
+    align-items: start;
+    border-top: 1px solid rgba($dark-teal, 0.14);
+    color: $dark-teal;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto 1fr;
+    padding: 1.35rem 0;
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+
+    strong {
+        display: block;
+        font-family: monospace;
+        font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+        line-height: 1.2;
+        margin-bottom: 0.35rem;
+    }
+
+    small {
+        color: rgba($dark-teal, 0.72);
+        display: block;
+        font-size: 1rem;
+        line-height: 1.55;
+        max-width: 64ch;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: $orange;
+        transform: translateX(0.25rem);
+
+        .home-tool__marker {
+            background: $orange;
+            transform: rotate(45deg) scale(1.08);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba($mustard, 0.6);
+        outline-offset: 0.5rem;
+    }
+}
+
+.home-tool__marker {
+    background: $foam-green;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    display: block;
+    height: 1.05rem;
+    margin-top: 0.25rem;
+    transition: background 160ms ease, transform 160ms ease;
+    width: 1.05rem;
+}
+
+.home-writing {
+    padding-bottom: 1rem;
+}
+
+.home-writing__item {
+    align-items: baseline;
+    border-top: 1px solid rgba($dark-teal, 0.14);
+    display: grid;
+    gap: 0.35rem 1.5rem;
+    margin-bottom: 0;
+    padding: 1rem 0;
+
+    a {
+        color: $dark-teal;
+        font-family: monospace;
+        font-size: 1.1rem;
+        line-height: 1.35;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.18em;
+
+        &:hover,
+        &:focus-visible {
+            color: $orange;
+        }
+    }
+
+    time {
+        color: rgba($dark-teal, 0.62);
+        font-family: monospace;
+        font-size: 0.9rem;
+    }
+
+    @include sm {
+        grid-template-columns: 1fr auto;
+    }
+}
+
 .post {
     position: relative;
 }
@@ -232,4 +429,17 @@ $large-scale-factor: 2;
 }
 @include lg {
     @include styling($headerMultiplier: $large-scale-factor);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-intro__links a,
+    .home-tool,
+    .home-tool__marker {
+        transition: none;
+    }
+
+    .home-tool:hover,
+    .home-tool:focus-visible {
+        transform: none;
+    }
 }

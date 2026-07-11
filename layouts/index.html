@@ -6,15 +6,68 @@
 {{ end }}
 
 {{ define "content" }}
-    <!--
-    <div id="about-box" class="center test-bg">
-        <p class="center">Health care, software, solutions for humans</p>
-    </div>
-    -->
+    {{ $posts := where site.RegularPages "Section" "==" "blog" }}
 
-    <h2 class="center"></h2>
+    <main class="home-page" aria-labelledby="home-intro-title">
+        <section class="home-intro" id="about" aria-labelledby="home-intro-title">
+            <p class="home-intro__kicker">software, tools, and notes</p>
+            <h2 id="home-intro-title">I build practical systems for developer workflows, healthcare software, and AI-assisted work.</h2>
+            <p>
+                This site is a home for the useful bits: durable setup guides, small tools, implementation notes,
+                and the occasional longer write-up when something is worth remembering.
+            </p>
+            <nav class="home-intro__links" aria-label="Homepage sections">
+                <a href="#about">About</a>
+                <a href="#tools">Tools</a>
+                <a href="https://github.com/mikaelweave">GitHub</a>
+            </nav>
+        </section>
 
-    {{ range first 10 (where site.RegularPages "Section" "==" "blog")}}
-        {{ partial "blog_preview_square.html" . }}
-    {{ end }}
+        <section class="home-section home-tools" id="tools" aria-labelledby="home-tools-title">
+            <div class="home-section__header">
+                <h2 id="home-tools-title">Tools and guides</h2>
+                <p>Things I use, maintain, or keep around so I do not have to rediscover them later.</p>
+            </div>
+
+            <div class="home-tools__list">
+                <a class="home-tool" href="/windows-dev-setup/">
+                    <span class="home-tool__marker" aria-hidden="true"></span>
+                    <span>
+                        <strong>Windows dev setup</strong>
+                        <small>An interactive checklist and generated command script for new Windows development machines.</small>
+                    </span>
+                </a>
+                <a class="home-tool" href="/kusto-mcp-enhanced/">
+                    <span class="home-tool__marker" aria-hidden="true"></span>
+                    <span>
+                        <strong>Kusto MCP Enhanced</strong>
+                        <small>A config-driven MCP server pattern for safer Azure Data Explorer agent workflows.</small>
+                    </span>
+                </a>
+                <a class="home-tool" href="/go-azure-functions/">
+                    <span class="home-tool__marker" aria-hidden="true"></span>
+                    <span>
+                        <strong>Go on Azure Functions</strong>
+                        <small>Notes and sample structure for running Go with Azure Functions custom handlers.</small>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <section class="home-section home-writing" id="writing" aria-labelledby="home-writing-title">
+            <div class="home-section__header">
+                <h2 id="home-writing-title">Recent writing</h2>
+                <p>Less a blog, more a shelf for technical notes that have aged well enough to keep.</p>
+            </div>
+
+            <div class="home-writing__list">
+                {{ range first 3 $posts }}
+                    <article class="home-writing__item">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</time>
+                    </article>
+                {{ end }}
+            </div>
+        </section>
+    </main>
 {{ end }}
