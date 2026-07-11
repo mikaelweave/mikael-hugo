@@ -1,0 +1,294 @@
+categories:
+  - id: keyboard
+    title: Keyboard and input
+    description: Set up the typing environment first so the rest of the machine feels right.
+  - id: essential-tools
+    title: Essential developer tools
+    description: Install the core apps and command-line utilities used across most projects.
+  - id: cloud-containers
+    title: Cloud and containers
+    description: Add the CLIs and desktop tooling needed for Azure, Docker, and Kubernetes work.
+  - id: ai-tools
+    title: AI coding assistants
+    description: Install the agentic coding tools used from the desktop and terminal.
+  - id: terminal
+    title: Terminal and shell
+    description: Make Windows Terminal and PowerShell comfortable before project-specific setup.
+
+steps:
+  - id: enable-colemak
+    category: keyboard
+    title: Enable Colemak keyboard
+    description: Add the Colemak keyboard layout before doing long setup work on the new machine.
+    default: true
+    commands: []
+    notes:
+      - "Open Settings > Time & language > Language & region."
+      - "Choose the active language, add a keyboard, and select Colemak."
+      - "This stays as a manual step until a reliable Windows command is added."
+
+  - id: install-vscode
+    category: essential-tools
+    title: Install Visual Studio Code
+    description: Install the baseline editor for local development.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.VisualStudioCode"
+    notes:
+      - "Sign in with Settings Sync if you want extensions and editor preferences restored."
+
+  - id: install-github-cli
+    category: essential-tools
+    title: Install GitHub CLI
+    description: Install GitHub command-line tooling for repository and pull request workflows.
+    default: true
+    commands:
+      - "winget install -e --id GitHub.cli"
+    notes:
+      - "After GitHub CLI installs, run gh auth login in a new terminal."
+
+  - id: install-1password
+    category: essential-tools
+    title: Install 1Password
+    description: Install the password manager before signing in to developer services.
+    default: true
+    commands:
+      - "winget install -e --id AgileBits.1Password"
+    notes:
+      - "If you also want the 1Password CLI later, add AgileBits.1Password.CLI as a separate step."
+
+  - id: install-powertoys
+    category: essential-tools
+    title: Install PowerToys
+    description: Install Microsoft PowerToys for Windows productivity utilities like FancyZones, PowerToys Run, and keyboard tools.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.PowerToys"
+    notes:
+      - "Some PowerToys features may prompt for elevation when enabled or configured."
+
+  - id: install-sysinternals-suite
+    category: essential-tools
+    title: Install Sysinternals Suite
+    description: Install the Sysinternals troubleshooting utilities.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.Sysinternals.Suite"
+    notes:
+      - "Tools such as Process Explorer and Autoruns may need elevation for full system visibility."
+
+  - id: windows-terminal-default
+    category: terminal
+    title: Ensure Windows Terminal is the default terminal
+    description: Set Windows Terminal as the default terminal host for a consistent command-line experience.
+    default: true
+    commands: []
+    notes:
+      - "Open Windows Terminal settings and set Default terminal application to Windows Terminal."
+      - "On Windows 11, this can also appear under Settings > System > For developers > Terminal."
+
+  - id: configure-windows-terminal-ghostty-keybindings
+    category: terminal
+    title: Configure Ghostty-like Windows Terminal keybindings
+    description: Merge a Ghostty-inspired Windows Terminal keybinding setup for tabs, splits, pane focus, zoom, and a Quake-style dropdown.
+    default: true
+    commands: []
+    snippets:
+      - title: "Windows Terminal settings.json additions"
+        language: jsonc
+        content: |
+          // Windows Terminal: Ghostty-like keybindings (tabs, splits, focus, zoom, quake)
+          // Paste into your settings.json (merge "actions", "globalSummons", and optional "compatibility")
+          // Meant to replicate: https://x.com/dani_avila7/status/2023151176758268349
+          // Make sure to install lazygit: winget install JesseDuffield.lazygit
+
+          {
+            // Optional: lets globalSummon work more reliably (varies by Terminal version)
+            "compatibility": {
+              "allowHeadless": true
+            },
+
+            "actions": [
+              // --- Clipboard / Find ---
+              { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+              { "command": "paste", "keys": "ctrl+v" },
+              { "command": "find", "keys": "ctrl+shift+f" },
+
+              // --- Tabs ---
+              { "command": "newTab", "keys": "ctrl+t" },
+              { "command": "closeTab", "keys": "ctrl+w" },
+              { "command": "prevTab", "keys": "ctrl+shift+left" },
+              { "command": "nextTab", "keys": "ctrl+shift+right" },
+
+              // --- Splits (duplicate = same profile) ---
+              { "command": { "action": "splitPane", "split": "right", "splitMode": "duplicate" }, "keys": "ctrl+d" },
+              { "command": { "action": "splitPane", "split": "down", "splitMode": "duplicate" }, "keys": "ctrl+shift+d" },
+              // keep your old "auto split" binding if you like it
+              { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
+
+              // --- Focus panes ---
+              { "command": { "action": "moveFocus", "direction": "left" }, "keys": "ctrl+alt+left" },
+              { "command": { "action": "moveFocus", "direction": "right" }, "keys": "ctrl+alt+right" },
+              { "command": { "action": "moveFocus", "direction": "up" }, "keys": "ctrl+alt+up" },
+              { "command": { "action": "moveFocus", "direction": "down" }, "keys": "ctrl+alt+down" },
+
+              // --- Close / Zoom pane ---
+              { "command": "closePane", "keys": "ctrl+alt+d" },
+              { "command": "togglePaneZoom", "keys": "ctrl+shift+z" },
+
+              // --- Quake / dropdown ---
+              { "command": { "action": "globalSummon", "name": "_quake" }, "keys": "ctrl+`" }
+            ],
+
+            "globalSummons": [
+              {
+                "name": "_quake",
+                "toggleVisibility": true,
+                "desktop": "toCurrent",
+                "monitor": "toCurrent",
+                "dropdownDuration": 0,
+                "animationDuration": 0,
+                "commandline": "pwsh"
+              }
+            ]
+          }
+    notes:
+      - "Open Windows Terminal, choose Settings, then Open JSON file."
+      - "Merge the compatibility, actions, and globalSummons blocks into the existing settings.json instead of replacing the whole file."
+      - "This config is from https://gist.github.com/mikaelweave/2248af7df2299438062e98fbc988ffdf and is based on the Ghostty workflow shared at https://x.com/dani_avila7/status/2023151176758268349."
+
+  - id: install-azure-cli
+    category: cloud-containers
+    title: Install Azure CLI
+    description: Install the Azure command-line interface for managing Azure resources from the terminal.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.AzureCLI"
+    notes:
+      - "After installation, open a new terminal and run az login."
+
+  - id: install-wsl
+    category: cloud-containers
+    title: Install WSL
+    description: Enable Windows Subsystem for Linux and install the default Ubuntu distribution. Run this from an admin terminal and reboot if prompted.
+    default: true
+    requires_admin: true
+    commands:
+      - "wsl --install"
+    notes:
+      - "Run this from Windows Terminal or PowerShell launched as administrator."
+      - "If Windows asks for a restart, reboot before installing Docker Desktop or using WSL-backed tooling."
+
+  - id: install-bruno
+    category: essential-tools
+    title: Install Bruno REST Requests
+    description: Install Bruno for local-first API request collections.
+    default: true
+    commands:
+      - "winget install -e --id Bruno.Bruno"
+    notes:
+      - "Use Bruno as a lightweight REST client for project request collections."
+
+  - id: install-copilot-cli
+    category: ai-tools
+    title: Install Copilot CLI
+    description: Install GitHub Copilot CLI for command-line AI assistance.
+    default: true
+    commands:
+      - "winget install -e --id GitHub.Copilot"
+    notes:
+      - "Requires an active GitHub Copilot subscription."
+      - "After installation, run copilot and use /login if prompted."
+
+  - id: install-copilot-desktop
+    category: ai-tools
+    title: Install Copilot Desktop
+    description: Install the GitHub Copilot desktop app.
+    default: true
+    commands:
+      - "winget install -e --id GitHub.CopilotApp"
+    notes:
+      - "Sign in with the GitHub account that has Copilot access."
+
+  - id: install-claude-code
+    category: ai-tools
+    title: Install Claude Code
+    description: Install Anthropic Claude Code for terminal-based coding sessions.
+    default: true
+    commands:
+      - "winget install -e --id Anthropic.ClaudeCode"
+    notes:
+      - "After installation, run claude and follow the browser sign-in flow."
+      - "Git for Windows is optional, but helps Claude Code use Git Bash on native Windows."
+
+  - id: install-codex
+    category: ai-tools
+    title: Install Codex CLI
+    description: Install OpenAI Codex CLI for local coding-agent workflows.
+    default: true
+    commands:
+      - 'powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"'
+    notes:
+      - "After installation, run codex and sign in with ChatGPT or configure API-key authentication."
+
+  - id: install-docker-desktop
+    category: cloud-containers
+    title: Install Docker Desktop
+    description: Install Docker Desktop for local container development.
+    default: true
+    commands:
+      - "winget install -e --id Docker.DockerDesktop"
+    notes:
+      - "Docker Desktop may require WSL 2 or virtualization support to be enabled."
+      - "Restart Windows if the installer asks for it."
+
+  - id: install-coreutils
+    category: essential-tools
+    title: Install Microsoft Coreutils
+    description: Add GNU-style command-line utilities maintained for Windows.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.Coreutils"
+    notes:
+      - "Restart any open terminals after installation so PATH changes are picked up."
+
+  - id: install-kubectl
+    category: cloud-containers
+    title: Install kubectl
+    description: Install the Kubernetes command-line tool used by Azure Kubernetes Service and other clusters.
+    default: true
+    commands:
+      - "winget install -e --id Kubernetes.kubectl"
+    notes:
+      - "After installation, verify with kubectl version --client."
+
+  - id: install-kubelogin
+    category: cloud-containers
+    title: Install kubelogin
+    description: Install Azure Kubelogin so kubectl can authenticate to Azure Kubernetes Service clusters through Azure CLI sign-in.
+    default: true
+    commands:
+      - "winget install -e --id Microsoft.Azure.Kubelogin"
+    notes:
+      - "Use this with AKS kubeconfigs that require Azure AD authentication."
+
+  - id: install-lazygit
+    category: terminal
+    title: Install lazygit
+    description: Install the terminal UI for Git workflows.
+    default: true
+    commands:
+      - "winget install -e --id JesseDuffield.lazygit"
+    notes:
+      - "Run lazygit from inside a Git repository."
+
+  - id: install-oh-my-posh
+    category: terminal
+    title: Install Oh My Posh
+    description: Install the prompt engine used to customize PowerShell.
+    default: true
+    commands:
+      - "winget install -e --id JanDeDobbeleer.OhMyPosh"
+    notes:
+      - "After install, configure your PowerShell profile with the preferred theme."
+      - "Run notepad $PROFILE from PowerShell if the profile needs to be created or edited."

@@ -1,0 +1,175 @@
+{{ define "title" }}
+  {{ .Title }} · {{ .Site.Title }}
+{{ end }}
+
+{{ define "meta" }}
+  {{ with .Params.meta_description }}
+        <meta name="description" content="{{ . }}">
+        <meta property="og:description" content="{{ . }}">
+  {{ end }}
+        <meta property="og:title" content="{{ .Title }} · {{ .Site.Title }}">
+        <meta property="og:url" content="{{ .Permalink }}">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_US">
+{{ end }}
+
+{{ define "style" }}
+  {{ $windows_setup_style := resources.Get "/scss/windows_setup.scss" | resources.ExecuteAsTemplate "windows_setupt.scss" . | toCSS | postCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $windows_setup_style.Permalink }}" integrity="{{ $windows_setup_style.Data.Integrity }}" media="screen">
+{{ end }}
+
+{{ define "content" }}
+  {{ $guide := index hugo.Data "windows_dev_setup" }}
+  {{ $commandStepCount := 0 }}
+  {{ $defaultSelectedCount := 0 }}
+  {{ $defaultCommandCount := 0 }}
+  {{ $manualStepCount := 0 }}
+  {{ range $guide.steps }}
+    {{ if .commands }}
+      {{ $commandStepCount = add $commandStepCount 1 }}
+      {{ if .default }}
+        {{ $defaultSelectedCount = add $defaultSelectedCount 1 }}
+        {{ $defaultCommandCount = add $defaultCommandCount (len .commands) }}
+      {{ end }}
+    {{ else }}
+      {{ $manualStepCount = add $manualStepCount 1 }}
+    {{ end }}
+  {{ end }}
+  <section class="windows-setup" data-windows-setup-guide>
+    <header class="windows-setup__hero">
+      <div class="windows-setup__hero-copy">
+        <div class="windows-setup__mark" aria-hidden="true">
+          <span class="windows-setup__mark-piece windows-setup__mark-piece--tan"></span>
+          <span class="windows-setup__mark-piece windows-setup__mark-piece--salmon"></span>
+          <span class="windows-setup__mark-piece windows-setup__mark-piece--green"></span>
+          <span class="windows-setup__mark-piece windows-setup__mark-piece--mustard"></span>
+        </div>
+        <p class="windows-setup__context">Fresh machine checklist</p>
+        <h1>{{ .Title }}</h1>
+        <div class="windows-setup__intro">
+          {{ .Content }}
+        </div>
+      </div>
+      <div class="windows-setup__summary" aria-label="Guide summary">
+        <p><strong>{{ $commandStepCount }}</strong> <span>line items</span></p>
+        <p><strong data-selected-count>{{ $defaultSelectedCount }}</strong> <span>selected</span></p>
+        <p><strong data-command-count>{{ $defaultCommandCount }}</strong> <span>commands</span></p>
+      </div>
+    </header>
+
+    <div class="windows-setup__workspace">
+      <aside class="windows-setup__command-panel" aria-labelledby="windows-setup-command-heading">
+        <div>
+          <p class="windows-setup__context">Command box</p>
+          <h2 id="windows-setup-command-heading">Copy selected commands</h2>
+          <p>Run admin commands first in an elevated terminal. Run app installs from a regular terminal so per-user apps land in your user profile.</p>
+        </div>
+
+        <section class="windows-setup__command-group" aria-labelledby="windows-setup-admin-command-heading">
+          <h3 id="windows-setup-admin-command-heading">Admin terminal</h3>
+          <p>Open Windows Terminal or PowerShell as administrator for these system-level commands.</p>
+          <pre class="windows-setup__command-output windows-setup__command-output--admin" tabindex="0"><code id="windows-setup-admin-command-output">{{ range $step := $guide.steps }}{{ if and $step.default $step.commands $step.requires_admin }}# {{ $step.title }}
+{{ range $step.commands }}{{ . }}
+{{ end }}
+{{ end }}{{ end }}</code></pre>
+          <div class="windows-setup__command-actions">
+            <button class="windows-setup__copy-button" type="button" data-copy-commands="admin">Copy admin commands</button>
+            <p class="windows-setup__copy-status" data-copy-status="admin" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="windows-setup__command-group" aria-labelledby="windows-setup-user-command-heading">
+          <h3 id="windows-setup-user-command-heading">Regular terminal</h3>
+          <p>Run these from your normal terminal session for user-profile apps and everyday CLI tools.</p>
+          <pre class="windows-setup__command-output windows-setup__command-output--user" tabindex="0"><code id="windows-setup-user-command-output">{{ range $step := $guide.steps }}{{ if and $step.default $step.commands (not $step.requires_admin) }}# {{ $step.title }}
+{{ range $step.commands }}{{ . }}
+{{ end }}
+{{ end }}{{ end }}</code></pre>
+          <div class="windows-setup__command-actions">
+            <button class="windows-setup__copy-button" type="button" data-copy-commands="user">Copy user commands</button>
+            <p class="windows-setup__copy-status" data-copy-status="user" aria-live="polite"></p>
+          </div>
+        </section>
+      </aside>
+
+      <div class="windows-setup__steps" aria-label="Windows setup steps">
+        {{ range $category := $guide.categories }}
+          {{ $steps := where $guide.steps "category" $category.id }}
+          {{ $hasCommandSteps := false }}
+          {{ range $step := $steps }}
+            {{ if $step.commands }}
+              {{ $hasCommandSteps = true }}
+            {{ end }}
+          {{ end }}
+          {{ if $hasCommandSteps }}
+            <section class="windows-setup__category" aria-labelledby="windows-setup-category-{{ $category.id }}">
+              <div class="windows-setup__category-heading">
+                <h2 id="windows-setup-category-{{ $category.id }}">{{ $category.title }}</h2>
+                <p>{{ $category.description }}</p>
+              </div>
+
+              {{ range $step := $steps }}
+                {{ if $step.commands }}
+                  <article class="windows-setup__step windows-setup__command-step" data-step data-step-id="{{ $step.id }}" data-requires-admin="{{ if $step.requires_admin }}true{{ else }}false{{ end }}">
+                    <label class="windows-setup__step-toggle" for="windows-step-{{ $step.id }}">
+                      <input id="windows-step-{{ $step.id }}" type="checkbox" data-step-toggle value="{{ $step.id }}"{{ if $step.default }} checked{{ end }}>
+                      <span>
+                        <span class="windows-setup__step-title">{{ $step.title }}</span>
+                        <span class="windows-setup__step-description">{{ $step.description }}</span>
+                        {{ if $step.requires_admin }}<span class="windows-setup__step-badge">admin</span>{{ end }}
+                      </span>
+                    </label>
+                    <span class="windows-setup__command-data" hidden>{{ range $step.commands }}<span data-command-line>{{ . }}</span>{{ end }}</span>
+                  </article>
+                {{ end }}
+              {{ end }}
+            </section>
+          {{ end }}
+        {{ end }}
+
+        {{ if gt $manualStepCount 0 }}
+          <section class="windows-setup__category windows-setup__manual-steps" aria-labelledby="windows-setup-manual-steps">
+            <div class="windows-setup__category-heading">
+              <h2 id="windows-setup-manual-steps">Manual steps</h2>
+              <p>These setup items require Windows settings or config edits, so they do not affect the generated command box.</p>
+            </div>
+
+            {{ range $step := $guide.steps }}
+              {{ if not $step.commands }}
+                <article class="windows-setup__step windows-setup__manual-step">
+                  <div>
+                    <h3 class="windows-setup__step-title">{{ $step.title }}</h3>
+                    <p class="windows-setup__step-description">{{ $step.description }}</p>
+                  </div>
+
+                  {{ with $step.notes }}
+                    <ul class="windows-setup__notes">
+                      {{ range . }}
+                        <li>{{ . }}</li>
+                      {{ end }}
+                    </ul>
+                  {{ end }}
+
+                  {{ with $step.snippets }}
+                    <details class="windows-setup__step-detail windows-setup__manual-detail">
+                      <summary>Config snippet</summary>
+                      <div class="windows-setup__step-snippets">
+                        {{ range . }}
+                          <div class="windows-setup__step-snippet">
+                            <p>{{ .title }}</p>
+                            <pre><code>{{ .content }}</code></pre>
+                          </div>
+                        {{ end }}
+                      </div>
+                    </details>
+                  {{ end }}
+                </article>
+              {{ end }}
+            {{ end }}
+          </section>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  <script src="/js/windows-setup-guide.js" defer></script>
+{{ end }}

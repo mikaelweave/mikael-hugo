@@ -1,0 +1,504 @@
+@import "assets/scss/site_params.scss";
+
+.windows-setup {
+  color: $forest;
+  font-family: $textFont;
+  margin: 0 auto 80px;
+  max-width: 1120px;
+
+  h1,
+  h2,
+  h3,
+  p,
+  ul {
+    font-family: inherit;
+  }
+
+  h1 {
+    color: $dark-teal;
+    font-family: monospace;
+    font-size: clamp(44px, 8vw, 88px);
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    margin: 0;
+    max-width: 11ch;
+    text-wrap: balance;
+  }
+
+  h2 {
+    color: $dark-teal;
+    font-family: monospace;
+    font-size: clamp(26px, 4vw, 40px);
+    line-height: 1.05;
+    margin: 0;
+    padding: 0;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+}
+
+.windows-setup__hero {
+  display: grid;
+  gap: 32px;
+  margin: 40px 0 clamp(48px, 8vw, 84px);
+
+  @include md {
+    align-items: end;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+  }
+}
+
+.windows-setup__hero-copy {
+  display: grid;
+  gap: 18px;
+  max-width: 760px;
+  position: relative;
+}
+
+.windows-setup__mark {
+  height: 92px;
+  margin-bottom: 8px;
+  position: relative;
+  width: 180px;
+}
+
+.windows-setup__mark-piece {
+  display: block;
+  position: absolute;
+}
+
+.windows-setup__mark-piece--tan {
+  background: $tan;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  height: 70px;
+  left: 12px;
+  top: 8px;
+  transform: rotate(-8deg);
+  width: 78px;
+}
+
+.windows-setup__mark-piece--salmon {
+  background: $salmon;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  height: 62px;
+  left: 74px;
+  top: 26px;
+  transform: rotate(7deg);
+  width: 70px;
+}
+
+.windows-setup__mark-piece--green {
+  background: $foam-green;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+  height: 54px;
+  left: 116px;
+  top: 0;
+  transform: rotate(22deg);
+  width: 60px;
+}
+
+.windows-setup__mark-piece--mustard {
+  background: $mustard;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  height: 38px;
+  left: 48px;
+  top: 52px;
+  transform: rotate(-18deg);
+  width: 46px;
+}
+
+.windows-setup__intro p {
+  color: $dark-teal;
+  font-size: clamp(20px, 3vw, 25px);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+
+.windows-setup__context {
+  color: $brown;
+  font-family: monospace !important;
+  font-size: 15px !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3 !important;
+  margin: 0;
+}
+
+.windows-setup__summary {
+  align-content: end;
+  border-top: 1px solid rgba($forest, 0.2);
+  display: grid;
+  gap: 0;
+
+  p {
+    align-items: baseline;
+    border-bottom: 1px solid rgba($forest, 0.2);
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 14px 0;
+  }
+
+  strong {
+    color: $dark-teal;
+    font-family: monospace;
+    font-size: clamp(30px, 6vw, 48px);
+    line-height: 1;
+  }
+
+  span {
+    color: $brown;
+    font-size: 16px;
+  }
+}
+
+.windows-setup__workspace {
+  display: grid;
+  gap: 44px;
+
+  @include lg {
+    align-items: start;
+    grid-template-columns: minmax(320px, 410px) minmax(0, 1fr);
+  }
+}
+
+.windows-setup__command-panel {
+  background: $white;
+  border: 1px solid rgba($forest, 0.2);
+  display: grid;
+  gap: 24px;
+  order: 2;
+  padding: 20px;
+
+  @include lg {
+    order: 0;
+    position: sticky;
+    top: 28px;
+  }
+
+  h2 {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-top: 4px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.windows-setup__command-group {
+  display: grid;
+  gap: 10px;
+
+  h3 {
+    color: $dark-teal;
+    font-family: monospace;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  p {
+    color: $brown;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+}
+
+.windows-setup__command-output,
+.windows-setup__step-commands pre,
+.windows-setup__step-snippet pre {
+  background: $dark-teal;
+  color: $white;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-x: auto;
+  padding: 18px;
+  white-space: pre;
+}
+
+.windows-setup__command-output {
+  min-height: 220px;
+}
+
+.windows-setup__command-output--admin {
+  min-height: 96px;
+}
+
+.windows-setup__command-output:focus,
+.windows-setup__copy-button:focus-visible,
+.windows-setup__step-toggle input:focus-visible + span,
+.windows-setup__step-detail summary:focus-visible {
+  outline: 3px solid $mustard;
+  outline-offset: 3px;
+}
+
+.windows-setup__command-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.windows-setup__copy-button {
+  background: $white;
+  border: 1px solid $forest;
+  color: $forest;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 11px 16px;
+}
+
+.windows-setup__copy-button:hover {
+  background: $forest;
+  color: $white;
+}
+
+.windows-setup__copy-status {
+  color: $brown;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  min-height: 1.4em;
+}
+
+.windows-setup__steps {
+  display: grid;
+  gap: 56px;
+  order: 1;
+
+  @include lg {
+    order: 0;
+  }
+}
+
+.windows-setup__category {
+  display: grid;
+  gap: 0;
+}
+
+.windows-setup__category-heading {
+  border-bottom: 1px solid rgba($forest, 0.28);
+  display: grid;
+  gap: 8px;
+  padding-bottom: 18px;
+
+  p {
+    color: $brown;
+    margin: 0;
+    max-width: 680px;
+  }
+}
+
+.windows-setup__step {
+  border-bottom: 1px solid rgba($forest, 0.16);
+  display: grid;
+  gap: 14px;
+  padding: 22px 0;
+}
+
+.windows-setup__step[data-selected="false"] {
+  color: $brown;
+
+  .windows-setup__step-title,
+  .windows-setup__step-description {
+    color: $brown;
+  }
+}
+
+.windows-setup__step-toggle {
+  align-items: flex-start;
+  cursor: pointer;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.windows-setup__step-toggle input {
+  accent-color: $forest;
+  height: 22px;
+  margin-top: 3px;
+  width: 22px;
+}
+
+.windows-setup__command-step {
+  gap: 0;
+  padding: 10px 0;
+
+  .windows-setup__step-toggle {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .windows-setup__step-toggle input {
+    height: 16px;
+    margin-top: 0;
+    width: 16px;
+  }
+
+  .windows-setup__step-toggle > span {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+  }
+
+  .windows-setup__step-title {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .windows-setup__step-description {
+    color: rgba($forest, 0.78);
+    font-size: 14px;
+    line-height: 1.45;
+    margin-top: 0;
+    max-width: none;
+  }
+
+  .windows-setup__step-description::before {
+    content: "— ";
+  }
+}
+
+.windows-setup__step-badge {
+  border: 1px solid rgba($brown, 0.45);
+  color: $brown;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 5px;
+}
+
+.windows-setup__step-title {
+  color: $dark-teal;
+  display: block;
+  font-family: monospace;
+  font-size: clamp(20px, 3vw, 25px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.windows-setup__step-description {
+  color: $forest;
+  display: block;
+  font-size: 17px;
+  line-height: 1.5;
+  margin-top: 6px;
+  max-width: 68ch;
+}
+
+.windows-setup__step-detail {
+  display: grid;
+  gap: 14px;
+  padding-left: 36px;
+
+  summary {
+    color: $brown;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 15px;
+    font-weight: 700;
+    width: fit-content;
+  }
+}
+
+.windows-setup__step-detail[open] {
+  gap: 16px;
+}
+
+.windows-setup__step-commands,
+.windows-setup__step-snippets {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+
+  p {
+    color: $brown;
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  pre {
+    font-size: 13px;
+    margin: 0;
+    min-height: auto;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.windows-setup__step-snippet {
+  display: grid;
+  gap: 8px;
+
+  pre {
+    max-height: 420px;
+  }
+}
+
+.windows-setup__manual-note {
+  color: $brown;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+  margin: 12px 0 0;
+}
+
+.windows-setup__manual-steps {
+  margin-top: 16px;
+}
+
+.windows-setup__manual-step {
+  gap: 12px;
+
+  .windows-setup__notes {
+    margin-top: 0;
+  }
+}
+
+.windows-setup__manual-detail {
+  padding-left: 0;
+}
+
+.windows-setup__notes {
+  color: $forest;
+  margin: 12px 0 0;
+  padding-left: 22px;
+
+  li {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .windows-setup__copy-button,
+  .windows-setup__step,
+  .windows-setup__step-title,
+  .windows-setup__step-description {
+    transition:
+      background-color 160ms ease-out,
+      border-color 160ms ease-out,
+      color 160ms ease-out,
+      transform 160ms ease-out;
+  }
+
+  .windows-setup__copy-button:hover {
+    transform: translateY(-1px);
+  }
+}
